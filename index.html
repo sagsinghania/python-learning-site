@@ -1,0 +1,1564 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Python 学习主页 | 从核心命令到项目实战</title>
+  <style>
+    :root {
+      --bg: #07111f;
+      --bg-soft: #0d1c30;
+      --panel: rgba(10, 24, 42, 0.72);
+      --panel-strong: rgba(8, 19, 34, 0.9);
+      --panel-light: #f4fbff;
+      --line: rgba(123, 196, 255, 0.18);
+      --text: #e8f6ff;
+      --text-dark: #0d1b2a;
+      --muted: #9ab5ca;
+      --muted-dark: #5f7487;
+      --cyan: #36d7c4;
+      --cyan-deep: #18b8a2;
+      --blue: #3b82f6;
+      --blue-deep: #1d4ed8;
+      --blue-soft: #dff5ff;
+      --teal-soft: #d9fff5;
+      --accent: #8ef2e4;
+      --shadow: 0 24px 70px rgba(0, 10, 22, 0.32);
+      --radius-xl: 28px;
+      --radius-lg: 22px;
+      --radius-md: 16px;
+      --radius-sm: 12px;
+      --max-width: 1180px;
+      --font-display: "Segoe UI Variable Display", "PingFang SC", "Microsoft YaHei UI", sans-serif;
+      --font-body: "Segoe UI Variable Text", "PingFang SC", "Microsoft YaHei", sans-serif;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      color: var(--text);
+      font-family: var(--font-body);
+      background:
+        radial-gradient(circle at top left, rgba(54, 215, 196, 0.16), transparent 28%),
+        radial-gradient(circle at 85% 12%, rgba(59, 130, 246, 0.22), transparent 30%),
+        linear-gradient(180deg, #07111f 0%, #091627 34%, #0c1e33 100%);
+      line-height: 1.65;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    button,
+    input,
+    select {
+      font: inherit;
+    }
+
+    .page-shell {
+      overflow: clip;
+    }
+
+    .container {
+      width: min(var(--max-width), calc(100% - 28px));
+      margin: 0 auto;
+    }
+
+    .section {
+      padding: 28px 0;
+    }
+
+    .glass {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(18px);
+    }
+
+    .site-header {
+      position: sticky;
+      top: 0;
+      z-index: 30;
+      padding: 14px 0;
+      background: linear-gradient(180deg, rgba(7, 17, 31, 0.85), rgba(7, 17, 31, 0.3));
+      backdrop-filter: blur(12px);
+    }
+
+    .nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      padding: 14px 18px;
+      border-radius: 999px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      min-width: 0;
+    }
+
+    .brand-mark {
+      width: 44px;
+      height: 44px;
+      border-radius: 14px;
+      display: grid;
+      place-items: center;
+      font-weight: 800;
+      letter-spacing: 0.08em;
+      background: linear-gradient(135deg, rgba(54, 215, 196, 0.28), rgba(59, 130, 246, 0.3));
+      border: 1px solid rgba(142, 242, 228, 0.22);
+      color: var(--accent);
+      flex: 0 0 auto;
+    }
+
+    .brand-copy strong {
+      display: block;
+      font-family: var(--font-display);
+      font-size: 1rem;
+      letter-spacing: 0.01em;
+    }
+
+    .brand-copy span {
+      display: block;
+      color: var(--muted);
+      font-size: 0.87rem;
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+    }
+
+    .nav-links a {
+      padding: 10px 14px;
+      border-radius: 999px;
+      color: var(--muted);
+      transition: 0.2s ease;
+    }
+
+    .nav-links a:hover,
+    .nav-links a.is-active {
+      background: rgba(255, 255, 255, 0.06);
+      color: #ffffff;
+    }
+
+    .menu-toggle {
+      display: none;
+      width: 46px;
+      height: 46px;
+      border: 0;
+      border-radius: 14px;
+      color: #fff;
+      background: rgba(255, 255, 255, 0.08);
+      cursor: pointer;
+    }
+
+    .hero {
+      padding: 26px 0 18px;
+    }
+
+    .hero-card {
+      position: relative;
+      padding: 36px;
+      border-radius: 34px;
+      overflow: hidden;
+    }
+
+    .hero-card::before,
+    .hero-card::after {
+      content: "";
+      position: absolute;
+      border-radius: 999px;
+      filter: blur(8px);
+      opacity: 0.85;
+    }
+
+    .hero-card::before {
+      width: 260px;
+      height: 260px;
+      right: -80px;
+      top: -90px;
+      background: radial-gradient(circle, rgba(54, 215, 196, 0.34), transparent 68%);
+    }
+
+    .hero-card::after {
+      width: 280px;
+      height: 280px;
+      left: -110px;
+      bottom: -120px;
+      background: radial-gradient(circle, rgba(59, 130, 246, 0.28), transparent 68%);
+    }
+
+    .hero-grid {
+      position: relative;
+      display: grid;
+      grid-template-columns: minmax(0, 1.08fr) minmax(320px, 0.92fr);
+      gap: 28px;
+      align-items: center;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 14px;
+      border-radius: 999px;
+      font-size: 0.9rem;
+      letter-spacing: 0.04em;
+      color: var(--accent);
+      background: rgba(142, 242, 228, 0.09);
+      border: 1px solid rgba(142, 242, 228, 0.14);
+    }
+
+    .hero h1 {
+      margin: 18px 0 14px;
+      font-family: var(--font-display);
+      font-size: clamp(2.45rem, 4.8vw, 4.55rem);
+      line-height: 1.03;
+      letter-spacing: -0.03em;
+    }
+
+    .hero h1 span {
+      color: var(--accent);
+    }
+
+    .hero p {
+      margin: 0;
+      max-width: 640px;
+      color: #c8ddef;
+      font-size: 1.06rem;
+    }
+
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 14px;
+      margin-top: 28px;
+    }
+
+    .button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      min-height: 52px;
+      padding: 0 22px;
+      border-radius: 999px;
+      border: 1px solid transparent;
+      font-weight: 700;
+      cursor: pointer;
+      transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+    }
+
+    .button:hover {
+      transform: translateY(-2px);
+    }
+
+    .button-primary {
+      color: #041321;
+      background: linear-gradient(135deg, var(--accent), #7de9ff);
+      box-shadow: 0 18px 40px rgba(93, 227, 233, 0.22);
+    }
+
+    .button-secondary {
+      color: #ffffff;
+      border-color: rgba(255, 255, 255, 0.14);
+      background: rgba(255, 255, 255, 0.07);
+    }
+
+    .button-inline {
+      color: var(--blue-deep);
+      background: linear-gradient(135deg, #d8fff6, #e2f5ff);
+    }
+
+    .hero-stats {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 14px;
+      margin-top: 28px;
+    }
+
+    .stat-card {
+      padding: 18px;
+      border-radius: 18px;
+      background: rgba(255, 255, 255, 0.07);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    .stat-card strong {
+      display: block;
+      font-size: 1.5rem;
+      font-family: var(--font-display);
+      color: #fff;
+    }
+
+    .stat-card span {
+      color: #bad3e7;
+      font-size: 0.92rem;
+    }
+
+    .hero-panel {
+      position: relative;
+      padding: 22px;
+      border-radius: 28px;
+      background: linear-gradient(180deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.03));
+      border: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    .panel-topline,
+    .panel-badges,
+    .panel-bottom {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .panel-topline {
+      justify-content: space-between;
+      color: #d8eafd;
+      font-size: 0.92rem;
+      margin-bottom: 16px;
+    }
+
+    .panel-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 7px 12px;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.08);
+      color: #cde7f9;
+      font-size: 0.86rem;
+      border: 1px solid rgba(255, 255, 255, 0.07);
+    }
+
+    .console {
+      margin: 14px 0 18px;
+      padding: 18px;
+      border-radius: 20px;
+      background: rgba(4, 12, 24, 0.82);
+      border: 1px solid rgba(92, 204, 255, 0.1);
+      font-family: "Cascadia Code", "Consolas", monospace;
+      color: #dff9ff;
+      box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.02);
+    }
+
+    .console .line {
+      display: block;
+      margin: 6px 0;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .console .muted {
+      color: #74d7cd;
+    }
+
+    .panel-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 12px;
+      margin-top: 16px;
+    }
+
+    .panel-card {
+      padding: 16px;
+      border-radius: 18px;
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid rgba(255, 255, 255, 0.07);
+    }
+
+    .panel-card strong {
+      display: block;
+      margin-bottom: 6px;
+      font-size: 0.98rem;
+    }
+
+    .panel-card span {
+      display: block;
+      color: #c2d9eb;
+      font-size: 0.9rem;
+    }
+
+    .section-heading {
+      display: flex;
+      justify-content: space-between;
+      gap: 18px;
+      align-items: end;
+      margin-bottom: 22px;
+    }
+
+    .section-heading h2 {
+      margin: 0 0 8px;
+      font-family: var(--font-display);
+      font-size: clamp(1.9rem, 3vw, 2.7rem);
+      line-height: 1.08;
+      letter-spacing: -0.02em;
+    }
+
+    .section-heading p {
+      margin: 0;
+      max-width: 640px;
+      color: var(--muted);
+    }
+
+    .surface-grid {
+      display: grid;
+      gap: 18px;
+    }
+
+    .surface-grid.cols-3 {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+
+    .surface-grid.cols-2 {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .surface-card {
+      position: relative;
+      padding: 24px;
+      border-radius: var(--radius-lg);
+      border: 1px solid var(--line);
+      background: linear-gradient(180deg, rgba(12, 27, 46, 0.9), rgba(8, 21, 36, 0.95));
+      box-shadow: var(--shadow);
+    }
+
+    .surface-card.light {
+      background: linear-gradient(180deg, #f8feff, #eff8ff);
+      border-color: rgba(57, 127, 181, 0.14);
+      color: var(--text-dark);
+    }
+
+    .surface-card.light p,
+    .surface-card.light li,
+    .surface-card.light .meta {
+      color: var(--muted-dark);
+    }
+
+    .card-kicker {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 44px;
+      height: 44px;
+      margin-bottom: 18px;
+      border-radius: 14px;
+      font-weight: 800;
+      letter-spacing: 0.05em;
+      color: #0c2238;
+      background: linear-gradient(135deg, #8ef2e4, #8ec5ff);
+    }
+
+    .surface-card h3 {
+      margin: 0 0 10px;
+      font-size: 1.25rem;
+      font-family: var(--font-display);
+    }
+
+    .surface-card p {
+      margin: 0;
+      color: var(--muted);
+    }
+
+    .feature-list,
+    .mini-list {
+      list-style: none;
+      margin: 18px 0 0;
+      padding: 0;
+    }
+
+    .feature-list li,
+    .mini-list li {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      margin: 10px 0;
+      color: inherit;
+    }
+
+    .feature-list li::before,
+    .mini-list li::before {
+      content: "";
+      width: 10px;
+      height: 10px;
+      margin-top: 8px;
+      border-radius: 999px;
+      flex: 0 0 auto;
+      background: linear-gradient(135deg, var(--cyan), #7ad7ff);
+      box-shadow: 0 0 0 5px rgba(54, 215, 196, 0.08);
+    }
+
+    .roadmap-card {
+      padding: 24px;
+      border-radius: 24px;
+      background: linear-gradient(180deg, rgba(12, 30, 50, 0.96), rgba(7, 21, 35, 0.96));
+      border: 1px solid var(--line);
+      box-shadow: var(--shadow);
+    }
+
+    .roadmap-top {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      align-items: center;
+      margin-bottom: 16px;
+    }
+
+    .step-badge {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 72px;
+      min-height: 34px;
+      padding: 0 14px;
+      border-radius: 999px;
+      font-size: 0.88rem;
+      font-weight: 700;
+      background: rgba(142, 242, 228, 0.1);
+      color: var(--accent);
+      border: 1px solid rgba(142, 242, 228, 0.16);
+    }
+
+    .roadmap-card h3 {
+      margin: 0 0 10px;
+      font-size: 1.18rem;
+    }
+
+    .meta-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 16px;
+    }
+
+    .meta {
+      display: inline-flex;
+      align-items: center;
+      min-height: 32px;
+      padding: 0 12px;
+      border-radius: 999px;
+      font-size: 0.84rem;
+      color: #c6deef;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      background: rgba(255, 255, 255, 0.04);
+    }
+
+    .chapter-card {
+      display: flex;
+      flex-direction: column;
+      min-height: 100%;
+    }
+
+    .chapter-card .chapter-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 18px;
+    }
+
+    .chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 12px;
+      border-radius: 999px;
+      font-size: 0.84rem;
+      color: #c9e3f3;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    .chapter-card .button {
+      margin-top: auto;
+    }
+
+    .project-shell {
+      display: grid;
+      grid-template-columns: 1.1fr 0.9fr;
+      gap: 18px;
+    }
+
+    .project-feature {
+      min-height: 100%;
+      background:
+        linear-gradient(145deg, rgba(142, 242, 228, 0.12), rgba(59, 130, 246, 0.08)),
+        linear-gradient(180deg, rgba(11, 28, 47, 0.96), rgba(8, 21, 36, 0.98));
+    }
+
+    .project-stack {
+      display: grid;
+      gap: 18px;
+    }
+
+    .quote {
+      position: relative;
+      padding-top: 28px;
+    }
+
+    .quote::before {
+      content: "“";
+      position: absolute;
+      top: -10px;
+      left: 0;
+      font-size: 4rem;
+      line-height: 1;
+      color: rgba(142, 242, 228, 0.18);
+      font-family: Georgia, serif;
+    }
+
+    .quote strong {
+      display: block;
+      margin-top: 18px;
+      font-size: 1rem;
+    }
+
+    .faq-list {
+      display: grid;
+      gap: 14px;
+    }
+
+    .faq-item {
+      border-radius: var(--radius-md);
+      background: linear-gradient(180deg, rgba(11, 27, 46, 0.94), rgba(8, 20, 34, 0.98));
+      border: 1px solid var(--line);
+      overflow: hidden;
+    }
+
+    .faq-trigger {
+      width: 100%;
+      padding: 18px 20px;
+      border: 0;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 16px;
+      background: transparent;
+      color: #fff;
+      text-align: left;
+      cursor: pointer;
+      font-weight: 700;
+    }
+
+    .faq-trigger span:last-child {
+      flex: 0 0 auto;
+      width: 30px;
+      height: 30px;
+      display: grid;
+      place-items: center;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.08);
+      color: var(--accent);
+      transition: transform 0.2s ease;
+    }
+
+    .faq-item.is-open .faq-trigger span:last-child {
+      transform: rotate(45deg);
+    }
+
+    .faq-panel {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.28s ease;
+    }
+
+    .faq-panel-inner {
+      padding: 0 20px 20px;
+      color: var(--muted);
+    }
+
+    .cta-card {
+      position: relative;
+      padding: 34px;
+      border-radius: 30px;
+      overflow: hidden;
+      background:
+        radial-gradient(circle at 10% 20%, rgba(142, 242, 228, 0.18), transparent 32%),
+        radial-gradient(circle at 88% 24%, rgba(59, 130, 246, 0.24), transparent 30%),
+        linear-gradient(135deg, #071726, #102843 52%, #0e3341);
+      border: 1px solid rgba(142, 242, 228, 0.16);
+      box-shadow: var(--shadow);
+    }
+
+    .cta-card h2 {
+      margin: 0 0 14px;
+      font-size: clamp(2rem, 3vw, 3rem);
+      font-family: var(--font-display);
+      line-height: 1.05;
+    }
+
+    .cta-card p {
+      margin: 0;
+      max-width: 720px;
+      color: #cae1f2;
+      font-size: 1.04rem;
+    }
+
+    .cta-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 14px;
+      margin-top: 28px;
+    }
+
+    .footer {
+      padding: 18px 0 42px;
+      color: #9ab3c7;
+      font-size: 0.95rem;
+    }
+
+    .footer-row {
+      display: flex;
+      justify-content: space-between;
+      gap: 20px;
+      flex-wrap: wrap;
+      align-items: center;
+    }
+
+    .reveal {
+      opacity: 0;
+      transform: translateY(26px);
+      transition: opacity 0.55s ease, transform 0.55s ease;
+    }
+
+    .reveal.is-visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .dialog {
+      position: fixed;
+      inset: 0;
+      z-index: 40;
+      display: none;
+      padding: 20px;
+      background: rgba(3, 9, 18, 0.74);
+      backdrop-filter: blur(14px);
+    }
+
+    .dialog.is-open {
+      display: grid;
+      place-items: center;
+    }
+
+    .dialog-card {
+      width: min(560px, 100%);
+      padding: 28px;
+      border-radius: 28px;
+      color: var(--text-dark);
+      background: linear-gradient(180deg, #f7feff, #eaf7ff);
+      border: 1px solid rgba(35, 102, 146, 0.12);
+      box-shadow: 0 24px 80px rgba(0, 0, 0, 0.24);
+    }
+
+    .dialog-card h3 {
+      margin: 0 0 10px;
+      font-size: 1.65rem;
+      font-family: var(--font-display);
+    }
+
+    .dialog-card p {
+      margin: 0;
+      color: var(--muted-dark);
+    }
+
+    .form-grid {
+      display: grid;
+      gap: 14px;
+      margin-top: 22px;
+    }
+
+    .field {
+      display: grid;
+      gap: 8px;
+    }
+
+    .field label {
+      font-weight: 700;
+      color: #173049;
+    }
+
+    .field input,
+    .field select {
+      min-height: 48px;
+      padding: 0 14px;
+      border-radius: 14px;
+      border: 1px solid rgba(24, 74, 111, 0.16);
+      background: rgba(255, 255, 255, 0.9);
+      color: #0d1b2a;
+      outline: none;
+    }
+
+    .field input:focus,
+    .field select:focus {
+      border-color: rgba(24, 184, 162, 0.45);
+      box-shadow: 0 0 0 4px rgba(54, 215, 196, 0.12);
+    }
+
+    .dialog-actions {
+      display: flex;
+      justify-content: flex-end;
+      gap: 12px;
+      margin-top: 22px;
+      flex-wrap: wrap;
+    }
+
+    .button-ghost {
+      color: #173049;
+      background: rgba(9, 32, 55, 0.06);
+    }
+
+    .enroll-feedback {
+      margin-top: 16px;
+      min-height: 24px;
+      color: #0b7c67;
+      font-weight: 700;
+    }
+
+    @media (max-width: 1080px) {
+      .hero-grid,
+      .project-shell,
+      .surface-grid.cols-3 {
+        grid-template-columns: 1fr;
+      }
+
+      .surface-grid.cols-2 {
+        grid-template-columns: 1fr;
+      }
+
+      .hero-panel {
+        max-width: 720px;
+      }
+    }
+
+    @media (max-width: 860px) {
+      .site-header {
+        padding-top: 10px;
+      }
+
+      .nav {
+        border-radius: 26px;
+        align-items: flex-start;
+      }
+
+      .menu-toggle {
+        display: inline-grid;
+        place-items: center;
+      }
+
+      .nav-links {
+        display: none;
+        width: 100%;
+        padding-top: 8px;
+        flex-direction: column;
+        align-items: stretch;
+      }
+
+      .nav-links.is-open {
+        display: flex;
+      }
+
+      .nav-links a {
+        background: rgba(255, 255, 255, 0.04);
+      }
+
+      .hero-card,
+      .cta-card,
+      .dialog-card {
+        padding: 24px;
+      }
+
+      .hero-stats {
+        grid-template-columns: 1fr;
+      }
+
+      .panel-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .section-heading {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .footer-row {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+    }
+
+    @media (max-width: 560px) {
+      .container {
+        width: min(var(--max-width), calc(100% - 20px));
+      }
+
+      .hero h1 {
+        font-size: 2.2rem;
+      }
+
+      .button {
+        width: 100%;
+      }
+
+      .hero-actions,
+      .cta-actions {
+        flex-direction: column;
+      }
+
+      .roadmap-top {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="page-shell">
+    <header class="site-header">
+      <div class="container">
+        <nav class="nav glass">
+          <div class="brand">
+            <div class="brand-mark">PY</div>
+            <div class="brand-copy">
+              <strong>Python 学习计划</strong>
+              <span>零基础先学高频命令，再进入系统课程</span>
+            </div>
+          </div>
+          <button class="menu-toggle" type="button" aria-label="打开菜单" data-menu-toggle>☰</button>
+          <div class="nav-links" data-nav-links>
+            <a href="#hero">首页</a>
+            <a href="#roadmap">学习路线</a>
+            <a href="#chapters">课程章节</a>
+            <a href="#projects">实战案例</a>
+            <a href="#faq">常见问题</a>
+            <a href="python_basics_words.html">核心命令</a>
+            <a href="python_study.html">学习总览</a>
+            <a href="#cta" class="is-active">开始学习</a>
+          </div>
+        </nav>
+      </div>
+    </header>
+
+    <main>
+      <section class="hero section" id="hero">
+        <div class="container">
+          <div class="hero-card glass reveal">
+            <div class="hero-grid">
+              <div>
+                <div class="eyebrow">适合零基础 / 青少年 / 成人职业转型</div>
+                <h1>先学会 <span>看得懂命令和英文</span>，再系统学 Python。</h1>
+                <p>这个页面不是单纯展示课程目录，而是把你的学习入口、路径、章节和行动按钮整合成一个清晰的学习首页。用户打开后能马上知道先学什么、接着学什么、学完能做什么。</p>
+                <div class="hero-actions">
+                  <a class="button button-primary" href="python_basics_words.html">先学核心命令</a>
+                  <a class="button button-secondary" href="python_study.html">进入系统学习</a>
+                  <button class="button button-secondary" type="button" data-open-enroll>预约学习计划</button>
+                </div>
+                <div class="hero-stats">
+                  <div class="stat-card">
+                    <strong>4 阶段</strong>
+                    <span>从英文命令到项目实战</span>
+                  </div>
+                  <div class="stat-card">
+                    <strong>6 章节</strong>
+                    <span>覆盖变量、类型、输入输出和流程控制</span>
+                  </div>
+                  <div class="stat-card">
+                    <strong>3 项目</strong>
+                    <span>让学习不只停留在语法层面</span>
+                  </div>
+                </div>
+              </div>
+
+              <div class="hero-panel">
+                <div class="panel-topline">
+                  <span>学习驾驶舱</span>
+                  <span class="panel-pill">本地课程文件已接入</span>
+                </div>
+                <div class="panel-badges">
+                  <span class="panel-pill">词汇优先</span>
+                  <span class="panel-pill">命令理解</span>
+                  <span class="panel-pill">渐进式学习</span>
+                </div>
+                <div class="console" aria-label="Python 学习示意">
+                  <span class="line"><span class="muted">&gt;&gt;&gt;</span> print("hello, python")</span>
+                  <span class="line">hello, python</span>
+                  <span class="line"><span class="muted">&gt;&gt;&gt;</span> age = 16</span>
+                  <span class="line"><span class="muted">&gt;&gt;&gt;</span> if age &gt;= 15: print("开始系统学习")</span>
+                </div>
+                <div class="panel-grid">
+                  <div class="panel-card">
+                    <strong>先打基础</strong>
+                    <span>常见英文、变量、输入输出和运算符先过一遍。</span>
+                  </div>
+                  <div class="panel-card">
+                    <strong>再做项目</strong>
+                    <span>用猜数字、成绩分析、记账本把语法真正用起来。</span>
+                  </div>
+                  <div class="panel-card">
+                    <strong>适配手机</strong>
+                    <span>通勤时也能看课程结构、章节和报名入口。</span>
+                  </div>
+                  <div class="panel-card">
+                    <strong>可持续扩展</strong>
+                    <span>以后继续增加 day08、词汇表和答案页也不乱。</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" id="overview">
+        <div class="container">
+          <div class="section-heading reveal">
+            <div>
+              <h2>为什么这个学习页适合零基础</h2>
+              <p>很多初学者不是学不会，而是不知道入口、术语和顺序。这个首页把“先学核心命令和常用英文”这件事放到了最前面。</p>
+            </div>
+          </div>
+          <div class="surface-grid cols-3">
+            <article class="surface-card light reveal">
+              <div class="card-kicker">A1</div>
+              <h3>先解决看不懂的问题</h3>
+              <p>把高频英文词汇、核心命令和语法关键词拆成更容易吸收的小模块，不让用户一上来就被整段代码吓退。</p>
+              <ul class="feature-list">
+                <li>理解 `print`、`input`、`if`、`else`、`type` 这些关键词</li>
+                <li>先会读，再会写</li>
+              </ul>
+            </article>
+
+            <article class="surface-card light reveal">
+              <div class="card-kicker">A2</div>
+              <h3>学习路径不会乱</h3>
+              <p>首页同时承担导航和课程介绍的作用，用户能快速在“现在该学什么”和“整个课程长什么样”之间切换。</p>
+              <ul class="feature-list">
+                <li>既能直接开学，也能先看总览</li>
+                <li>适合自学，也适合后续招生介绍</li>
+              </ul>
+            </article>
+
+            <article class="surface-card light reveal">
+              <div class="card-kicker">A3</div>
+              <h3>从语法走向项目</h3>
+              <p>不是只罗列知识点，而是直接告诉用户后面能做哪些程序，让学习更有目标感。</p>
+              <ul class="feature-list">
+                <li>成绩查询程序</li>
+                <li>猜数字游戏 / 记账本 / 数据统计练习</li>
+              </ul>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" id="roadmap">
+        <div class="container">
+          <div class="section-heading reveal">
+            <div>
+              <h2>Python 学习路线</h2>
+              <p>学习顺序按照你的目标设计：先认识命令和高频英文，再学基础语法，再进入逻辑控制和小项目实战。</p>
+            </div>
+          </div>
+          <div class="surface-grid cols-2">
+            <article class="roadmap-card reveal">
+              <div class="roadmap-top">
+                <span class="step-badge">Step 01</span>
+                <span class="meta">适合第 1 周</span>
+              </div>
+              <h3>认识高频英文 + 核心命令</h3>
+              <p>先弄懂最常出现的英文单词和动作，例如 `print`、`input`、`true`、`false`、`and`、`or`、`not`。这一步是“读懂代码”的起点。</p>
+              <div class="meta-row">
+                <span class="meta">目标：先看懂</span>
+                <span class="meta">重点：单词 + 命令含义</span>
+                <span class="meta">输出：能解释简单代码</span>
+              </div>
+            </article>
+
+            <article class="roadmap-card reveal">
+              <div class="roadmap-top">
+                <span class="step-badge">Step 02</span>
+                <span class="meta">适合第 1-2 周</span>
+              </div>
+              <h3>语法基础模块</h3>
+              <p>从变量、数据类型、输入输出、运算符入手，把所有最基础的表达方式建立起来。这个阶段要做到“能自己拼出简短程序”。</p>
+              <div class="meta-row">
+                <span class="meta">变量</span>
+                <span class="meta">类型</span>
+                <span class="meta">输入输出</span>
+              </div>
+            </article>
+
+            <article class="roadmap-card reveal">
+              <div class="roadmap-top">
+                <span class="step-badge">Step 03</span>
+                <span class="meta">适合第 2-3 周</span>
+              </div>
+              <h3>判断逻辑与程序思维</h3>
+              <p>开始理解 `if / elif / else` 的判断结构，学会让程序根据条件做不同动作。这一步是从“语法”过渡到“逻辑”的关键。</p>
+              <div class="meta-row">
+                <span class="meta">条件判断</span>
+                <span class="meta">比较运算</span>
+                <span class="meta">程序分支</span>
+              </div>
+            </article>
+
+            <article class="roadmap-card reveal">
+              <div class="roadmap-top">
+                <span class="step-badge">Step 04</span>
+                <span class="meta">适合第 3 周后</span>
+              </div>
+              <h3>项目实战与表达能力</h3>
+              <p>把学过的命令和语法用到具体案例里，训练“能从需求写出程序”的能力。项目不追求复杂，追求完整闭环和成就感。</p>
+              <div class="meta-row">
+                <span class="meta">成绩查询</span>
+                <span class="meta">猜数字</span>
+                <span class="meta">记账本</span>
+              </div>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" id="chapters">
+        <div class="container">
+          <div class="section-heading reveal">
+            <div>
+              <h2>课程章节</h2>
+              <p>下面这部分直接对接你现有项目文件，用户可以从首页进入总览页，也可以直接跳到当天的学习内容。</p>
+            </div>
+          </div>
+          <div class="surface-grid cols-3">
+            <article class="surface-card chapter-card reveal">
+              <div class="card-kicker">01</div>
+              <h3>核心命令和常用英文</h3>
+              <p>适合作为真正的零基础起点。先把高频命令和英文词读熟，再去看正式章节，理解速度会明显更快。</p>
+              <div class="chapter-links">
+                <span class="chip">命令优先</span>
+                <span class="chip">看懂代码</span>
+                <span class="chip">零基础起步</span>
+              </div>
+              <a class="button button-inline" href="python_basics_words.html">打开核心命令页</a>
+            </article>
+
+            <article class="surface-card chapter-card reveal">
+              <div class="card-kicker">00</div>
+              <h3>系统学习总览</h3>
+              <p>适合第一次进入课程的用户，先看整体结构、30 天学习节奏和课程安排，再决定今天学哪一部分。</p>
+              <div class="chapter-links">
+                <span class="chip">课程地图</span>
+                <span class="chip">学习节奏</span>
+                <span class="chip">进度规划</span>
+              </div>
+              <a class="button button-inline" href="python_study.html">打开学习总览</a>
+            </article>
+
+            <article class="surface-card chapter-card reveal">
+              <div class="card-kicker">02</div>
+              <h3>变量 Variables</h3>
+              <p>理解“把数据装进名字里”这件事，是编程最早需要建立的抽象能力。会变量后，代码开始真正有内容。</p>
+              <div class="chapter-links">
+                <span class="chip">name</span>
+                <span class="chip">age</span>
+                <span class="chip">score</span>
+              </div>
+              <a class="button button-inline" href="day02_variables.html">进入变量章节</a>
+            </article>
+
+            <article class="surface-card chapter-card reveal">
+              <div class="card-kicker">03</div>
+              <h3>数据类型 Types</h3>
+              <p>知道字符串、整数、浮点数分别是什么，能帮助用户理解为什么有些数据能相加，有些数据需要先转换。</p>
+              <div class="chapter-links">
+                <span class="chip">str</span>
+                <span class="chip">int</span>
+                <span class="chip">float</span>
+              </div>
+              <a class="button button-inline" href="day03_types.html">进入类型章节</a>
+            </article>
+
+            <article class="surface-card chapter-card reveal">
+              <div class="card-kicker">04</div>
+              <h3>输入输出 Input / Output</h3>
+              <p>用户开始和程序发生互动，从“只看代码”过渡到“程序能接收我输入的内容并给出结果”。</p>
+              <div class="chapter-links">
+                <span class="chip">input</span>
+                <span class="chip">print</span>
+                <span class="chip">交互</span>
+              </div>
+              <a class="button button-inline" href="day04_input_output.html">进入输入输出</a>
+            </article>
+
+            <article class="surface-card chapter-card reveal">
+              <div class="card-kicker">05</div>
+              <h3>运算符 Operators</h3>
+              <p>学会加减乘除、比较和逻辑组合后，程序才能开始处理实际问题，也能理解判断条件是怎么组成的。</p>
+              <div class="chapter-links">
+                <span class="chip">+</span>
+                <span class="chip">&gt;=</span>
+                <span class="chip">and / or</span>
+              </div>
+              <a class="button button-inline" href="day05_operators.html">进入运算符</a>
+            </article>
+
+            <article class="surface-card chapter-card reveal">
+              <div class="card-kicker">06</div>
+              <h3>判断逻辑与案例</h3>
+              <p>从 `if else` 到成绩程序，把前面所有知识串起来。这个阶段用户会第一次感受到“我真的能写出程序”。</p>
+              <div class="chapter-links">
+                <span class="chip">if / else</span>
+                <span class="chip">条件分支</span>
+                <span class="chip">案例程序</span>
+              </div>
+              <a class="button button-inline" href="day06_if_else.html">进入判断章节</a>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" id="projects">
+        <div class="container">
+          <div class="section-heading reveal">
+            <div>
+              <h2>项目实战案例</h2>
+              <p>项目区不是摆设，它负责告诉用户“学这些命令最终能做什么”。这会直接影响用户是否愿意继续投入学习。</p>
+            </div>
+          </div>
+          <div class="project-shell">
+            <article class="surface-card project-feature reveal">
+              <div class="card-kicker">PX</div>
+              <h3>成绩查询程序</h3>
+              <p>把变量、输入输出、运算符和 `if else` 全部串起来，是非常适合零基础的第一个综合案例。它难度不高，但能明显建立程序思维。</p>
+              <ul class="feature-list">
+                <li>输入分数，程序自动给出等级判断</li>
+                <li>能理解“条件触发不同结果”的思路</li>
+                <li>适合作为第一批作品向家长或同学展示</li>
+              </ul>
+              <div class="meta-row">
+                <span class="meta">已有关联页面</span>
+                <span class="meta">逻辑完整</span>
+                <span class="meta">适合零基础</span>
+              </div>
+              <div class="hero-actions">
+                <a class="button button-inline" href="day07_score_program.html">查看成绩程序</a>
+              </div>
+            </article>
+
+            <div class="project-stack">
+              <article class="surface-card reveal">
+                <div class="card-kicker">P1</div>
+                <h3>猜数字游戏</h3>
+                <p>训练输入、输出、判断和循环的组合。用户最容易从这个项目里体会到编程的“游戏感”和互动性。</p>
+                <ul class="mini-list">
+                  <li>适合青少年用户</li>
+                  <li>能提升动手兴趣</li>
+                </ul>
+              </article>
+
+              <article class="surface-card reveal">
+                <div class="card-kicker">P2</div>
+                <h3>命令行记账本</h3>
+                <p>更偏成人职业教育风格，强调输入数据、记录信息和输出结果。能让用户感觉 Python 跟真实工作更接近。</p>
+                <ul class="mini-list">
+                  <li>适合成人入门</li>
+                  <li>贴近日常办公场景</li>
+                </ul>
+              </article>
+
+              <article class="surface-card reveal">
+                <div class="card-kicker">P3</div>
+                <h3>小型数据统计练习</h3>
+                <p>把分数、消费、学习时长等数字做简单分类和统计，让用户开始理解为什么大家会说 Python 很适合数据处理。</p>
+                <ul class="mini-list">
+                  <li>连接后续数据分析方向</li>
+                  <li>适合展示 Python 的实用性</li>
+                </ul>
+              </article>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" id="reviews">
+        <div class="container">
+          <div class="section-heading reveal">
+            <div>
+              <h2>学员评价</h2>
+              <p>用偏真实的表达方式告诉用户：这个课程不是高深堆砌，而是为了让零基础用户真正能迈过第一步。</p>
+            </div>
+          </div>
+          <div class="surface-grid cols-3">
+            <article class="surface-card reveal">
+              <div class="quote">
+                <p>我原来连 `print` 是什么都不知道，这个页面先把常见命令和英文解释清楚了，再看代码就没有那么怕了。</p>
+                <strong>初中生家长</strong>
+              </div>
+            </article>
+
+            <article class="surface-card reveal">
+              <div class="quote">
+                <p>我更喜欢它把学习路径写得很清楚，不是把一堆章节丢给我，而是告诉我先学什么、为什么要学这个。</p>
+                <strong>成人转行学习者</strong>
+              </div>
+            </article>
+
+            <article class="surface-card reveal">
+              <div class="quote">
+                <p>课程里有项目案例这一点很重要。哪怕只是成绩程序，我也第一次感觉自己不是在死记语法，而是在做程序。</p>
+                <strong>零基础自学用户</strong>
+              </div>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" id="faq">
+        <div class="container">
+          <div class="section-heading reveal">
+            <div>
+              <h2>常见问题</h2>
+              <p>如果这个首页后续要承担转化作用，这部分建议保留，因为初学者在开始前的顾虑通常高度一致。</p>
+            </div>
+          </div>
+          <div class="faq-list reveal">
+            <article class="faq-item is-open">
+              <button class="faq-trigger" type="button">
+                <span>我完全没有编程基础，真的能学吗？</span>
+                <span>+</span>
+              </button>
+              <div class="faq-panel" style="max-height: 220px;">
+                <div class="faq-panel-inner">
+                  可以。这个页面的路径本来就是按零基础设计的，先学看得懂的英文和命令，再逐步进入变量、类型、输入输出和判断逻辑，不会一开始就压复杂概念。
+                </div>
+              </div>
+            </article>
+
+            <article class="faq-item">
+              <button class="faq-trigger" type="button">
+                <span>应该先背命令，还是先做题？</span>
+                <span>+</span>
+              </button>
+              <div class="faq-panel">
+                <div class="faq-panel-inner">
+                  先理解高频命令和常见英文，再配合非常短的小练习。只背命令容易忘，只做题又容易看不懂提示词，所以两者要同步推进，但顺序上先理解更重要。
+                </div>
+              </div>
+            </article>
+
+            <article class="faq-item">
+              <button class="faq-trigger" type="button">
+                <span>这套内容更适合青少年还是成人？</span>
+                <span>+</span>
+              </button>
+              <div class="faq-panel">
+                <div class="faq-panel-inner">
+                  两者都可以。页面视觉是偏现代教育产品风，项目案例同时兼顾了青少年的趣味性和成人用户对实用性的需求，后续你也可以继续细分版本。
+                </div>
+              </div>
+            </article>
+
+            <article class="faq-item">
+              <button class="faq-trigger" type="button">
+                <span>后续还能继续扩展更多课程吗？</span>
+                <span>+</span>
+              </button>
+              <div class="faq-panel">
+                <div class="faq-panel-inner">
+                  可以。现在首页已经把结构分出来了，后面继续新增 day08、day09、词汇表、答案页或者视频入口，只需要沿着现有卡片区继续扩展，不需要推倒重来。
+                </div>
+              </div>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" id="cta">
+        <div class="container">
+          <div class="cta-card reveal">
+            <h2>先把第一步走出来，Python 才会真的变简单。</h2>
+            <p>如果你现在的目标是先学完核心命令和常用英文，再进入系统课程，这个首页已经把入口、路径和章节都安排好了。你可以直接开始学，也可以先留下你的学习目标。</p>
+            <div class="cta-actions">
+              <a class="button button-primary" href="python_basics_words.html">先学核心命令</a>
+              <button class="button button-secondary" type="button" data-open-enroll>填写学习目标</button>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <div class="container">
+        <div class="footer-row">
+          <div>当前课程入口文件：<strong>index.html</strong></div>
+          <div>推荐学习顺序：核心命令 → 学习总览 → 变量 → 类型 → 输入输出 → 运算符 → 判断与案例</div>
+        </div>
+      </div>
+    </footer>
+  </div>
+
+  <div class="dialog" data-enroll-dialog aria-hidden="true">
+    <div class="dialog-card">
+      <h3>留下你的学习目标</h3>
+      <p>这是一个本地演示版报名表单，提交后会保存在当前浏览器的本地存储中，方便后续扩展成真实报名入口。</p>
+      <form data-enroll-form>
+        <div class="form-grid">
+          <div class="field">
+            <label for="studentName">称呼</label>
+            <input id="studentName" name="studentName" type="text" placeholder="例如：小林 / 王老师" required />
+          </div>
+          <div class="field">
+            <label for="goal">当前目标</label>
+            <select id="goal" name="goal" required>
+              <option value="">请选择一个方向</option>
+              <option value="先学核心命令和英文">先学核心命令和英文</option>
+              <option value="系统学完整个基础课程">系统学完整个基础课程</option>
+              <option value="尽快做出第一个小项目">尽快做出第一个小项目</option>
+            </select>
+          </div>
+          <div class="field">
+            <label for="hours">每周可投入时间</label>
+            <select id="hours" name="hours" required>
+              <option value="">请选择时间</option>
+              <option value="每周 2-3 小时">每周 2-3 小时</option>
+              <option value="每周 4-6 小时">每周 4-6 小时</option>
+              <option value="每周 7 小时以上">每周 7 小时以上</option>
+            </select>
+          </div>
+        </div>
+        <div class="enroll-feedback" data-enroll-feedback></div>
+        <div class="dialog-actions">
+          <button class="button button-ghost" type="button" data-close-enroll>取消</button>
+          <button class="button button-primary" type="submit">保存学习意向</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script>
+    const menuToggle = document.querySelector("[data-menu-toggle]");
+    const navLinks = document.querySelector("[data-nav-links]");
+    const faqItems = document.querySelectorAll(".faq-item");
+    const revealItems = document.querySelectorAll(".reveal");
+    const dialog = document.querySelector("[data-enroll-dialog]");
+    const openEnrollButtons = document.querySelectorAll("[data-open-enroll]");
+    const closeEnrollButton = document.querySelector("[data-close-enroll]");
+    const enrollForm = document.querySelector("[data-enroll-form]");
+    const enrollFeedback = document.querySelector("[data-enroll-feedback]");
+
+    if (menuToggle && navLinks) {
+      menuToggle.addEventListener("click", () => {
+        navLinks.classList.toggle("is-open");
+      });
+
+      navLinks.querySelectorAll("a").forEach((link) => {
+        link.addEventListener("click", () => navLinks.classList.remove("is-open"));
+      });
+    }
+
+    faqItems.forEach((item) => {
+      const trigger = item.querySelector(".faq-trigger");
+      const panel = item.querySelector(".faq-panel");
+
+      trigger.addEventListener("click", () => {
+        const isOpen = item.classList.contains("is-open");
+
+        faqItems.forEach((current) => {
+          current.classList.remove("is-open");
+          current.querySelector(".faq-panel").style.maxHeight = "";
+        });
+
+        if (!isOpen) {
+          item.classList.add("is-open");
+          panel.style.maxHeight = panel.scrollHeight + "px";
+        }
+      });
+    });
+
+    if ("IntersectionObserver" in window) {
+      const revealObserver = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("is-visible");
+            revealObserver.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.16 });
+
+      revealItems.forEach((item) => revealObserver.observe(item));
+    } else {
+      revealItems.forEach((item) => item.classList.add("is-visible"));
+    }
+
+    const openDialog = () => {
+      dialog.classList.add("is-open");
+      dialog.setAttribute("aria-hidden", "false");
+      document.body.style.overflow = "hidden";
+    };
+
+    const closeDialog = () => {
+      dialog.classList.remove("is-open");
+      dialog.setAttribute("aria-hidden", "true");
+      document.body.style.overflow = "";
+      enrollFeedback.textContent = "";
+    };
+
+    openEnrollButtons.forEach((button) => {
+      button.addEventListener("click", openDialog);
+    });
+
+    if (closeEnrollButton) {
+      closeEnrollButton.addEventListener("click", closeDialog);
+    }
+
+    dialog.addEventListener("click", (event) => {
+      if (event.target === dialog) {
+        closeDialog();
+      }
+    });
+
+    window.addEventListener("keydown", (event) => {
+      if (event.key === "Escape" && dialog.classList.contains("is-open")) {
+        closeDialog();
+      }
+    });
+
+    enrollForm.addEventListener("submit", (event) => {
+      event.preventDefault();
+
+      const formData = new FormData(enrollForm);
+      const payload = {
+        studentName: formData.get("studentName"),
+        goal: formData.get("goal"),
+        hours: formData.get("hours"),
+        savedAt: new Date().toLocaleString("zh-CN", { hour12: false })
+      };
+
+      const current = JSON.parse(localStorage.getItem("python-learning-enrollments") || "[]");
+      current.push(payload);
+      localStorage.setItem("python-learning-enrollments", JSON.stringify(current));
+
+      enrollFeedback.textContent = "已保存到本地浏览器，可继续扩展成真实报名表单。";
+      enrollForm.reset();
+
+      window.setTimeout(() => {
+        closeDialog();
+      }, 1000);
+    });
+  </script>
+</body>
+</html>

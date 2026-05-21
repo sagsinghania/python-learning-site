@@ -1,0 +1,974 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Python 核心命令和常用英文 | 零基础第一步</title>
+  <style>
+    :root {
+      --bg: #07111f;
+      --panel: rgba(10, 24, 42, 0.82);
+      --line: rgba(123, 196, 255, 0.18);
+      --text: #e9f6ff;
+      --text-dark: #0d1b2a;
+      --muted: #9cb7cb;
+      --muted-dark: #607487;
+      --accent: #8ef2e4;
+      --shadow: 0 24px 70px rgba(0, 10, 22, 0.3);
+      --radius-lg: 24px;
+      --max-width: 1180px;
+      --font-display: "Segoe UI Variable Display", "PingFang SC", "Microsoft YaHei UI", sans-serif;
+      --font-body: "Segoe UI Variable Text", "PingFang SC", "Microsoft YaHei", sans-serif;
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      color: var(--text);
+      font-family: var(--font-body);
+      line-height: 1.7;
+      background:
+        radial-gradient(circle at top left, rgba(54, 215, 196, 0.16), transparent 28%),
+        radial-gradient(circle at 85% 12%, rgba(59, 130, 246, 0.22), transparent 30%),
+        linear-gradient(180deg, #07111f 0%, #091627 34%, #0c1e33 100%);
+    }
+
+    a { color: inherit; text-decoration: none; }
+
+    .container { width: min(var(--max-width), calc(100% - 28px)); margin: 0 auto; }
+    .section { padding: 26px 0; }
+
+    .glass {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(16px);
+    }
+
+    .site-header {
+      position: sticky;
+      top: 0;
+      z-index: 40;
+      padding: 14px 0;
+      background: linear-gradient(180deg, rgba(7, 17, 31, 0.86), rgba(7, 17, 31, 0.32));
+      backdrop-filter: blur(12px);
+    }
+
+    .nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      padding: 14px 18px;
+      border-radius: 999px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      min-width: 0;
+    }
+
+    .brand-mark {
+      width: 44px;
+      height: 44px;
+      display: grid;
+      place-items: center;
+      border-radius: 14px;
+      font-weight: 800;
+      letter-spacing: 0.08em;
+      color: var(--accent);
+      background: linear-gradient(135deg, rgba(54, 215, 196, 0.28), rgba(59, 130, 246, 0.28));
+      border: 1px solid rgba(142, 242, 228, 0.18);
+    }
+
+    .brand-copy strong {
+      display: block;
+      font-size: 1rem;
+      font-family: var(--font-display);
+    }
+
+    .brand-copy span {
+      display: block;
+      color: var(--muted);
+      font-size: 0.88rem;
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+    }
+
+    .nav-links a {
+      padding: 10px 14px;
+      border-radius: 999px;
+      color: var(--muted);
+      transition: 0.2s ease;
+    }
+
+    .nav-links a:hover,
+    .nav-links a.is-active {
+      color: #fff;
+      background: rgba(255, 255, 255, 0.07);
+    }
+
+    .menu-toggle {
+      display: none;
+      width: 46px;
+      height: 46px;
+      border: 0;
+      border-radius: 14px;
+      background: rgba(255, 255, 255, 0.08);
+      color: #fff;
+      cursor: pointer;
+    }
+
+    .hero-card {
+      position: relative;
+      padding: 36px;
+      border-radius: 34px;
+      overflow: hidden;
+    }
+
+    .hero-card::before,
+    .hero-card::after {
+      content: "";
+      position: absolute;
+      border-radius: 999px;
+      filter: blur(10px);
+    }
+
+    .hero-card::before {
+      width: 280px;
+      height: 280px;
+      top: -120px;
+      right: -80px;
+      background: radial-gradient(circle, rgba(54, 215, 196, 0.28), transparent 68%);
+    }
+
+    .hero-card::after {
+      width: 320px;
+      height: 320px;
+      bottom: -160px;
+      left: -120px;
+      background: radial-gradient(circle, rgba(59, 130, 246, 0.26), transparent 68%);
+    }
+
+    .hero-grid {
+      position: relative;
+      display: grid;
+      grid-template-columns: minmax(0, 1.06fr) minmax(300px, 0.94fr);
+      gap: 26px;
+      align-items: center;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 14px;
+      border-radius: 999px;
+      color: var(--accent);
+      font-size: 0.9rem;
+      background: rgba(142, 242, 228, 0.08);
+      border: 1px solid rgba(142, 242, 228, 0.14);
+    }
+
+    .hero h1 {
+      margin: 18px 0 14px;
+      font-size: clamp(2.4rem, 4.7vw, 4.1rem);
+      line-height: 1.05;
+      letter-spacing: -0.03em;
+      font-family: var(--font-display);
+    }
+
+    .hero h1 span { color: var(--accent); }
+
+    .hero p {
+      margin: 0;
+      max-width: 650px;
+      color: #c8ddef;
+      font-size: 1.04rem;
+    }
+
+    .hero-actions,
+    .section-actions,
+    .quiz-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 14px;
+      margin-top: 28px;
+    }
+
+    .button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      min-height: 52px;
+      padding: 0 22px;
+      border-radius: 999px;
+      border: 1px solid transparent;
+      font-weight: 700;
+      transition: transform 0.2s ease;
+      cursor: pointer;
+    }
+
+    .button:hover { transform: translateY(-2px); }
+
+    .button-primary {
+      color: #07131e;
+      background: linear-gradient(135deg, var(--accent), #7ed9ff);
+      box-shadow: 0 18px 40px rgba(93, 227, 233, 0.2);
+    }
+
+    .button-secondary {
+      color: #fff;
+      background: rgba(255, 255, 255, 0.07);
+      border-color: rgba(255, 255, 255, 0.12);
+    }
+
+    .hero-stats {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 14px;
+      margin-top: 28px;
+    }
+
+    .stat-card {
+      padding: 18px;
+      border-radius: 18px;
+      background: rgba(255, 255, 255, 0.07);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    .stat-card strong {
+      display: block;
+      color: #fff;
+      font-size: 1.45rem;
+      font-family: var(--font-display);
+    }
+
+    .stat-card span {
+      color: #bdd5e8;
+      font-size: 0.92rem;
+    }
+
+    .hero-panel {
+      padding: 24px;
+      border-radius: 28px;
+      background: linear-gradient(180deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.04));
+      border: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    .hero-panel h3 {
+      margin: 0 0 10px;
+      font-size: 1.12rem;
+    }
+
+    .hero-panel p {
+      margin: 0;
+      color: #c6daeb;
+      font-size: 0.96rem;
+    }
+
+    .panel-box {
+      margin-top: 18px;
+      padding: 18px;
+      border-radius: 20px;
+      background: rgba(4, 12, 24, 0.74);
+      border: 1px solid rgba(92, 204, 255, 0.12);
+      color: #dff9ff;
+      font-family: "Cascadia Code", "Consolas", monospace;
+      line-height: 1.8;
+      white-space: pre-wrap;
+    }
+
+    .section-heading {
+      display: flex;
+      justify-content: space-between;
+      gap: 18px;
+      align-items: end;
+      margin-bottom: 22px;
+    }
+
+    .section-heading h2 {
+      margin: 0 0 8px;
+      font-family: var(--font-display);
+      font-size: clamp(1.9rem, 3vw, 2.7rem);
+      line-height: 1.08;
+      letter-spacing: -0.02em;
+    }
+
+    .section-heading p {
+      margin: 0;
+      max-width: 670px;
+      color: var(--muted);
+    }
+
+    .surface-grid {
+      display: grid;
+      gap: 18px;
+    }
+
+    .surface-grid.cols-2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .surface-grid.cols-3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+
+    .surface-card {
+      padding: 24px;
+      border-radius: var(--radius-lg);
+      border: 1px solid var(--line);
+      background: linear-gradient(180deg, rgba(12, 27, 46, 0.95), rgba(8, 21, 36, 0.98));
+      box-shadow: var(--shadow);
+    }
+
+    .light-card {
+      padding: 24px;
+      border-radius: var(--radius-lg);
+      color: var(--text-dark);
+      background: linear-gradient(180deg, var(--card-light), var(--card-light-2));
+      border: 1px solid rgba(57, 127, 181, 0.14);
+      box-shadow: var(--shadow);
+    }
+
+    .card-kicker {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 44px;
+      height: 44px;
+      margin-bottom: 16px;
+      border-radius: 14px;
+      font-weight: 800;
+      color: #0d2238;
+      background: linear-gradient(135deg, #8ef2e4, #8ec5ff);
+    }
+
+    .surface-card h3,
+    .light-card h3 {
+      margin: 0 0 10px;
+      font-size: 1.2rem;
+      font-family: var(--font-display);
+    }
+
+    .surface-card p { margin: 0; color: var(--muted); }
+    .light-card p, .light-card li { color: var(--muted-dark); }
+
+    .word-card {
+      position: relative;
+      padding: 20px;
+      border-radius: 22px;
+      border: 1px solid rgba(57, 127, 181, 0.14);
+      background: linear-gradient(180deg, #fafdff, #edf8ff);
+      color: var(--text-dark);
+      box-shadow: var(--shadow);
+    }
+
+    .word-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+    }
+
+    .word-token {
+      display: inline-flex;
+      align-items: center;
+      min-height: 38px;
+      padding: 0 14px;
+      border-radius: 999px;
+      background: #0c2035;
+      color: #dff8ff;
+      font-family: "Cascadia Code", "Consolas", monospace;
+      font-size: 0.95rem;
+      font-weight: 700;
+    }
+
+    .word-tag {
+      display: inline-flex;
+      align-items: center;
+      min-height: 32px;
+      padding: 0 12px;
+      border-radius: 999px;
+      background: rgba(54, 215, 196, 0.12);
+      color: #0e7866;
+      font-size: 0.82rem;
+      font-weight: 700;
+    }
+
+    .word-card h3 {
+      margin: 16px 0 8px;
+      font-size: 1.08rem;
+      font-family: var(--font-display);
+    }
+
+    .word-card p { margin: 0; color: var(--muted-dark); }
+
+    .code {
+      margin-top: 16px;
+      padding: 18px;
+      border-radius: 18px;
+      background: #09111f;
+      border: 1px solid rgba(120, 194, 255, 0.12);
+      color: #e4f4ff;
+      font-family: "Cascadia Code", "Consolas", monospace;
+      line-height: 1.8;
+      white-space: pre-wrap;
+      overflow-x: auto;
+    }
+
+    .memory-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 14px;
+      margin-top: 18px;
+    }
+
+    .memory-item {
+      padding: 18px;
+      border-radius: 20px;
+      border: 1px solid var(--line);
+      background: rgba(255, 255, 255, 0.05);
+    }
+
+    .memory-item strong {
+      display: block;
+      margin-bottom: 8px;
+      color: #fff;
+    }
+
+    .quiz-card {
+      padding: 24px;
+      border-radius: var(--radius-lg);
+      border: 1px solid var(--line);
+      background: linear-gradient(180deg, rgba(12, 27, 46, 0.95), rgba(8, 21, 36, 0.98));
+      box-shadow: var(--shadow);
+    }
+
+    .quiz-card h3 {
+      margin: 0 0 8px;
+      font-family: var(--font-display);
+      font-size: 1.25rem;
+    }
+
+    .quiz-card p { margin: 0; color: var(--muted); }
+
+    .quiz-button {
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      background: rgba(255, 255, 255, 0.06);
+      color: #fff;
+      border-radius: 14px;
+      min-height: 46px;
+      padding: 0 16px;
+      cursor: pointer;
+      font-weight: 700;
+    }
+
+    .quiz-feedback {
+      margin-top: 16px;
+      min-height: 24px;
+      color: var(--accent);
+      font-weight: 700;
+    }
+
+    .cta-card {
+      padding: 34px;
+      border-radius: 30px;
+      background:
+        radial-gradient(circle at 10% 20%, rgba(142, 242, 228, 0.18), transparent 32%),
+        radial-gradient(circle at 88% 24%, rgba(59, 130, 246, 0.24), transparent 30%),
+        linear-gradient(135deg, #071726, #102843 52%, #0e3341);
+      border: 1px solid rgba(142, 242, 228, 0.16);
+      box-shadow: var(--shadow);
+    }
+
+    .cta-card h2 {
+      margin: 0 0 14px;
+      font-family: var(--font-display);
+      font-size: clamp(2rem, 3vw, 3rem);
+      line-height: 1.05;
+    }
+
+    .cta-card p {
+      margin: 0;
+      max-width: 740px;
+      color: #cae1f2;
+      font-size: 1.04rem;
+    }
+
+    .footer {
+      padding: 16px 0 42px;
+      color: #9ab3c7;
+      font-size: 0.95rem;
+    }
+
+    .footer-row {
+      display: flex;
+      justify-content: space-between;
+      gap: 20px;
+      flex-wrap: wrap;
+      align-items: center;
+    }
+
+    .reveal {
+      opacity: 0;
+      transform: translateY(24px);
+      transition: opacity 0.55s ease, transform 0.55s ease;
+    }
+
+    .reveal.is-visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    @media (max-width: 1080px) {
+      .hero-grid, .surface-grid.cols-3, .surface-grid.cols-2, .memory-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 860px) {
+      .menu-toggle { display: inline-grid; place-items: center; }
+      .nav { border-radius: 28px; align-items: flex-start; }
+      .nav-links {
+        display: none;
+        width: 100%;
+        flex-direction: column;
+        align-items: stretch;
+        padding-top: 8px;
+      }
+      .nav-links.is-open { display: flex; }
+      .nav-links a { background: rgba(255, 255, 255, 0.04); }
+      .hero-card, .cta-card, .surface-card, .light-card, .quiz-card { padding: 24px; }
+      .hero-stats { grid-template-columns: 1fr; }
+    }
+
+    @media (max-width: 560px) {
+      .container { width: min(var(--max-width), calc(100% - 20px)); }
+      .button { width: 100%; }
+      .hero-actions, .section-actions, .quiz-actions { flex-direction: column; }
+    }
+  </style>
+</head>
+<body>
+  <header class="site-header">
+    <div class="container">
+      <nav class="nav glass">
+        <div class="brand">
+          <div class="brand-mark">PY</div>
+          <div class="brand-copy">
+            <strong>Python 核心命令页</strong>
+            <span>读懂代码的第一步</span>
+          </div>
+        </div>
+        <button class="menu-toggle" type="button" aria-label="打开菜单" data-menu-toggle>☰</button>
+        <div class="nav-links" data-nav-links>
+          <a href="index.html">首页</a>
+          <a href="python_study.html">系统总览</a>
+          <a href="#commands">核心命令</a>
+          <a href="#words">常用英文</a>
+          <a href="#quiz" class="is-active">小测试</a>
+        </div>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="section hero">
+      <div class="container">
+        <div class="hero-card glass reveal">
+          <div class="hero-grid">
+            <div>
+              <div class="eyebrow">零基础建议先看这一页</div>
+              <h1>先把 <span>最常见的命令和英文</span> 看懂，再去学语法。</h1>
+              <p>很多初学者不是不会学，而是一打开代码就被 `print`、`input`、`if`、`else` 这些词挡住了。这个页面就是把最常见的关键词拆开讲，让你先过“看懂”这一关。</p>
+              <div class="hero-actions">
+                <a class="button button-primary" href="#commands">开始学核心命令</a>
+                <a class="button button-secondary" href="python_study.html">回到系统总览</a>
+              </div>
+              <div class="hero-stats">
+                <div class="stat-card">
+                  <strong>12 个</strong>
+                  <span>先掌握最常见命令和词汇</span>
+                </div>
+                <div class="stat-card">
+                  <strong>3 组</strong>
+                  <span>按输出、输入、判断来理解</span>
+                </div>
+                <div class="stat-card">
+                  <strong>1 个目标</strong>
+                  <span>先能读懂基础代码</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="hero-panel">
+              <h3>你现在最需要记住的不是全部语法</h3>
+              <p>而是看见这些单词时，脑子里能立刻有中文意思和作用感。</p>
+              <div class="panel-box">print  = 输出
+input  = 输入
+if     = 如果
+else   = 否则
+True   = 真
+False  = 假</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="commands">
+      <div class="container">
+        <div class="section-heading reveal">
+          <div>
+            <h2>核心命令</h2>
+            <p>先掌握这些高频命令，你看很多入门代码时就不会再是完全陌生的状态。这里不要求你全背下来，只要求先看熟、先知道作用。</p>
+          </div>
+        </div>
+
+        <div class="surface-grid cols-3">
+          <article class="word-card reveal">
+            <div class="word-top">
+              <span class="word-token">print()</span>
+              <span class="word-tag">输出</span>
+            </div>
+            <h3>把内容显示到屏幕上</h3>
+            <p>它的作用就是告诉程序：“把这句话、这个数字或者这个结果打印出来给我看。”</p>
+            <div class="code">print("你好，Python")</div>
+          </article>
+
+          <article class="word-card reveal">
+            <div class="word-top">
+              <span class="word-token">input()</span>
+              <span class="word-tag">输入</span>
+            </div>
+            <h3>从用户那里拿到信息</h3>
+            <p>它会先停下来，等你输入内容，再把输入的东西交给程序继续处理。</p>
+            <div class="code">name = input("请输入名字：")</div>
+          </article>
+
+          <article class="word-card reveal">
+            <div class="word-top">
+              <span class="word-token">type()</span>
+              <span class="word-tag">类型</span>
+            </div>
+            <h3>查看数据属于什么类型</h3>
+            <p>当你不确定一个值是字符串还是数字时，可以用它来检查。</p>
+            <div class="code">print(type(18))</div>
+          </article>
+
+          <article class="word-card reveal">
+            <div class="word-top">
+              <span class="word-token">if</span>
+              <span class="word-tag">如果</span>
+            </div>
+            <h3>满足条件时执行某件事</h3>
+            <p>它像在问程序：“如果这个条件成立，那你就这样做。”</p>
+            <div class="code">if score >= 60:
+    print("及格")</div>
+          </article>
+
+          <article class="word-card reveal">
+            <div class="word-top">
+              <span class="word-token">else</span>
+              <span class="word-tag">否则</span>
+            </div>
+            <h3>条件不成立时怎么办</h3>
+            <p>当 `if` 里的条件不满足，就执行 `else` 里面的内容。</p>
+            <div class="code">else:
+    print("不及格")</div>
+          </article>
+
+          <article class="word-card reveal">
+            <div class="word-top">
+              <span class="word-token">for</span>
+              <span class="word-tag">循环</span>
+            </div>
+            <h3>重复做同一类事情</h3>
+            <p>当你不想把同样的代码写很多次时，就会用到循环。</p>
+            <div class="code">for i in range(3):
+    print("继续练习")</div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="words">
+      <div class="container">
+        <div class="section-heading reveal">
+          <div>
+            <h2>常用英文</h2>
+            <p>这些英文会在入门阶段高频出现。你不用一次性全部背会，先做到“看见它就知道大概是什么意思”。</p>
+          </div>
+        </div>
+
+        <div class="surface-grid cols-2">
+          <article class="surface-card reveal">
+            <div class="card-kicker">W1</div>
+            <h3>数据相关</h3>
+            <div class="memory-grid">
+              <div class="memory-item">
+                <strong>variable = 变量</strong>
+                <p>可以把它理解成一个有名字的盒子。</p>
+              </div>
+              <div class="memory-item">
+                <strong>value = 值</strong>
+                <p>盒子里装着的内容就是值。</p>
+              </div>
+              <div class="memory-item">
+                <strong>string = 字符串</strong>
+                <p>被引号包起来的一段文字。</p>
+              </div>
+              <div class="memory-item">
+                <strong>number = 数字</strong>
+                <p>包括整数和小数。</p>
+              </div>
+            </div>
+          </article>
+
+          <article class="surface-card reveal">
+            <div class="card-kicker">W2</div>
+            <h3>判断相关</h3>
+            <div class="memory-grid">
+              <div class="memory-item">
+                <strong>condition = 条件</strong>
+                <p>程序做判断时要先看条件。</p>
+              </div>
+              <div class="memory-item">
+                <strong>True = 真</strong>
+                <p>表示条件成立。</p>
+              </div>
+              <div class="memory-item">
+                <strong>False = 假</strong>
+                <p>表示条件不成立。</p>
+              </div>
+              <div class="memory-item">
+                <strong>compare = 比较</strong>
+                <p>比如大于、小于、是否相等。</p>
+              </div>
+            </div>
+          </article>
+
+          <article class="surface-card reveal">
+            <div class="card-kicker">W3</div>
+            <h3>动作相关</h3>
+            <div class="memory-grid">
+              <div class="memory-item">
+                <strong>output = 输出</strong>
+                <p>让程序把结果显示出来。</p>
+              </div>
+              <div class="memory-item">
+                <strong>input = 输入</strong>
+                <p>从用户那里接收内容。</p>
+              </div>
+              <div class="memory-item">
+                <strong>loop = 循环</strong>
+                <p>重复做某件事。</p>
+              </div>
+              <div class="memory-item">
+                <strong>function = 函数</strong>
+                <p>把一段逻辑打包，方便重复使用。</p>
+              </div>
+            </div>
+          </article>
+
+          <article class="light-card reveal">
+            <div class="card-kicker">Tip</div>
+            <h3>零基础怎么记这些词更有效</h3>
+            <p>不要把它们当成纯英语单词去硬背，而是把它们和“程序动作”绑在一起记。</p>
+            <ul>
+              <li>`print` 一看到就想到“输出”。</li>
+              <li>`input` 一看到就想到“等用户输入”。</li>
+              <li>`if` 一看到就想到“如果满足条件”。</li>
+              <li>`for` 一看到就想到“重复做几次”。</li>
+            </ul>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="examples">
+      <div class="container">
+        <div class="section-heading reveal">
+          <div>
+            <h2>把命令放进例子里理解</h2>
+            <p>只看单词容易忘，把它们放进最短的程序里，你会更容易形成“这个命令是干什么的”直觉。</p>
+          </div>
+        </div>
+
+        <div class="surface-grid cols-2">
+          <article class="light-card reveal">
+            <div class="card-kicker">E1</div>
+            <h3>输出一句欢迎语</h3>
+            <p>先从最简单的开始，让程序说一句话。</p>
+            <div class="code">print("欢迎开始学习 Python")</div>
+          </article>
+
+          <article class="light-card reveal">
+            <div class="card-kicker">E2</div>
+            <h3>问用户名字再打招呼</h3>
+            <p>程序先拿到你的输入，再做回应。</p>
+            <div class="code">name = input("请输入你的名字：")
+print("你好，" + name)</div>
+          </article>
+
+          <article class="light-card reveal">
+            <div class="card-kicker">E3</div>
+            <h3>判断是否及格</h3>
+            <p>看见 `if` 和 `else`，就知道程序在做分支判断。</p>
+            <div class="code">score = 75
+
+if score >= 60:
+    print("及格")
+else:
+    print("不及格")</div>
+          </article>
+
+          <article class="light-card reveal">
+            <div class="card-kicker">E4</div>
+            <h3>重复输出三次</h3>
+            <p>看见 `for`，就知道程序在重复处理。</p>
+            <div class="code">for i in range(3):
+    print("继续练习")</div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="quiz">
+      <div class="container">
+        <div class="section-heading reveal">
+          <div>
+            <h2>1 分钟小测试</h2>
+            <p>不是为了考试，是为了让你确认自己有没有真正把这些命令和词的基本意思记住。</p>
+          </div>
+        </div>
+
+        <div class="quiz-card reveal">
+          <h3 id="quizQuestion">`print()` 的作用是什么？</h3>
+          <p id="quizHint">选一个最接近的答案。</p>
+          <div class="quiz-actions" id="quizActions"></div>
+          <div class="quiz-feedback" id="quizFeedback"></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container">
+        <div class="cta-card reveal">
+          <h2>看懂这些词之后，再进入正式章节会轻松很多。</h2>
+          <p>你现在不需要马上全部默写出来。只要做到了“看见这些命令和英文不会发怵”，就已经跨过了零基础最难的第一道门槛。接下来可以去系统总览页，按顺序开始学变量和数据类型。</p>
+          <div class="section-actions">
+            <a class="button button-primary" href="python_study.html">进入系统总览</a>
+            <a class="button button-secondary" href="day02_variables.html">直接去变量章节</a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-row">
+        <div>当前页面：<strong>python_basics_words.html</strong></div>
+        <div>推荐下一步：系统总览 → 变量 → 类型 → 输入输出 → 运算符 → 判断逻辑</div>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    const menuToggle = document.querySelector("[data-menu-toggle]");
+    const navLinks = document.querySelector("[data-nav-links]");
+    const revealItems = document.querySelectorAll(".reveal");
+    const quizQuestion = document.getElementById("quizQuestion");
+    const quizHint = document.getElementById("quizHint");
+    const quizActions = document.getElementById("quizActions");
+    const quizFeedback = document.getElementById("quizFeedback");
+
+    const quizItems = [
+      {
+        question: "`print()` 的作用是什么？",
+        hint: "选一个最接近的答案。",
+        answers: ["把内容输出到屏幕", "从用户那里接收输入", "定义一个变量"],
+        correct: 0,
+        feedback: "对。`print()` 就是输出结果，是入门阶段最常见的命令之一。"
+      },
+      {
+        question: "`input()` 更接近下面哪个意思？",
+        hint: "它和人机互动有关。",
+        answers: ["重复执行", "接收用户输入", "判断条件真假"],
+        correct: 1,
+        feedback: "对。`input()` 的作用是让程序停下来，等待用户输入内容。"
+      },
+      {
+        question: "`if` 在代码里通常表示什么？",
+        hint: "它和条件有关。",
+        answers: ["如果满足条件", "重复很多次", "把内容删掉"],
+        correct: 0,
+        feedback: "对。看见 `if`，就可以先理解成“如果这个条件成立”。"
+      }
+    ];
+
+    let currentQuizIndex = 0;
+
+    function renderQuiz() {
+      const item = quizItems[currentQuizIndex];
+      quizQuestion.textContent = item.question;
+      quizHint.textContent = item.hint;
+      quizFeedback.textContent = "";
+      quizActions.innerHTML = "";
+
+      item.answers.forEach((answer, index) => {
+        const button = document.createElement("button");
+        button.type = "button";
+        button.className = "quiz-button";
+        button.textContent = answer;
+        button.addEventListener("click", () => {
+          if (index === item.correct) {
+            quizFeedback.textContent = item.feedback;
+            window.setTimeout(() => {
+              currentQuizIndex = (currentQuizIndex + 1) % quizItems.length;
+              renderQuiz();
+            }, 1200);
+          } else {
+            quizFeedback.textContent = "这题不对。再看一下命令含义，重点抓住它的动作。";
+          }
+        });
+        quizActions.appendChild(button);
+      });
+    }
+
+    if (menuToggle && navLinks) {
+      menuToggle.addEventListener("click", () => {
+        navLinks.classList.toggle("is-open");
+      });
+
+      navLinks.querySelectorAll("a").forEach((link) => {
+        link.addEventListener("click", () => navLinks.classList.remove("is-open"));
+      });
+    }
+
+    if ("IntersectionObserver" in window) {
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("is-visible");
+            observer.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.14 });
+
+      revealItems.forEach((item) => observer.observe(item));
+    } else {
+      revealItems.forEach((item) => item.classList.add("is-visible"));
+    }
+
+    renderQuiz();
+  </script>
+</body>
+</html>

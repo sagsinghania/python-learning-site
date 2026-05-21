@@ -1,0 +1,531 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>第 6 天：条件判断 | Python 学习页</title>
+  <style>
+    :root {
+      --bg: #07111f;
+      --panel: rgba(10, 24, 42, 0.82);
+      --line: rgba(123, 196, 255, 0.18);
+      --text: #e9f6ff;
+      --text-dark: #0d1b2a;
+      --muted: #9cb7cb;
+      --muted-dark: #607487;
+      --accent: #8ef2e4;
+      --shadow: 0 24px 70px rgba(0, 10, 22, 0.3);
+      --radius-lg: 24px;
+      --max-width: 1180px;
+      --font-display: "Segoe UI Variable Display", "PingFang SC", "Microsoft YaHei UI", sans-serif;
+      --font-body: "Segoe UI Variable Text", "PingFang SC", "Microsoft YaHei", sans-serif;
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      color: var(--text);
+      font-family: var(--font-body);
+      line-height: 1.72;
+      background:
+        radial-gradient(circle at top left, rgba(54, 215, 196, 0.15), transparent 24%),
+        radial-gradient(circle at 85% 12%, rgba(59, 130, 246, 0.22), transparent 26%),
+        linear-gradient(180deg, #07111f 0%, #0a1830 45%, #0d2238 100%);
+    }
+    a { color: inherit; text-decoration: none; }
+    .container { width: min(1180px, calc(100% - 28px)); margin: 0 auto; }
+    .section { padding: 26px 0; }
+    .glass {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(16px);
+    }
+    .site-header {
+      position: sticky;
+      top: 0;
+      z-index: 40;
+      padding: 14px 0;
+      background: linear-gradient(180deg, rgba(7, 17, 31, 0.86), rgba(7, 17, 31, 0.32));
+      backdrop-filter: blur(12px);
+    }
+    .nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      padding: 14px 18px;
+      border-radius: 999px;
+    }
+    .brand { display: flex; align-items: center; gap: 14px; }
+    .brand-mark {
+      width: 44px;
+      height: 44px;
+      display: grid;
+      place-items: center;
+      border-radius: 14px;
+      font-weight: 800;
+      letter-spacing: 0.08em;
+      color: var(--accent);
+      background: linear-gradient(135deg, rgba(54, 215, 196, 0.28), rgba(59, 130, 246, 0.28));
+      border: 1px solid rgba(142, 242, 228, 0.18);
+    }
+    .brand-copy strong {
+      display: block;
+      font-size: 1rem;
+      font-family: var(--font-display);
+    }
+    .brand-copy span { display: block; color: var(--muted); font-size: 0.88rem; }
+    .nav-links { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+    .nav-links a {
+      padding: 10px 14px;
+      border-radius: 999px;
+      color: var(--muted);
+      transition: 0.2s ease;
+    }
+    .nav-links a:hover,
+    .nav-links a.is-active {
+      color: #fff;
+      background: rgba(255,255,255,0.07);
+    }
+    .hero-card, .section-card, .light-card, .cta-card, .toc { border-radius: var(--radius-lg); box-shadow: var(--shadow); }
+    .hero-card {
+      position: relative;
+      overflow: hidden;
+      padding: 36px;
+    }
+    .hero-card::before,
+    .hero-card::after {
+      content: "";
+      position: absolute;
+      border-radius: 999px;
+      filter: blur(10px);
+    }
+    .hero-card::before {
+      width: 260px;
+      height: 260px;
+      top: -110px;
+      right: -70px;
+      background: radial-gradient(circle, rgba(54, 215, 196, 0.28), transparent 68%);
+    }
+    .hero-card::after {
+      width: 300px;
+      height: 300px;
+      bottom: -150px;
+      left: -110px;
+      background: radial-gradient(circle, rgba(59, 130, 246, 0.24), transparent 68%);
+    }
+    .hero-grid {
+      position: relative;
+      display: grid;
+      grid-template-columns: minmax(0, 1.08fr) minmax(320px, 0.92fr);
+      gap: 28px;
+      align-items: center;
+    }
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 14px;
+      border-radius: 999px;
+      color: var(--accent);
+      font-size: 0.9rem;
+      background: rgba(142, 242, 228, 0.08);
+      border: 1px solid rgba(142, 242, 228, 0.14);
+    }
+    .hero h1 {
+      margin: 18px 0 14px;
+      font-size: clamp(2.45rem, 4.8vw, 4rem);
+      line-height: 1.04;
+      letter-spacing: -0.03em;
+      font-family: var(--font-display);
+    }
+    .hero p {
+      margin: 0;
+      max-width: 680px;
+      color: #c8ddef;
+      font-size: 1.05rem;
+    }
+    .hero-actions, .section-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 14px;
+      margin-top: 28px;
+    }
+    .button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 52px;
+      padding: 0 22px;
+      border-radius: 999px;
+      border: 1px solid transparent;
+      font-weight: 700;
+      cursor: pointer;
+      transition: transform 0.2s ease;
+    }
+    .button:hover { transform: translateY(-2px); }
+    .button-primary { color: #07131e; background: linear-gradient(135deg, var(--accent), #7ed9ff); }
+    .button-secondary { color: #fff; background: rgba(255,255,255,0.07); border-color: rgba(255,255,255,0.12); }
+    .button-inline { color: #12406c; background: linear-gradient(135deg, #d8fff6, #dceeff); }
+    .hero-stats, .surface-grid { display: grid; gap: 18px; }
+    .hero-stats { grid-template-columns: repeat(3, minmax(0, 1fr)); margin-top: 28px; }
+    .surface-grid.cols-2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .stat-card, .section-card, .toc {
+      background: linear-gradient(180deg, rgba(12, 27, 46, 0.95), rgba(8, 21, 36, 0.98));
+      border: 1px solid var(--line);
+    }
+    .stat-card { padding: 18px; border-radius: 18px; }
+    .stat-card strong {
+      display: block;
+      color: #fff;
+      font-size: 1.45rem;
+      font-family: var(--font-display);
+    }
+    .stat-card span { color: #bdd5e8; font-size: 0.92rem; }
+    .hero-panel {
+      padding: 24px;
+      border-radius: 28px;
+      background: linear-gradient(180deg, rgba(255,255,255,0.08), rgba(255,255,255,0.04));
+      border: 1px solid rgba(255,255,255,0.08);
+    }
+    .hero-panel h3 { margin: 0 0 10px; font-size: 1.12rem; }
+    .hero-panel p { margin: 0; color: #c6daeb; font-size: 0.96rem; }
+    .panel-box, .code {
+      margin-top: 16px;
+      padding: 18px;
+      border-radius: 18px;
+      background: #09111f;
+      border: 1px solid rgba(120, 194, 255, 0.12);
+      color: #e4f4ff;
+      font-family: "Cascadia Code", "Consolas", monospace;
+      line-height: 1.8;
+      white-space: pre-wrap;
+      overflow-x: auto;
+    }
+    .page-grid {
+      display: grid;
+      grid-template-columns: 280px 1fr;
+      gap: 24px;
+      align-items: start;
+    }
+    .toc {
+      position: sticky;
+      top: 92px;
+      padding: 20px;
+    }
+    .toc h2 {
+      margin: 0 0 10px;
+      font-size: 1.02rem;
+      font-family: var(--font-display);
+    }
+    .toc p {
+      margin: 0 0 14px;
+      color: var(--muted);
+      font-size: 0.92rem;
+    }
+    .toc a {
+      display: block;
+      padding: 10px 12px;
+      border-radius: 14px;
+      color: #cbe1f1;
+      transition: 0.2s ease;
+    }
+    .toc a:hover {
+      color: #fff;
+      background: rgba(255,255,255,0.07);
+    }
+    .content { display: grid; gap: 20px; }
+    .section-card { padding: 24px; }
+    .light-card {
+      padding: 24px;
+      color: var(--text-dark);
+      background: linear-gradient(180deg, #f5fcff, #edf8ff);
+      border: 1px solid rgba(57, 127, 181, 0.14);
+    }
+    .section-card h2, .light-card h2 {
+      margin: 0 0 10px;
+      font-family: var(--font-display);
+      font-size: 2rem;
+      line-height: 1.08;
+    }
+    .section-card h3, .light-card h3 {
+      margin: 0 0 10px;
+      font-family: var(--font-display);
+      font-size: 1.2rem;
+    }
+    .section-card p, .section-card li { color: var(--muted); }
+    .light-card p, .light-card li { color: var(--muted-dark); }
+    .card-kicker {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 44px;
+      height: 44px;
+      margin-bottom: 16px;
+      border-radius: 14px;
+      font-weight: 800;
+      color: #0d2238;
+      background: linear-gradient(135deg, #8ef2e4, #8ec5ff);
+    }
+    .info, .success, .warn {
+      margin-top: 18px;
+      padding: 16px 18px;
+      border-radius: 18px;
+      border-left: 5px solid #3b82f6;
+      background: rgba(222, 245, 255, 0.08);
+    }
+    .success { border-left-color: #0f9f7a; background: rgba(15, 159, 122, 0.1); }
+    .warn { border-left-color: #ea7c3c; background: rgba(234, 124, 60, 0.1); }
+    .info strong, .success strong, .warn strong { color: #fff; }
+    .flow-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 16px;
+    }
+    .flow-row span {
+      display: inline-flex;
+      align-items: center;
+      min-height: 34px;
+      padding: 0 12px;
+      border-radius: 999px;
+      background: linear-gradient(135deg, #d7fff7, #dbeeff);
+      color: #0d2238;
+      font-weight: 700;
+      font-size: 0.84rem;
+    }
+    .cta-card {
+      padding: 34px;
+      background:
+        radial-gradient(circle at 10% 20%, rgba(142, 242, 228, 0.18), transparent 32%),
+        radial-gradient(circle at 88% 24%, rgba(59, 130, 246, 0.24), transparent 30%),
+        linear-gradient(135deg, #071726, #102843 52%, #0e3341);
+      border: 1px solid rgba(142, 242, 228, 0.16);
+    }
+    .cta-card h2 {
+      margin: 0 0 14px;
+      font-family: var(--font-display);
+      font-size: clamp(2rem, 3vw, 3rem);
+      line-height: 1.05;
+    }
+    .cta-card p {
+      margin: 0;
+      max-width: 760px;
+      color: #cae1f2;
+      font-size: 1.04rem;
+    }
+    .footer {
+      padding: 16px 0 42px;
+      color: #9ab3c7;
+      font-size: 0.95rem;
+    }
+    .footer-row {
+      display: flex;
+      justify-content: space-between;
+      gap: 18px;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+    @media (max-width: 1080px) {
+      .hero-grid, .page-grid, .surface-grid.cols-2 { grid-template-columns: 1fr; }
+      .toc { position: static; }
+    }
+    @media (max-width: 860px) {
+      .hero-card, .section-card, .light-card, .cta-card { padding: 24px; }
+      .hero-stats { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 560px) {
+      .container { width: min(var(--max-width), calc(100% - 20px)); }
+      .button { width: 100%; }
+      .hero-actions, .section-actions { flex-direction: column; }
+    }
+  </style>
+</head>
+<body>
+  <header class="site-header">
+    <div class="container">
+      <nav class="nav glass">
+        <div class="brand">
+          <div class="brand-mark">D6</div>
+          <div class="brand-copy">
+            <strong>第 6 天：条件判断</strong>
+            <span>程序第一次开始“做选择”</span>
+          </div>
+        </div>
+        <div class="nav-links">
+          <a href="index.html">首页</a>
+          <a href="python_basics_words.html">核心命令</a>
+          <a href="python_study.html">系统总览</a>
+          <a href="day07_score_program.html" class="is-active">下一天</a>
+        </div>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="section hero">
+      <div class="container">
+        <div class="hero-card glass">
+          <div class="hero-grid">
+            <div>
+              <div class="eyebrow">Day 06 / If Else</div>
+              <h1>程序不只是按顺序往下走，<br />它也开始会根据条件做不同选择。</h1>
+              <p>今天学的 `if / else` 是真正把程序从“固定执行”带向“判断逻辑”的关键。它会让你的程序第一次像是在根据情况作决定。</p>
+              <div class="hero-actions">
+                <a class="button button-primary" href="#case">先看是否成年案例</a>
+                <a class="button button-secondary" href="day05_operators.html">回看运算符</a>
+              </div>
+              <div class="hero-stats">
+                <div class="stat-card">
+                  <strong>2 个分支</strong>
+                  <span>满足条件 / 不满足条件</span>
+                </div>
+                <div class="stat-card">
+                  <strong>1 个结构</strong>
+                  <span>`if ... else ...`</span>
+                </div>
+                <div class="stat-card">
+                  <strong>1 个重点</strong>
+                  <span>缩进必须写对</span>
+                </div>
+              </div>
+            </div>
+            <div class="hero-panel">
+              <h3>你今天会第一次理解</h3>
+              <p>为什么说程序不是只会死板执行，它也能根据条件给出不同结果。</p>
+              <div class="panel-box">if age >= 18:
+    print("已经成年")
+else:
+    print("还未成年")</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container page-grid">
+        <aside class="toc">
+          <h2>本页目录</h2>
+          <p>先理解结构，再练条件判断。</p>
+          <a href="#goal">1. 今天目标</a>
+          <a href="#structure">2. 基本结构</a>
+          <a href="#case">3. 是否成年案例</a>
+          <a href="#logic">4. 条件判断在想什么</a>
+          <a href="#indent">5. 为什么缩进重要</a>
+          <a href="#practice">6. 今日练习</a>
+          <a href="#summary">7. 今日总结</a>
+        </aside>
+
+        <div class="content">
+          <section class="section-card" id="goal">
+            <h2>1. 今天目标</h2>
+            <p>你今天要学会的，不只是把 `if` 和 `else` 打出来，而是真正理解：程序可以根据不同条件，走向不同分支。</p>
+          </section>
+
+          <section class="section-card" id="structure">
+            <h2>2. 基本结构</h2>
+            <div class="code">if 条件:
+    条件成立时执行的代码
+else:
+    条件不成立时执行的代码</div>
+            <div class="info">
+              <strong>一句话理解：</strong> 如果条件成立，就做 A；否则，就做 B。
+            </div>
+          </section>
+
+          <section class="section-card" id="case">
+            <h2>3. 是否成年案例</h2>
+            <p>最常见的例子之一，就是根据年龄判断是否成年。</p>
+            <div class="code">age = 20
+
+if age >= 18:
+    print("你已经成年")
+else:
+    print("你还未成年")</div>
+            <ul>
+              <li>如果 `age >= 18` 成立，就输出“已经成年”。</li>
+              <li>如果不成立，就输出“还未成年”。</li>
+            </ul>
+          </section>
+
+          <section class="section-card" id="logic">
+            <h2>4. 条件判断在想什么</h2>
+            <p>你可以把它理解成程序先问自己一个问题：这个条件是真是假？如果是真，走一边；如果是假，走另一边。</p>
+            <div class="flow-row">
+              <span>先比较</span>
+              <span>得到 True / False</span>
+              <span>进入不同分支</span>
+              <span>输出不同结果</span>
+            </div>
+            <div class="success">
+              <strong>这是程序思维的重要一步：</strong> 从今天开始，你写的代码已经不是只有一个固定答案，而是会根据情况变化了。
+            </div>
+          </section>
+
+          <section class="section-card" id="indent">
+            <h2>5. 为什么缩进重要</h2>
+            <p>Python 里，缩进不是装饰，而是结构本身。缩进错了，程序就会报错，或者执行逻辑不对。</p>
+            <div class="warn">
+              <strong>今天特别要注意：</strong> `if` 下面和 `else` 下面的代码要缩进，而且通常缩进层级要保持一致。
+            </div>
+          </section>
+
+          <section class="section-card" id="practice">
+            <h2>6. 今日练习</h2>
+            <div class="light-card">
+              <div class="card-kicker">P1</div>
+              <h3>分数是否及格</h3>
+              <p>定义一个分数变量，如果大于等于 60 输出“及格”，否则输出“不及格”。</p>
+            </div>
+            <div class="light-card" style="margin-top: 18px;">
+              <div class="card-kicker">P2</div>
+              <h3>年龄是否成年</h3>
+              <p>定义一个年龄变量，判断是否成年。</p>
+            </div>
+            <div class="light-card" style="margin-top: 18px;">
+              <div class="card-kicker">P3</div>
+              <h3>数字正负判断</h3>
+              <p>输入一个数字，判断它是正数、负数还是零。这个题先自己想，想不全也没关系。</p>
+            </div>
+          </section>
+
+          <section class="section-card" id="summary">
+            <h2>7. 今日总结</h2>
+            <ul>
+              <li>`if`：如果条件成立。</li>
+              <li>`else`：否则。</li>
+              <li>条件判断让程序有了不同执行路径。</li>
+              <li>缩进是 Python 结构的一部分，不能乱。</li>
+            </ul>
+            <div class="success">
+              <strong>今天过关标准：</strong> 你能自己写出一个“根据条件输出不同结果”的程序，就算今天掌握了最核心的内容。
+            </div>
+          </section>
+
+          <section class="section">
+            <div class="cta-card">
+              <h2>条件判断学会后，就能把前面几天真正串成一个小程序。</h2>
+              <p>第 7 天会进入第一周的综合案例：成绩判断程序。你会把输入、变量、类型转换、条件判断和输出真正连起来。</p>
+              <div class="section-actions">
+                <a class="button button-primary" href="day07_score_program.html">进入第 7 天：成绩程序</a>
+                <a class="button button-secondary" href="day05_operators.html">回到第 5 天</a>
+              </div>
+            </div>
+          </section>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-row">
+        <div>当前页面：<strong>day06_if_else.html</strong></div>
+        <div>上一页：运算符　下一页：成绩程序</div>
+      </div>
+    </div>
+  </footer>
+</body>
+</html>

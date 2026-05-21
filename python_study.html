@@ -1,0 +1,1112 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Python 系统学习总览 | 30 天路线与章节安排</title>
+  <style>
+    :root {
+      --bg: #07111f;
+      --panel: rgba(10, 24, 42, 0.82);
+      --line: rgba(123, 196, 255, 0.18);
+      --text: #e9f6ff;
+      --text-dark: #0d1b2a;
+      --muted: #9cb7cb;
+      --muted-dark: #607487;
+      --accent: #8ef2e4;
+      --shadow: 0 24px 70px rgba(0, 10, 22, 0.3);
+      --radius-lg: 24px;
+      --max-width: 1200px;
+      --font-display: "Segoe UI Variable Display", "PingFang SC", "Microsoft YaHei UI", sans-serif;
+      --font-body: "Segoe UI Variable Text", "PingFang SC", "Microsoft YaHei", sans-serif;
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      color: var(--text);
+      font-family: var(--font-body);
+      line-height: 1.7;
+      background:
+        radial-gradient(circle at top left, rgba(54, 215, 196, 0.15), transparent 24%),
+        radial-gradient(circle at 85% 12%, rgba(59, 130, 246, 0.22), transparent 26%),
+        linear-gradient(180deg, #07111f 0%, #0a1830 45%, #0d2238 100%);
+    }
+
+    a { color: inherit; text-decoration: none; }
+    button, input { font: inherit; }
+
+    .container { width: min(var(--max-width), calc(100% - 28px)); margin: 0 auto; }
+    .section { padding: 26px 0; }
+
+    .glass {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(16px);
+    }
+
+    .site-header {
+      position: sticky;
+      top: 0;
+      z-index: 40;
+      padding: 14px 0;
+      background: linear-gradient(180deg, rgba(7, 17, 31, 0.86), rgba(7, 17, 31, 0.32));
+      backdrop-filter: blur(12px);
+    }
+
+    .nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      padding: 14px 18px;
+      border-radius: 999px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      min-width: 0;
+    }
+
+    .brand-mark {
+      width: 44px;
+      height: 44px;
+      display: grid;
+      place-items: center;
+      border-radius: 14px;
+      font-weight: 800;
+      letter-spacing: 0.08em;
+      color: var(--accent);
+      background: linear-gradient(135deg, rgba(54, 215, 196, 0.28), rgba(59, 130, 246, 0.28));
+      border: 1px solid rgba(142, 242, 228, 0.18);
+    }
+
+    .brand-copy strong {
+      display: block;
+      font-size: 1rem;
+      font-family: var(--font-display);
+    }
+
+    .brand-copy span {
+      display: block;
+      color: var(--muted);
+      font-size: 0.88rem;
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+    }
+
+    .nav-links a {
+      padding: 10px 14px;
+      border-radius: 999px;
+      color: var(--muted);
+      transition: 0.2s ease;
+    }
+
+    .nav-links a:hover,
+    .nav-links a.is-active {
+      color: #fff;
+      background: rgba(255, 255, 255, 0.07);
+    }
+
+    .menu-toggle {
+      display: none;
+      width: 46px;
+      height: 46px;
+      border: 0;
+      border-radius: 14px;
+      background: rgba(255, 255, 255, 0.08);
+      color: #fff;
+      cursor: pointer;
+    }
+
+    .hero-card {
+      position: relative;
+      padding: 36px;
+      border-radius: 36px;
+      overflow: hidden;
+    }
+
+    .hero-card::before,
+    .hero-card::after {
+      content: "";
+      position: absolute;
+      border-radius: 999px;
+      filter: blur(10px);
+    }
+
+    .hero-card::before {
+      width: 280px;
+      height: 280px;
+      top: -120px;
+      right: -80px;
+      background: radial-gradient(circle, rgba(54, 215, 196, 0.28), transparent 68%);
+    }
+
+    .hero-card::after {
+      width: 320px;
+      height: 320px;
+      bottom: -160px;
+      left: -120px;
+      background: radial-gradient(circle, rgba(59, 130, 246, 0.26), transparent 68%);
+    }
+
+    .hero-grid {
+      position: relative;
+      display: grid;
+      grid-template-columns: minmax(0, 1.08fr) minmax(320px, 0.92fr);
+      gap: 28px;
+      align-items: center;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 14px;
+      border-radius: 999px;
+      color: var(--accent);
+      font-size: 0.9rem;
+      background: rgba(142, 242, 228, 0.08);
+      border: 1px solid rgba(142, 242, 228, 0.14);
+    }
+
+    .hero h1 {
+      margin: 18px 0 14px;
+      font-size: clamp(2.45rem, 4.8vw, 4.2rem);
+      line-height: 1.04;
+      letter-spacing: -0.03em;
+      font-family: var(--font-display);
+    }
+
+    .hero h1 span { color: var(--accent); }
+
+    .hero p {
+      margin: 0;
+      max-width: 680px;
+      color: #c8ddef;
+      font-size: 1.05rem;
+    }
+
+    .hero-actions,
+    .section-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 14px;
+      margin-top: 28px;
+    }
+
+    .button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      min-height: 52px;
+      padding: 0 22px;
+      border-radius: 999px;
+      border: 1px solid transparent;
+      font-weight: 700;
+      transition: transform 0.2s ease;
+      cursor: pointer;
+    }
+
+    .button:hover { transform: translateY(-2px); }
+
+    .button-primary {
+      color: #07131e;
+      background: linear-gradient(135deg, var(--accent), #7ed9ff);
+      box-shadow: 0 18px 40px rgba(93, 227, 233, 0.2);
+    }
+
+    .button-secondary {
+      color: #fff;
+      background: rgba(255, 255, 255, 0.07);
+      border-color: rgba(255, 255, 255, 0.12);
+    }
+
+    .button-inline {
+      color: #12406c;
+      background: linear-gradient(135deg, #d8fff6, #dceeff);
+    }
+
+    .hero-stats {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 14px;
+      margin-top: 28px;
+    }
+
+    .stat-card {
+      padding: 18px;
+      border-radius: 18px;
+      background: rgba(255, 255, 255, 0.07);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    .stat-card strong {
+      display: block;
+      color: #fff;
+      font-size: 1.45rem;
+      font-family: var(--font-display);
+    }
+
+    .stat-card span {
+      color: #bdd5e8;
+      font-size: 0.92rem;
+    }
+
+    .hero-panel {
+      padding: 24px;
+      border-radius: 28px;
+      background: linear-gradient(180deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.04));
+      border: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    .hero-panel h3 {
+      margin: 0 0 10px;
+      font-size: 1.12rem;
+    }
+
+    .hero-panel p {
+      margin: 0;
+      color: #c6daeb;
+      font-size: 0.96rem;
+    }
+
+    .panel-box {
+      margin-top: 18px;
+      padding: 18px;
+      border-radius: 20px;
+      background: rgba(4, 12, 24, 0.74);
+      border: 1px solid rgba(92, 204, 255, 0.12);
+      color: #dff9ff;
+      font-family: "Cascadia Code", "Consolas", monospace;
+      line-height: 1.8;
+      white-space: pre-wrap;
+    }
+
+    .page-grid {
+      display: grid;
+      grid-template-columns: 280px 1fr;
+      gap: 24px;
+      align-items: start;
+    }
+
+    .toc {
+      position: sticky;
+      top: 92px;
+      padding: 20px;
+      border-radius: 24px;
+    }
+
+    .toc h2 {
+      margin: 0 0 10px;
+      font-size: 1.02rem;
+      font-family: var(--font-display);
+    }
+
+    .toc p {
+      margin: 0 0 14px;
+      color: var(--muted);
+      font-size: 0.92rem;
+    }
+
+    .toc a {
+      display: block;
+      padding: 10px 12px;
+      border-radius: 14px;
+      color: #cbe1f1;
+      transition: 0.2s ease;
+    }
+
+    .toc a:hover {
+      color: #fff;
+      background: rgba(255, 255, 255, 0.07);
+    }
+
+    .content { display: grid; gap: 20px; }
+
+    .section-card,
+    .light-card,
+    .phase-card,
+    .link-card {
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow);
+    }
+
+    .section-card,
+    .phase-card,
+    .link-card {
+      padding: 24px;
+      border: 1px solid var(--line);
+      background: linear-gradient(180deg, rgba(12, 27, 46, 0.95), rgba(8, 21, 36, 0.98));
+    }
+
+    .light-card {
+      padding: 24px;
+      color: var(--text-dark);
+      background: linear-gradient(180deg, #f5fcff, #edf8ff);
+      border: 1px solid rgba(57, 127, 181, 0.14);
+    }
+
+    .section-card h2,
+    .light-card h2 {
+      margin: 0 0 10px;
+      font-family: var(--font-display);
+      font-size: 2rem;
+      line-height: 1.08;
+    }
+
+    .section-card h3,
+    .light-card h3,
+    .phase-card h3,
+    .link-card h3 {
+      margin: 0 0 10px;
+      font-family: var(--font-display);
+      font-size: 1.2rem;
+    }
+
+    .section-card p,
+    .phase-card p,
+    .link-card p {
+      margin: 0;
+      color: var(--muted);
+    }
+
+    .light-card p,
+    .light-card li { color: var(--muted-dark); }
+
+    .surface-grid {
+      display: grid;
+      gap: 18px;
+    }
+
+    .surface-grid.cols-2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .surface-grid.cols-3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+
+    .card-kicker {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 44px;
+      height: 44px;
+      margin-bottom: 16px;
+      border-radius: 14px;
+      font-weight: 800;
+      color: #0d2238;
+      background: linear-gradient(135deg, #8ef2e4, #8ec5ff);
+    }
+
+    .info,
+    .success,
+    .warn {
+      margin-top: 18px;
+      padding: 16px 18px;
+      border-radius: 18px;
+      border-left: 5px solid #3b82f6;
+      background: rgba(222, 245, 255, 0.08);
+    }
+
+    .success { border-left-color: #0f9f7a; background: rgba(15, 159, 122, 0.1); }
+    .warn { border-left-color: #ea7c3c; background: rgba(234, 124, 60, 0.1); }
+
+    .info strong, .success strong, .warn strong { color: #fff; }
+
+    .meta-row,
+    .flow-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 16px;
+    }
+
+    .meta-row span,
+    .flow-row span {
+      display: inline-flex;
+      align-items: center;
+      min-height: 34px;
+      padding: 0 12px;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      color: #d5e8f6;
+      font-size: 0.84rem;
+    }
+
+    .flow-row span {
+      background: linear-gradient(135deg, #d7fff7, #dbeeff);
+      color: #0d2238;
+      font-weight: 700;
+      border: 0;
+    }
+
+    .code {
+      margin-top: 16px;
+      padding: 18px;
+      border-radius: 18px;
+      background: #09111f;
+      border: 1px solid rgba(120, 194, 255, 0.12);
+      color: #e4f4ff;
+      font-family: "Cascadia Code", "Consolas", monospace;
+      line-height: 1.8;
+      white-space: pre-wrap;
+      overflow-x: auto;
+    }
+
+    .phase-grid,
+    .check-grid {
+      display: grid;
+      gap: 16px;
+      margin-top: 18px;
+    }
+
+    .day-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 14px;
+      margin-top: 16px;
+    }
+
+    .day-card {
+      padding: 18px;
+      border-radius: 18px;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    .day-card strong {
+      display: block;
+      margin-bottom: 8px;
+      color: #fff;
+    }
+
+    .check-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+
+    .check-item {
+      padding: 16px;
+      border-radius: 18px;
+      border: 1px solid var(--line);
+      background: rgba(255, 255, 255, 0.05);
+    }
+
+    .check-item label {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      cursor: pointer;
+      font-weight: 700;
+    }
+
+    .check-item small {
+      display: block;
+      margin-left: 30px;
+      margin-top: 6px;
+      color: var(--muted);
+    }
+
+    input[type="checkbox"] {
+      width: 18px;
+      height: 18px;
+      transform: translateY(4px);
+      accent-color: #36d7c4;
+      flex: 0 0 auto;
+    }
+
+    .progress-wrap {
+      margin-top: 22px;
+      padding: 18px;
+      border-radius: 20px;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid var(--line);
+    }
+
+    .progress-bar {
+      width: 100%;
+      height: 14px;
+      border-radius: 999px;
+      overflow: hidden;
+      background: rgba(255, 255, 255, 0.08);
+    }
+
+    .progress-fill {
+      width: 0;
+      height: 100%;
+      border-radius: 999px;
+      background: linear-gradient(90deg, #36d7c4, #7ed9ff);
+      transition: width 0.25s ease;
+    }
+
+    .progress-meta {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 14px;
+      margin-top: 12px;
+      flex-wrap: wrap;
+    }
+
+    .reset-button {
+      border: 0;
+      border-radius: 999px;
+      min-height: 42px;
+      padding: 0 16px;
+      color: #07131e;
+      background: linear-gradient(135deg, #d8fff6, #dceeff);
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    .cta-card {
+      padding: 34px;
+      border-radius: 30px;
+      background:
+        radial-gradient(circle at 10% 20%, rgba(142, 242, 228, 0.18), transparent 32%),
+        radial-gradient(circle at 88% 24%, rgba(59, 130, 246, 0.24), transparent 30%),
+        linear-gradient(135deg, #071726, #102843 52%, #0e3341);
+      border: 1px solid rgba(142, 242, 228, 0.16);
+      box-shadow: var(--shadow);
+    }
+
+    .cta-card h2 {
+      margin: 0 0 14px;
+      font-family: var(--font-display);
+      font-size: clamp(2rem, 3vw, 3rem);
+      line-height: 1.05;
+    }
+
+    .cta-card p {
+      margin: 0;
+      max-width: 760px;
+      color: #cae1f2;
+      font-size: 1.04rem;
+    }
+
+    .footer {
+      padding: 16px 0 42px;
+      color: #9ab3c7;
+      font-size: 0.95rem;
+    }
+
+    .footer-row {
+      display: flex;
+      justify-content: space-between;
+      gap: 18px;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+
+    .reveal {
+      opacity: 0;
+      transform: translateY(24px);
+      transition: opacity 0.55s ease, transform 0.55s ease;
+    }
+
+    .reveal.is-visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    @media (max-width: 1080px) {
+      .hero-grid, .page-grid, .surface-grid.cols-3, .surface-grid.cols-2, .day-grid {
+        grid-template-columns: 1fr;
+      }
+      .toc { position: static; }
+    }
+
+    @media (max-width: 860px) {
+      .menu-toggle { display: inline-grid; place-items: center; }
+      .nav { border-radius: 28px; align-items: flex-start; }
+      .nav-links {
+        display: none;
+        width: 100%;
+        flex-direction: column;
+        align-items: stretch;
+        padding-top: 8px;
+      }
+      .nav-links.is-open { display: flex; }
+      .nav-links a { background: rgba(255, 255, 255, 0.04); }
+      .hero-card, .cta-card, .section-card, .light-card, .phase-card, .link-card { padding: 24px; }
+      .hero-stats, .check-grid { grid-template-columns: 1fr; }
+    }
+
+    @media (max-width: 560px) {
+      .container { width: min(var(--max-width), calc(100% - 20px)); }
+      .button { width: 100%; }
+      .hero-actions, .section-actions { flex-direction: column; }
+    }
+  </style>
+</head>
+<body>
+  <header class="site-header">
+    <div class="container">
+      <nav class="nav glass">
+        <div class="brand">
+          <div class="brand-mark">PY</div>
+          <div class="brand-copy">
+            <strong>Python 系统学习总览</strong>
+            <span>从核心命令到 30 天进阶路线</span>
+          </div>
+        </div>
+        <button class="menu-toggle" type="button" aria-label="打开菜单" data-menu-toggle>☰</button>
+        <div class="nav-links" data-nav-links>
+          <a href="index.html">首页</a>
+          <a href="python_basics_words.html">核心命令</a>
+          <a href="#overview">总览</a>
+          <a href="#plan30">30 天路线</a>
+          <a href="#checkin">打卡区</a>
+          <a href="#next" class="is-active">下一步</a>
+        </div>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="section hero">
+      <div class="container">
+        <div class="hero-card glass reveal">
+          <div class="hero-grid">
+            <div>
+              <div class="eyebrow">适合零基础用户的系统学习总览</div>
+              <h1>把学习顺序先排清楚，<span>Python 才会越学越顺。</span></h1>
+              <p>这个页面负责解决两个问题：第一，告诉你 30 天左右该怎样从零开始学；第二，把你现在已有的章节、练习入口和打卡机制统一成一张清晰的学习地图。</p>
+              <div class="hero-actions">
+                <a class="button button-primary" href="python_basics_words.html">先学核心命令</a>
+                <a class="button button-secondary" href="day02_variables.html">进入变量章节</a>
+                <a class="button button-secondary" href="#checkin">打开学习打卡</a>
+              </div>
+              <div class="hero-stats">
+                <div class="stat-card">
+                  <strong>30 天</strong>
+                  <span>给零基础的稳定学习节奏</span>
+                </div>
+                <div class="stat-card">
+                  <strong>4 阶段</strong>
+                  <span>从看懂命令到完成小项目</span>
+                </div>
+                <div class="stat-card">
+                  <strong>7 天起步</strong>
+                  <span>第一周建立程序最核心感觉</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="hero-panel">
+              <h3>建议学习顺序</h3>
+              <p>如果你现在完全没有编程基础，最稳妥的方式不是乱跳章节，而是先读懂关键词，再上语法，再做小项目。</p>
+              <div class="panel-box">学习流程
+1. 看懂 print / input / if / else
+2. 学变量、类型、输入输出、运算符
+3. 写出成绩判断、猜数字、记账本</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container page-grid">
+        <aside class="toc glass reveal">
+          <h2>目录导航</h2>
+          <p>先看路线，再根据今天的目标跳转章节。</p>
+          <a href="#overview">1. 学习总览</a>
+          <a href="#plan30">2. 30 天路线</a>
+          <a href="#day1">3. 第 1 天正式课程</a>
+          <a href="#week1">4. 第 1 周章节入口</a>
+          <a href="#checkin">5. 学习打卡区</a>
+          <a href="#next">6. 下一步建议</a>
+        </aside>
+
+        <div class="content">
+          <section class="section-card reveal" id="overview">
+            <h2>1. 学习总览</h2>
+            <p>对零基础用户来说，最容易卡住的不是“不会敲代码”，而是不知道从哪里开始、为什么先学这个、学到哪里算入门。这个总览页就是为了解决这些问题。</p>
+            <div class="surface-grid cols-3" style="margin-top: 18px;">
+              <article class="light-card">
+                <div class="card-kicker">01</div>
+                <h3>Python 是什么</h3>
+                <p>Python 是一门可读性强、入门门槛相对低、应用场景很广的编程语言。它既适合零基础学习，也能一路延伸到自动化、数据分析、网站开发和 AI。</p>
+              </article>
+              <article class="light-card">
+                <div class="card-kicker">02</div>
+                <h3>你现在最该学什么</h3>
+                <p>不是一下子去碰复杂项目，而是先学会高频命令、变量、输入输出、运算符和判断逻辑。前面这些会了，后面大部分内容都会更顺。</p>
+              </article>
+              <article class="light-card">
+                <div class="card-kicker">03</div>
+                <h3>如何判断自己在进步</h3>
+                <p>你不需要一开始就写长程序。只要能看懂简单代码、能自己写出 5 到 10 行的小程序、能修改别人给的例子，就已经是在有效进步。</p>
+              </article>
+            </div>
+            <div class="info">
+              <strong>推荐节奏：</strong> 每天 30 到 50 分钟，按“看概念 → 看例子 → 自己改代码 → 做 1 到 3 题练习”的顺序推进，不要只看不动手。
+            </div>
+          </section>
+
+          <section class="section-card reveal" id="plan30">
+            <h2>2. 30 天学习路线</h2>
+            <p>这份路线不是为了让你机械打卡 30 次，而是把入门阶段最核心的内容拆成四个阶段，让你知道每一段到底在解决什么问题。</p>
+            <div class="phase-grid">
+              <article class="phase-card">
+                <h3>阶段 1：第 1 到 7 天，建立编程感觉</h3>
+                <p>重点是看懂命令、理解变量和输入输出，第一次写出能运行的小程序。</p>
+                <div class="day-grid">
+                  <div class="day-card">
+                    <strong>Day 1</strong>
+                    <ul>
+                      <li>认识程序与顺序执行</li>
+                      <li>学会 `print()`</li>
+                      <li>理解代码就是明确步骤</li>
+                    </ul>
+                  </div>
+                  <div class="day-card">
+                    <strong>Day 2</strong>
+                    <ul>
+                      <li>理解变量的作用</li>
+                      <li>保存名字、价格、分数</li>
+                      <li>会修改变量再输出</li>
+                    </ul>
+                  </div>
+                  <div class="day-card">
+                    <strong>Day 3</strong>
+                    <ul>
+                      <li>认识 `str`、`int`、`float`</li>
+                      <li>会用 `type()` 看类型</li>
+                      <li>理解字符串和数字区别</li>
+                    </ul>
+                  </div>
+                  <div class="day-card">
+                    <strong>Day 4</strong>
+                    <ul>
+                      <li>学会 `input()` 和 `print()` 配合</li>
+                      <li>做第一个交互程序</li>
+                      <li>开始体验人机互动</li>
+                    </ul>
+                  </div>
+                </div>
+              </article>
+
+              <article class="phase-card">
+                <h3>阶段 2：第 8 到 15 天，强化基础语法</h3>
+                <p>重点是循环、列表、字典、字符串处理，让程序从“一次性动作”升级成能处理更多数据。</p>
+                <div class="meta-row">
+                  <span>for / while</span>
+                  <span>list / dict</span>
+                  <span>字符串处理</span>
+                  <span>函数入门</span>
+                </div>
+              </article>
+
+              <article class="phase-card">
+                <h3>阶段 3：第 16 到 23 天，开始组织代码</h3>
+                <p>重点是函数、模块、文件操作和异常处理。你会逐渐明白，程序不只是“写一段能跑的代码”，还要学会整理和复用。</p>
+                <div class="meta-row">
+                  <span>def</span>
+                  <span>import</span>
+                  <span>open()</span>
+                  <span>try / except</span>
+                </div>
+              </article>
+
+              <article class="phase-card">
+                <h3>阶段 4：第 24 到 30 天，进入小项目</h3>
+                <p>重点是把前面的知识拼起来，做出完整的小项目。哪怕项目简单，只要能完整跑通，就是非常关键的跨越。</p>
+                <div class="meta-row">
+                  <span>成绩管理</span>
+                  <span>待办清单</span>
+                  <span>命令行记账本</span>
+                  <span>调试能力</span>
+                </div>
+              </article>
+            </div>
+            <div class="info">
+              <strong>如何理解这 30 天：</strong> 这不是死记 30 个知识点，而是每天解决一个更真实的小问题。前面先学“怎么保存信息、怎么输出、怎么判断”，后面才能自然过渡到小项目。
+            </div>
+          </section>
+
+          <section class="section-card reveal" id="day1">
+            <h2>3. 第 1 天正式课程：认识 Python 和程序</h2>
+            <p>如果你是第一次学编程，第 1 天的目标不要定得太大。今天只需要理解“程序是什么”“代码是怎么执行的”，并且会用 `print()` 输出内容就够了。</p>
+            <div class="surface-grid cols-2" style="margin-top: 18px;">
+              <article class="light-card">
+                <div class="card-kicker">1A</div>
+                <h3>程序到底是什么</h3>
+                <p>程序本质上就是一组写给电脑的明确步骤。你写得越清楚，电脑执行得越准确。</p>
+                <div class="flow-row">
+                  <span>拿杯子</span>
+                  <span>放咖啡粉</span>
+                  <span>倒热水</span>
+                  <span>搅拌</span>
+                </div>
+              </article>
+              <article class="light-card">
+                <div class="card-kicker">1B</div>
+                <h3>代码默认如何执行</h3>
+                <p>默认是从上到下、一句一句执行。这就叫顺序结构。</p>
+                <div class="code">print("第一句")
+print("第二句")
+print("第三句")</div>
+              </article>
+            </div>
+            <div class="light-card" style="margin-top: 18px;">
+              <div class="card-kicker">1C</div>
+              <h3>认识 `print()`</h3>
+              <p>`print()` 的作用就是把内容输出到屏幕上。你可以把它理解成“让程序开口说话”。</p>
+              <div class="code">print("你好，Python")
+print("欢迎开始学习编程")</div>
+              <ul>
+                <li>先把 `print` 记成“输出”。</li>
+                <li>括号现在先接受它的写法，不用急着深究。</li>
+                <li>字符串可以先理解成：被引号包起来的一段文字。</li>
+              </ul>
+            </div>
+            <div class="success">
+              <strong>今天学完的标准：</strong> 你能自己写出 3 行 `print()`，并理解代码是按顺序执行的，就算第 1 天真正过关。
+            </div>
+          </section>
+
+          <section class="section-card reveal" id="week1">
+            <h2>4. 第 1 周章节入口</h2>
+            <p>下面这些入口直接接到你现有的学习文件。建议学习顺序是：核心命令页 → 变量 → 类型 → 输入输出 → 运算符 → 判断与案例。</p>
+            <div class="phase-grid">
+              <article class="link-card">
+                <h3>核心命令和常用英文</h3>
+                <p>如果你对 `print`、`input`、`if`、`else` 这些词还不熟，建议先从这个页面开始，把读懂代码的门槛先降下来。</p>
+                <div class="section-actions">
+                  <a class="button button-inline" href="python_basics_words.html">打开核心命令页</a>
+                </div>
+              </article>
+
+              <article class="link-card">
+                <h3>变量 Variables</h3>
+                <p>学会用名字保存信息，像保存姓名、价格、分数一样，把数据先装进变量里。</p>
+                <div class="section-actions">
+                  <a class="button button-inline" href="day02_variables.html">进入变量章节</a>
+                </div>
+              </article>
+
+              <article class="link-card">
+                <h3>数据类型 Types</h3>
+                <p>理解字符串、整数、浮点数和布尔值，弄清楚“不同类型为什么要区别对待”。</p>
+                <div class="section-actions">
+                  <a class="button button-inline" href="day03_types.html">进入类型章节</a>
+                </div>
+              </article>
+
+              <article class="link-card">
+                <h3>输入输出 Input / Output</h3>
+                <p>开始做用户和程序之间的简单互动，让学习从“静态知识”进入“能跑起来”的感觉。</p>
+                <div class="section-actions">
+                  <a class="button button-inline" href="day04_input_output.html">进入输入输出</a>
+                </div>
+              </article>
+
+              <article class="link-card">
+                <h3>运算符 Operators</h3>
+                <p>学会做加减乘除、比较和条件组合，为判断语句做准备。</p>
+                <div class="section-actions">
+                  <a class="button button-inline" href="day05_operators.html">进入运算符</a>
+                </div>
+              </article>
+
+              <article class="link-card">
+                <h3>判断逻辑与成绩程序</h3>
+                <p>从 `if else` 到成绩判断案例，把前面的命令、变量、输入输出和判断全部串起来。</p>
+                <div class="section-actions">
+                  <a class="button button-inline" href="day06_if_else.html">进入判断章节</a>
+                  <a class="button button-secondary" href="day07_score_program.html">查看成绩程序</a>
+                </div>
+              </article>
+            </div>
+          </section>
+
+          <section class="section-card reveal" id="checkin">
+            <h2>5. 学习打卡区</h2>
+            <p>打卡不是形式主义。对初学者来说，持续感非常重要。你每完成一天就勾掉一项，能明显看到自己在往前走。</p>
+            <div class="check-grid">
+              <div class="check-item"><label><input type="checkbox" data-day="1"><span>第 1 天：认识程序和 `print()`</span></label><small>先理解代码是按顺序执行的</small></div>
+              <div class="check-item"><label><input type="checkbox" data-day="2"><span>第 2 天：变量</span></label><small>学会保存名字、价格、分数</small></div>
+              <div class="check-item"><label><input type="checkbox" data-day="3"><span>第 3 天：数据类型</span></label><small>理解字符串、整数、浮点数</small></div>
+              <div class="check-item"><label><input type="checkbox" data-day="4"><span>第 4 天：输入输出</span></label><small>用 `input()` 和 `print()` 做交互</small></div>
+              <div class="check-item"><label><input type="checkbox" data-day="5"><span>第 5 天：运算符</span></label><small>开始做计算和比较</small></div>
+              <div class="check-item"><label><input type="checkbox" data-day="6"><span>第 6 天：条件判断</span></label><small>理解 `if / else`</small></div>
+              <div class="check-item"><label><input type="checkbox" data-day="7"><span>第 7 天：成绩程序</span></label><small>把第一周知识串起来</small></div>
+              <div class="check-item"><label><input type="checkbox" data-day="8"><span>第 8 天：循环入门</span></label><small>开始处理重复任务</small></div>
+              <div class="check-item"><label><input type="checkbox" data-day="9"><span>第 9 天：列表</span></label><small>学会保存多个数据</small></div>
+              <div class="check-item"><label><input type="checkbox" data-day="10"><span>第 10 天：字典</span></label><small>开始用键值对组织信息</small></div>
+              <div class="check-item"><label><input type="checkbox" data-day="11"><span>第 11 天：字符串处理</span></label><small>切片、长度、常见方法</small></div>
+              <div class="check-item"><label><input type="checkbox" data-day="12"><span>第 12 天：循环练习</span></label><small>做批量输出和统计</small></div>
+              <div class="check-item"><label><input type="checkbox" data-day="13"><span>第 13 天：函数概念</span></label><small>把重复逻辑封装起来</small></div>
+              <div class="check-item"><label><input type="checkbox" data-day="14"><span>第 14 天：函数参数</span></label><small>让函数更灵活</small></div>
+              <div class="check-item"><label><input type="checkbox" data-day="15"><span>第 15 天：阶段复习</span></label><small>把前两周内容连起来</small></div>
+              <div class="check-item"><label><input type="checkbox" data-day="16"><span>第 16 天：模块导入</span></label><small>学会 `import`</small></div>
+              <div class="check-item"><label><input type="checkbox" data-day="17"><span>第 17 天：文件读写</span></label><small>开始处理文本文件</small></div>
+              <div class="check-item"><label><input type="checkbox" data-day="18"><span>第 18 天：异常处理</span></label><small>学会面对报错</small></div>
+              <div class="check-item"><label><input type="checkbox" data-day="19"><span>第 19 天：函数综合</span></label><small>多个函数配合写程序</small></div>
+              <div class="check-item"><label><input type="checkbox" data-day="20"><span>第 20 天：文件项目练习</span></label><small>保存和读取数据</small></div>
+              <div class="check-item"><label><input type="checkbox" data-day="21"><span>第 21 天：调试能力</span></label><small>看懂常见报错</small></div>
+              <div class="check-item"><label><input type="checkbox" data-day="22"><span>第 22 天：小型综合程序</span></label><small>做一个完整练习</small></div>
+              <div class="check-item"><label><input type="checkbox" data-day="23"><span>第 23 天：第三周复盘</span></label><small>补漏洞，查缺补漏</small></div>
+              <div class="check-item"><label><input type="checkbox" data-day="24"><span>第 24 天：类和对象</span></label><small>接触面向对象概念</small></div>
+              <div class="check-item"><label><input type="checkbox" data-day="25"><span>第 25 天：项目结构</span></label><small>学会拆分功能</small></div>
+              <div class="check-item"><label><input type="checkbox" data-day="26"><span>第 26 天：代码规范</span></label><small>命名、缩进和注释</small></div>
+              <div class="check-item"><label><input type="checkbox" data-day="27"><span>第 27 天：项目 1</span></label><small>比如成绩管理或待办清单</small></div>
+              <div class="check-item"><label><input type="checkbox" data-day="28"><span>第 28 天：项目 2</span></label><small>比如记账本或通讯录</small></div>
+              <div class="check-item"><label><input type="checkbox" data-day="29"><span>第 29 天：调优和复盘</span></label><small>修改程序，让它更稳</small></div>
+              <div class="check-item"><label><input type="checkbox" data-day="30"><span>第 30 天：总结与下一步</span></label><small>判断接下来学什么方向</small></div>
+            </div>
+            <div class="progress-wrap">
+              <div class="progress-bar"><div class="progress-fill" id="progressBar"></div></div>
+              <div class="progress-meta">
+                <span id="progressText">已完成 0 / 30 天（0%）</span>
+                <button class="reset-button" type="button" onclick="resetChecks()">清空全部打卡</button>
+              </div>
+            </div>
+          </section>
+
+          <section class="section-card reveal" id="next">
+            <h2>6. 下一步建议</h2>
+            <p>如果你现在准备继续推进，这里是最稳的执行方式。</p>
+            <div class="surface-grid cols-2" style="margin-top: 18px;">
+              <article class="light-card">
+                <div class="card-kicker">Go</div>
+                <h3>推荐马上做的事</h3>
+                <ul>
+                  <li>先打开核心命令页，把 `print / input / if / else` 看熟。</li>
+                  <li>再学变量和数据类型，不要急着直接上复杂语法。</li>
+                  <li>学完一个章节就做当天练习，再打卡。</li>
+                </ul>
+                <div class="section-actions">
+                  <a class="button button-inline" href="python_basics_words.html">先去学核心命令</a>
+                </div>
+              </article>
+
+              <article class="light-card">
+                <div class="card-kicker">Up</div>
+                <h3>这个项目下一步还能继续扩展</h3>
+                <ul>
+                  <li>继续补 Day 8 之后的独立学习页</li>
+                  <li>增加每章练习答案页和代码下载区</li>
+                  <li>补一个面向青少年版和一个面向成人版的文案分支</li>
+                </ul>
+                <div class="section-actions">
+                  <a class="button button-secondary" href="index.html">返回课程首页</a>
+                </div>
+              </article>
+            </div>
+          </section>
+
+          <section class="section reveal">
+            <div class="cta-card">
+              <h2>先把核心命令学明白，再进入正式章节。</h2>
+              <p>如果你现在最大的障碍还是“看不懂代码里的英文”，那最值得先做的不是继续往后翻，而是先把高频命令和常用词汇页过一遍。学会读，后面的吸收速度会明显快很多。</p>
+              <div class="section-actions">
+                <a class="button button-primary" href="python_basics_words.html">打开核心命令页</a>
+                <a class="button button-secondary" href="day02_variables.html">进入第 2 天学习</a>
+              </div>
+            </div>
+          </section>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-row">
+        <div>当前页面：<strong>python_study.html</strong></div>
+        <div>推荐起点：核心命令页 → 变量 → 类型 → 输入输出 → 运算符 → 判断逻辑</div>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    const storageKey = "python-study-checkin-v2";
+    const checkboxes = Array.from(document.querySelectorAll('input[type="checkbox"][data-day]'));
+    const progressBar = document.getElementById("progressBar");
+    const progressText = document.getElementById("progressText");
+    const menuToggle = document.querySelector("[data-menu-toggle]");
+    const navLinks = document.querySelector("[data-nav-links]");
+    const revealItems = document.querySelectorAll(".reveal");
+
+    function loadChecks() {
+      try {
+        const raw = localStorage.getItem(storageKey);
+        return raw ? JSON.parse(raw) : {};
+      } catch {
+        return {};
+      }
+    }
+
+    function saveChecks(state) {
+      localStorage.setItem(storageKey, JSON.stringify(state));
+    }
+
+    function refreshProgress() {
+      const state = loadChecks();
+      let done = 0;
+
+      checkboxes.forEach((checkbox) => {
+        checkbox.checked = !!state[checkbox.dataset.day];
+        if (checkbox.checked) done += 1;
+      });
+
+      const total = checkboxes.length;
+      const percent = total ? (done / total) * 100 : 0;
+      progressBar.style.width = percent + "%";
+      progressText.textContent = `已完成 ${done} / ${total} 天（${Math.round(percent)}%）`;
+    }
+
+    checkboxes.forEach((checkbox) => {
+      checkbox.addEventListener("change", () => {
+        const state = loadChecks();
+        state[checkbox.dataset.day] = checkbox.checked;
+        saveChecks(state);
+        refreshProgress();
+      });
+    });
+
+    function resetChecks() {
+      localStorage.removeItem(storageKey);
+      refreshProgress();
+    }
+
+    window.resetChecks = resetChecks;
+
+    if (menuToggle && navLinks) {
+      menuToggle.addEventListener("click", () => {
+        navLinks.classList.toggle("is-open");
+      });
+
+      navLinks.querySelectorAll("a").forEach((link) => {
+        link.addEventListener("click", () => navLinks.classList.remove("is-open"));
+      });
+    }
+
+    if ("IntersectionObserver" in window) {
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("is-visible");
+            observer.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.14 });
+
+      revealItems.forEach((item) => observer.observe(item));
+    } else {
+      revealItems.forEach((item) => item.classList.add("is-visible"));
+    }
+
+    refreshProgress();
+  </script>
+</body>
+</html>

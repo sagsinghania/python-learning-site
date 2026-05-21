@@ -1,0 +1,742 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>第 2 天：变量 | Python 学习页</title>
+  <style>
+    :root {
+      --bg: #07111f;
+      --panel: rgba(10, 24, 42, 0.82);
+      --line: rgba(123, 196, 255, 0.18);
+      --text: #e9f6ff;
+      --text-dark: #0d1b2a;
+      --muted: #9cb7cb;
+      --muted-dark: #607487;
+      --accent: #8ef2e4;
+      --shadow: 0 24px 70px rgba(0, 10, 22, 0.3);
+      --radius-lg: 24px;
+      --max-width: 1180px;
+      --font-display: "Segoe UI Variable Display", "PingFang SC", "Microsoft YaHei UI", sans-serif;
+      --font-body: "Segoe UI Variable Text", "PingFang SC", "Microsoft YaHei", sans-serif;
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      color: var(--text);
+      font-family: var(--font-body);
+      line-height: 1.72;
+      background:
+        radial-gradient(circle at top left, rgba(54, 215, 196, 0.15), transparent 24%),
+        radial-gradient(circle at 85% 12%, rgba(59, 130, 246, 0.22), transparent 26%),
+        linear-gradient(180deg, #07111f 0%, #0a1830 45%, #0d2238 100%);
+    }
+
+    a { color: inherit; text-decoration: none; }
+    .container { width: min(var(--max-width), calc(100% - 28px)); margin: 0 auto; }
+    .section { padding: 26px 0; }
+
+    .glass {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(16px);
+    }
+
+    .site-header {
+      position: sticky;
+      top: 0;
+      z-index: 40;
+      padding: 14px 0;
+      background: linear-gradient(180deg, rgba(7, 17, 31, 0.86), rgba(7, 17, 31, 0.32));
+      backdrop-filter: blur(12px);
+    }
+
+    .nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      padding: 14px 18px;
+      border-radius: 999px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .brand-mark {
+      width: 44px;
+      height: 44px;
+      display: grid;
+      place-items: center;
+      border-radius: 14px;
+      font-weight: 800;
+      letter-spacing: 0.08em;
+      color: var(--accent);
+      background: linear-gradient(135deg, rgba(54, 215, 196, 0.28), rgba(59, 130, 246, 0.28));
+      border: 1px solid rgba(142, 242, 228, 0.18);
+    }
+
+    .brand-copy strong {
+      display: block;
+      font-size: 1rem;
+      font-family: var(--font-display);
+    }
+
+    .brand-copy span {
+      display: block;
+      color: var(--muted);
+      font-size: 0.88rem;
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+    }
+
+    .nav-links a {
+      padding: 10px 14px;
+      border-radius: 999px;
+      color: var(--muted);
+      transition: 0.2s ease;
+    }
+
+    .nav-links a:hover,
+    .nav-links a.is-active {
+      color: #fff;
+      background: rgba(255, 255, 255, 0.07);
+    }
+
+    .hero-card,
+    .section-card,
+    .light-card,
+    .cta-card,
+    .toc {
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow);
+    }
+
+    .hero-card {
+      position: relative;
+      overflow: hidden;
+      padding: 36px;
+    }
+
+    .hero-card::before,
+    .hero-card::after {
+      content: "";
+      position: absolute;
+      border-radius: 999px;
+      filter: blur(10px);
+    }
+
+    .hero-card::before {
+      width: 260px;
+      height: 260px;
+      top: -110px;
+      right: -70px;
+      background: radial-gradient(circle, rgba(54, 215, 196, 0.28), transparent 68%);
+    }
+
+    .hero-card::after {
+      width: 300px;
+      height: 300px;
+      bottom: -150px;
+      left: -110px;
+      background: radial-gradient(circle, rgba(59, 130, 246, 0.24), transparent 68%);
+    }
+
+    .hero-grid {
+      position: relative;
+      display: grid;
+      grid-template-columns: minmax(0, 1.08fr) minmax(320px, 0.92fr);
+      gap: 28px;
+      align-items: center;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 14px;
+      border-radius: 999px;
+      color: var(--accent);
+      font-size: 0.9rem;
+      background: rgba(142, 242, 228, 0.08);
+      border: 1px solid rgba(142, 242, 228, 0.14);
+    }
+
+    .hero h1 {
+      margin: 18px 0 14px;
+      font-size: clamp(2.45rem, 4.8vw, 4rem);
+      line-height: 1.04;
+      letter-spacing: -0.03em;
+      font-family: var(--font-display);
+    }
+
+    .hero p {
+      margin: 0;
+      max-width: 680px;
+      color: #c8ddef;
+      font-size: 1.05rem;
+    }
+
+    .hero-actions,
+    .section-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 14px;
+      margin-top: 28px;
+    }
+
+    .button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      min-height: 52px;
+      padding: 0 22px;
+      border-radius: 999px;
+      border: 1px solid transparent;
+      font-weight: 700;
+      cursor: pointer;
+      transition: transform 0.2s ease;
+    }
+
+    .button:hover { transform: translateY(-2px); }
+
+    .button-primary {
+      color: #07131e;
+      background: linear-gradient(135deg, var(--accent), #7ed9ff);
+      box-shadow: 0 18px 40px rgba(93, 227, 233, 0.2);
+    }
+
+    .button-secondary {
+      color: #fff;
+      background: rgba(255, 255, 255, 0.07);
+      border-color: rgba(255, 255, 255, 0.12);
+    }
+
+    .button-inline {
+      color: #12406c;
+      background: linear-gradient(135deg, #d8fff6, #dceeff);
+    }
+
+    .hero-stats,
+    .surface-grid {
+      display: grid;
+      gap: 18px;
+    }
+
+    .hero-stats { grid-template-columns: repeat(3, minmax(0, 1fr)); margin-top: 28px; }
+    .surface-grid.cols-2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+
+    .stat-card,
+    .section-card,
+    .toc {
+      background: linear-gradient(180deg, rgba(12, 27, 46, 0.95), rgba(8, 21, 36, 0.98));
+      border: 1px solid var(--line);
+    }
+
+    .stat-card {
+      padding: 18px;
+      border-radius: 18px;
+    }
+
+    .stat-card strong {
+      display: block;
+      color: #fff;
+      font-size: 1.45rem;
+      font-family: var(--font-display);
+    }
+
+    .stat-card span {
+      color: #bdd5e8;
+      font-size: 0.92rem;
+    }
+
+    .hero-panel {
+      padding: 24px;
+      border-radius: 28px;
+      background: linear-gradient(180deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.04));
+      border: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    .hero-panel h3 {
+      margin: 0 0 10px;
+      font-size: 1.12rem;
+    }
+
+    .hero-panel p {
+      margin: 0;
+      color: #c6daeb;
+      font-size: 0.96rem;
+    }
+
+    .panel-box,
+    .code {
+      margin-top: 16px;
+      padding: 18px;
+      border-radius: 18px;
+      background: #09111f;
+      border: 1px solid rgba(120, 194, 255, 0.12);
+      color: #e4f4ff;
+      font-family: "Cascadia Code", "Consolas", monospace;
+      line-height: 1.8;
+      white-space: pre-wrap;
+      overflow-x: auto;
+    }
+
+    .page-grid {
+      display: grid;
+      grid-template-columns: 280px 1fr;
+      gap: 24px;
+      align-items: start;
+    }
+
+    .toc {
+      position: sticky;
+      top: 92px;
+      padding: 20px;
+    }
+
+    .toc h2 {
+      margin: 0 0 10px;
+      font-size: 1.02rem;
+      font-family: var(--font-display);
+    }
+
+    .toc p {
+      margin: 0 0 14px;
+      color: var(--muted);
+      font-size: 0.92rem;
+    }
+
+    .toc a {
+      display: block;
+      padding: 10px 12px;
+      border-radius: 14px;
+      color: #cbe1f1;
+      transition: 0.2s ease;
+    }
+
+    .toc a:hover {
+      color: #fff;
+      background: rgba(255, 255, 255, 0.07);
+    }
+
+    .content { display: grid; gap: 20px; }
+
+    .section-card { padding: 24px; }
+
+    .light-card {
+      padding: 24px;
+      color: var(--text-dark);
+      background: linear-gradient(180deg, #f5fcff, #edf8ff);
+      border: 1px solid rgba(57, 127, 181, 0.14);
+    }
+
+    .section-card h2,
+    .light-card h2 {
+      margin: 0 0 10px;
+      font-family: var(--font-display);
+      font-size: 2rem;
+      line-height: 1.08;
+    }
+
+    .section-card h3,
+    .light-card h3 {
+      margin: 0 0 10px;
+      font-family: var(--font-display);
+      font-size: 1.2rem;
+    }
+
+    .section-card p,
+    .section-card li {
+      color: var(--muted);
+    }
+
+    .light-card p,
+    .light-card li {
+      color: var(--muted-dark);
+    }
+
+    .card-kicker {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 44px;
+      height: 44px;
+      margin-bottom: 16px;
+      border-radius: 14px;
+      font-weight: 800;
+      color: #0d2238;
+      background: linear-gradient(135deg, #8ef2e4, #8ec5ff);
+    }
+
+    .info,
+    .success,
+    .warn {
+      margin-top: 18px;
+      padding: 16px 18px;
+      border-radius: 18px;
+      border-left: 5px solid #3b82f6;
+      background: rgba(222, 245, 255, 0.08);
+    }
+
+    .success { border-left-color: #0f9f7a; background: rgba(15, 159, 122, 0.1); }
+    .warn { border-left-color: #ea7c3c; background: rgba(234, 124, 60, 0.1); }
+    .info strong, .success strong, .warn strong { color: #fff; }
+
+    .chips,
+    .flow-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 16px;
+    }
+
+    .chips span,
+    .flow-row span {
+      display: inline-flex;
+      align-items: center;
+      min-height: 34px;
+      padding: 0 12px;
+      border-radius: 999px;
+      font-size: 0.84rem;
+    }
+
+    .chips span {
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      color: #d5e8f6;
+    }
+
+    .flow-row span {
+      background: linear-gradient(135deg, #d7fff7, #dbeeff);
+      color: #0d2238;
+      font-weight: 700;
+    }
+
+    .cta-card {
+      padding: 34px;
+      background:
+        radial-gradient(circle at 10% 20%, rgba(142, 242, 228, 0.18), transparent 32%),
+        radial-gradient(circle at 88% 24%, rgba(59, 130, 246, 0.24), transparent 30%),
+        linear-gradient(135deg, #071726, #102843 52%, #0e3341);
+      border: 1px solid rgba(142, 242, 228, 0.16);
+    }
+
+    .cta-card h2 {
+      margin: 0 0 14px;
+      font-family: var(--font-display);
+      font-size: clamp(2rem, 3vw, 3rem);
+      line-height: 1.05;
+    }
+
+    .cta-card p {
+      margin: 0;
+      max-width: 760px;
+      color: #cae1f2;
+      font-size: 1.04rem;
+    }
+
+    .footer {
+      padding: 16px 0 42px;
+      color: #9ab3c7;
+      font-size: 0.95rem;
+    }
+
+    .footer-row {
+      display: flex;
+      justify-content: space-between;
+      gap: 18px;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+
+    @media (max-width: 1080px) {
+      .hero-grid, .page-grid, .surface-grid.cols-2 { grid-template-columns: 1fr; }
+      .toc { position: static; }
+    }
+
+    @media (max-width: 860px) {
+      .hero-card, .section-card, .light-card, .cta-card { padding: 24px; }
+      .hero-stats { grid-template-columns: 1fr; }
+    }
+
+    @media (max-width: 560px) {
+      .container { width: min(var(--max-width), calc(100% - 20px)); }
+      .button { width: 100%; }
+      .hero-actions, .section-actions { flex-direction: column; }
+    }
+  </style>
+</head>
+<body>
+  <header class="site-header">
+    <div class="container">
+      <nav class="nav glass">
+        <div class="brand">
+          <div class="brand-mark">D2</div>
+          <div class="brand-copy">
+            <strong>第 2 天：变量</strong>
+            <span>把信息装进有名字的盒子里</span>
+          </div>
+        </div>
+        <div class="nav-links">
+          <a href="index.html">首页</a>
+          <a href="python_basics_words.html">核心命令</a>
+          <a href="python_study.html">系统总览</a>
+          <a href="day03_types.html" class="is-active">下一天</a>
+        </div>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="section hero">
+      <div class="container">
+        <div class="hero-card glass">
+          <div class="hero-grid">
+            <div>
+              <div class="eyebrow">Day 02 / Variables</div>
+              <h1>变量不是难概念，<br />它只是程序记住信息的方式。</h1>
+              <p>今天这页的重点不是背术语，而是真正理解变量为什么存在。学会变量之后，后面保存姓名、价格、分数、数量这些信息时，你就不会再觉得代码是“空的”。</p>
+              <div class="hero-actions">
+                <a class="button button-primary" href="#practice">直接开始练习</a>
+                <a class="button button-secondary" href="python_study.html#week1">返回章节入口</a>
+              </div>
+              <div class="hero-stats">
+                <div class="stat-card">
+                  <strong>1 个核心</strong>
+                  <span>变量 = 有名字的盒子</span>
+                </div>
+                <div class="stat-card">
+                  <strong>3 个动作</strong>
+                  <span>保存、修改、输出</span>
+                </div>
+                <div class="stat-card">
+                  <strong>1 个目标</strong>
+                  <span>自己定义并使用变量</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="hero-panel">
+              <h3>今天学完你要会</h3>
+              <p>能看懂变量在做什么，能自己保存一份信息，再把它输出出来。</p>
+              <div class="panel-box">name = "小林"
+price = 18
+count = 2
+
+print(name)</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container page-grid">
+        <aside class="toc">
+          <h2>本页目录</h2>
+          <p>按顺序看完，再做练习。</p>
+          <a href="#goal">1. 今天目标</a>
+          <a href="#meaning">2. 变量是什么</a>
+          <a href="#why">3. 为什么必须学变量</a>
+          <a href="#case">4. 奶茶订单案例</a>
+          <a href="#syntax">5. 变量怎么写</a>
+          <a href="#mistakes">6. 常见错误</a>
+          <a href="#practice">7. 今日练习</a>
+          <a href="#summary">8. 今日总结</a>
+        </aside>
+
+        <div class="content">
+          <section class="section-card" id="goal">
+            <h2>1. 今天目标</h2>
+            <p>你今天不需要掌握很复杂的程序，只需要把“把信息先保存下来”这个动作练熟。后面的输入、判断和项目，几乎都离不开变量。</p>
+            <div class="surface-grid cols-2" style="margin-top: 18px;">
+              <article class="light-card">
+                <div class="card-kicker">A</div>
+                <h3>学完后你应该会</h3>
+                <ul>
+                  <li>看懂变量在代码里的作用</li>
+                  <li>自己定义变量保存信息</li>
+                  <li>修改变量的值</li>
+                  <li>用 `print()` 把变量输出出来</li>
+                </ul>
+              </article>
+              <article class="light-card">
+                <div class="card-kicker">B</div>
+                <h3>今天的关键词</h3>
+                <ul>
+                  <li>`variable` = 变量</li>
+                  <li>`value` = 值</li>
+                  <li>`print` = 输出</li>
+                  <li>`=` = 把右边的值交给左边的名字</li>
+                </ul>
+              </article>
+            </div>
+            <div class="info">
+              <strong>先别怕英文：</strong> 你今天真正要理解的，不是单词本身，而是“给一份数据起名字，以后就能反复拿来用”。
+            </div>
+          </section>
+
+          <section class="section-card" id="meaning">
+            <h2>2. 变量是什么</h2>
+            <p>变量可以先理解成一个有名字的盒子。这个盒子里可以放文字、数字，或者以后更多种类的数据。</p>
+            <div class="flow-row">
+              <span>姓名</span>
+              <span>年龄</span>
+              <span>价格</span>
+              <span>分数</span>
+            </div>
+            <div class="light-card" style="margin-top: 18px;">
+              <div class="card-kicker">例</div>
+              <h3>生活类比：贴标签的收纳盒</h3>
+              <p>如果你有几个收纳盒，分别写着“文具”“证件”“充电线”，下次找东西时就很快。变量也是一样，程序以后要用这些内容时，直接通过名字去找。</p>
+            </div>
+          </section>
+
+          <section class="section-card" id="why">
+            <h2>3. 为什么必须学变量</h2>
+            <p>因为程序几乎不可能只处理“写死不变”的内容。很多信息都需要先记住，再继续使用。</p>
+            <div class="surface-grid cols-2" style="margin-top: 18px;">
+              <article class="light-card">
+                <div class="card-kicker">No</div>
+                <h3>没有变量会怎样</h3>
+                <p>每次都得重新写一遍数据，代码会很乱，后面要修改也很麻烦。</p>
+              </article>
+              <article class="light-card">
+                <div class="card-kicker">Yes</div>
+                <h3>有变量会怎样</h3>
+                <p>你只需要改一次变量的值，后面所有使用到它的地方都能跟着变，程序更容易管理。</p>
+              </article>
+            </div>
+            <div class="warn">
+              <strong>你可以把变量理解成：</strong> 先把信息安顿好，程序后面才能继续做计算、做判断、做展示。
+            </div>
+          </section>
+
+          <section class="section-card" id="case">
+            <h2>4. 奶茶订单案例</h2>
+            <p>先看一个最贴近生活的例子。你点了一杯奶茶，程序要记住名字、价格和数量。</p>
+            <div class="code">drink = "奶茶"
+price = 18
+count = 2
+
+print(drink)
+print(price)
+print(count)</div>
+            <ul>
+              <li>`drink = "奶茶"`：创建一个叫 `drink` 的变量，里面放“奶茶”。</li>
+              <li>`price = 18`：创建一个叫 `price` 的变量，里面放 18。</li>
+              <li>`count = 2`：创建一个叫 `count` 的变量，里面放 2。</li>
+              <li>`print(...)`：把这些变量里的内容输出出来。</li>
+            </ul>
+            <div class="success">
+              <strong>这段代码最关键的理解：</strong> 左边是名字，右边是内容。程序记住的是“这个名字对应什么值”。
+            </div>
+          </section>
+
+          <section class="section-card" id="syntax">
+            <h2>5. 变量怎么写</h2>
+            <p>最基础的写法就是：</p>
+            <div class="code">变量名 = 值</div>
+            <p>例如：</p>
+            <div class="code">name = "小林"
+age = 18
+city = "上海"</div>
+            <div class="info">
+              <strong>注意：</strong> 这里的 `=` 不是数学里的“左右相等”，而更像“把右边交给左边”。
+            </div>
+          </section>
+
+          <section class="section-card" id="mistakes">
+            <h2>6. 常见错误</h2>
+            <div class="light-card">
+              <div class="card-kicker">X1</div>
+              <h3>变量没定义就直接使用</h3>
+              <div class="code">print(name)</div>
+              <p>如果前面没有 `name = "小林"`，程序就不知道 `name` 是谁。</p>
+            </div>
+            <div class="light-card" style="margin-top: 18px;">
+              <div class="card-kicker">X2</div>
+              <h3>字符串忘了加引号</h3>
+              <div class="code">name = 小林</div>
+              <p>文字内容需要写成：</p>
+              <div class="code">name = "小林"</div>
+            </div>
+          </section>
+
+          <section class="section-card" id="practice">
+            <h2>7. 今日练习</h2>
+            <p>今天不追求复杂，只要把“保存信息”这件事练熟就行。</p>
+            <div class="light-card">
+              <div class="card-kicker">P1</div>
+              <h3>保存个人信息</h3>
+              <ul>
+                <li>定义 3 个变量，保存你的名字、年龄、所在城市。</li>
+                <li>再用 `print()` 把这 3 个变量输出出来。</li>
+              </ul>
+            </div>
+            <div class="light-card" style="margin-top: 18px;">
+              <div class="card-kicker">P2</div>
+              <h3>修改变量</h3>
+              <div class="code">age = 18</div>
+              <p>先输出一次，再把它改成 19，再输出一次。</p>
+            </div>
+            <div class="light-card" style="margin-top: 18px;">
+              <div class="card-kicker">P3</div>
+              <h3>商品信息</h3>
+              <p>定义变量保存一种商品的名字、价格、数量，然后输出出来。可以选苹果、奶茶、耳机、书都行。</p>
+            </div>
+          </section>
+
+          <section class="section-card" id="summary">
+            <h2>8. 今日总结</h2>
+            <ul>
+              <li>变量 = 有名字的盒子。</li>
+              <li>写法：`变量名 = 值`。</li>
+              <li>变量可以保存文字、数字等信息。</li>
+              <li>变量的值可以被修改。</li>
+              <li>程序后面可以反复使用这些变量。</li>
+            </ul>
+            <div class="success">
+              <strong>今天过关标准：</strong> 你能自己写出 3 到 5 个变量，并且分得清“哪个是变量名，哪个是值”，就算真的掌握了今天的内容。
+            </div>
+          </section>
+
+          <section class="section">
+            <div class="cta-card">
+              <h2>变量学明白以后，下一步就是弄清楚“这些值属于哪一类”。</h2>
+              <p>第 3 天会进入数据类型。你会开始分清字符串、整数、浮点数和布尔值，理解为什么有些值可以直接相加，有些值需要先转换。</p>
+              <div class="section-actions">
+                <a class="button button-primary" href="day03_types.html">进入第 3 天：数据类型</a>
+                <a class="button button-secondary" href="python_study.html">回到系统总览</a>
+              </div>
+            </div>
+          </section>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-row">
+        <div>当前页面：<strong>day02_variables.html</strong></div>
+        <div>上一页：核心命令页　下一页：数据类型</div>
+      </div>
+    </div>
+  </footer>
+</body>
+</html>
