@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Python 系统学习总览 | 30 天路线与章节安排</title>
+  <title>Python 新手核心内容 | 核心命令与学习路线总览</title>
   <style>
     :root {
       --bg: #07111f;
@@ -406,6 +406,59 @@
       background: linear-gradient(135deg, #8ef2e4, #8ec5ff);
     }
 
+    .word-card {
+      position: relative;
+      padding: 20px;
+      border-radius: 22px;
+      border: 1px solid rgba(57, 127, 181, 0.14);
+      background: linear-gradient(180deg, #fafdff, #edf8ff);
+      color: var(--text-dark);
+      box-shadow: var(--shadow);
+    }
+
+    .word-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+    }
+
+    .word-token {
+      display: inline-flex;
+      align-items: center;
+      min-height: 38px;
+      padding: 0 14px;
+      border-radius: 999px;
+      background: #0c2035;
+      color: #dff8ff;
+      font-family: "Cascadia Code", "Consolas", monospace;
+      font-size: 0.95rem;
+      font-weight: 700;
+    }
+
+    .word-tag {
+      display: inline-flex;
+      align-items: center;
+      min-height: 32px;
+      padding: 0 12px;
+      border-radius: 999px;
+      background: rgba(54, 215, 196, 0.12);
+      color: #0e7866;
+      font-size: 0.82rem;
+      font-weight: 700;
+    }
+
+    .word-card h3 {
+      margin: 16px 0 8px;
+      font-size: 1.08rem;
+      font-family: var(--font-display);
+    }
+
+    .word-card p {
+      margin: 0;
+      color: var(--muted-dark);
+    }
+
     .info,
     .success,
     .warn {
@@ -460,6 +513,81 @@
       line-height: 1.8;
       white-space: pre-wrap;
       overflow-x: auto;
+    }
+
+    .memory-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 14px;
+      margin-top: 18px;
+    }
+
+    .memory-item {
+      padding: 16px;
+      border-radius: 18px;
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    .memory-item strong {
+      display: block;
+      margin-bottom: 6px;
+      color: #fff;
+    }
+
+    .memory-item p {
+      margin: 0;
+      color: #cfe1ef;
+      font-size: 0.95rem;
+    }
+
+    .quiz-card {
+      padding: 26px;
+      border-radius: var(--radius-lg);
+      border: 1px solid var(--line);
+      background: linear-gradient(180deg, rgba(14, 30, 51, 0.95), rgba(8, 19, 33, 0.98));
+      box-shadow: var(--shadow);
+    }
+
+    .quiz-card h3 {
+      margin: 0 0 10px;
+      font-size: 1.24rem;
+      font-family: var(--font-display);
+    }
+
+    .quiz-card p {
+      margin: 0;
+      color: var(--muted);
+    }
+
+    .quiz-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 22px;
+    }
+
+    .quiz-button {
+      min-height: 48px;
+      padding: 0 18px;
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.06);
+      color: #fff;
+      cursor: pointer;
+      transition: transform 0.2s ease, background 0.2s ease;
+    }
+
+    .quiz-button:hover {
+      transform: translateY(-2px);
+      background: rgba(255, 255, 255, 0.12);
+    }
+
+    .quiz-feedback {
+      min-height: 28px;
+      margin-top: 18px;
+      color: var(--accent);
+      font-weight: 700;
     }
 
     .phase-grid,
@@ -616,7 +744,7 @@
     }
 
     @media (max-width: 1080px) {
-      .hero-grid, .page-grid, .surface-grid.cols-3, .surface-grid.cols-2, .day-grid {
+      .hero-grid, .page-grid, .surface-grid.cols-3, .surface-grid.cols-2, .day-grid, .memory-grid {
         grid-template-columns: 1fr;
       }
       .toc { position: static; }
@@ -652,15 +780,15 @@
         <div class="brand">
           <div class="brand-mark">PY</div>
           <div class="brand-copy">
-            <strong>Python 系统学习总览</strong>
-            <span>从核心命令到 30 天进阶路线</span>
+            <strong>Python 新手核心内容</strong>
+            <span>把核心命令和学习路线合成一个入口</span>
           </div>
         </div>
-        <button class="menu-toggle" type="button" aria-label="打开菜单" data-menu-toggle>☰</button>
-        <div class="nav-links" data-nav-links>
+        <button class="menu-toggle" type="button" aria-label="打开菜单" aria-expanded="false" aria-controls="study-nav" data-menu-toggle>☰</button>
+        <div class="nav-links" id="study-nav" data-nav-links>
           <a href="index.html">首页</a>
-          <a href="python_basics_words.html">核心命令</a>
-          <a href="#overview">总览</a>
+          <a href="#commands">核心命令</a>
+          <a href="#overview">学习总览</a>
           <a href="#plan30">30 天路线</a>
           <a href="#checkin">打卡区</a>
           <a href="#next" class="is-active">下一步</a>
@@ -675,37 +803,37 @@
         <div class="hero-card glass reveal">
           <div class="hero-grid">
             <div>
-              <div class="eyebrow">适合零基础用户的系统学习总览</div>
-              <h1>把学习顺序先排清楚，<span>Python 才会越学越顺。</span></h1>
-              <p>这个页面负责解决两个问题：第一，告诉你 30 天左右该怎样从零开始学；第二，把你现在已有的章节、练习入口和打卡机制统一成一张清晰的学习地图。</p>
+              <div class="eyebrow">适合零基础用户的一站式起步页</div>
+              <h1>先看懂核心命令，<span>再按路线进入真正的学习。</span></h1>
+              <p>这个页面把原来的“核心命令”和“系统总览”合成了一个入口。你不用在两个入门页之间来回跳，只要先在这里看懂高频命令、常用英文和学习顺序，再进入 Day 02 即可。</p>
               <div class="hero-actions">
-                <a class="button button-primary" href="python_basics_words.html">先学核心命令</a>
+                <a class="button button-primary" href="#commands">开始新手核心内容</a>
                 <a class="button button-secondary" href="day02_variables.html">进入变量章节</a>
                 <a class="button button-secondary" href="#checkin">打开学习打卡</a>
               </div>
               <div class="hero-stats">
                 <div class="stat-card">
+                  <strong>12 个</strong>
+                  <span>优先看懂的高频命令和词汇</span>
+                </div>
+                <div class="stat-card">
                   <strong>30 天</strong>
-                  <span>给零基础的稳定学习节奏</span>
+                  <span>可以照着推进的基础路线</span>
                 </div>
                 <div class="stat-card">
-                  <strong>4 阶段</strong>
-                  <span>从看懂命令到完成小项目</span>
-                </div>
-                <div class="stat-card">
-                  <strong>7 天起步</strong>
-                  <span>第一周建立程序最核心感觉</span>
+                  <strong>1 个入口</strong>
+                  <span>不再拆成两个重复的入门页</span>
                 </div>
               </div>
             </div>
 
             <div class="hero-panel">
               <h3>建议学习顺序</h3>
-              <p>如果你现在完全没有编程基础，最稳妥的方式不是乱跳章节，而是先读懂关键词，再上语法，再做小项目。</p>
+              <p>如果你现在完全没有编程基础，最稳妥的方式不是乱跳章节，而是先在这一页把“看懂”和“知道顺序”一起解决，再去学变量、类型和输入输出。</p>
               <div class="panel-box">学习流程
 1. 看懂 print / input / if / else
-2. 学变量、类型、输入输出、运算符
-3. 写出成绩判断、猜数字、记账本</div>
+2. 知道 30 天路线和第一周入口
+3. 从 Day 02 开始往后学</div>
             </div>
           </div>
         </div>
@@ -716,19 +844,191 @@
       <div class="container page-grid">
         <aside class="toc glass reveal">
           <h2>目录导航</h2>
-          <p>先看路线，再根据今天的目标跳转章节。</p>
-          <a href="#overview">1. 学习总览</a>
-          <a href="#plan30">2. 30 天路线</a>
-          <a href="#day1">3. 第 1 天正式课程</a>
-          <a href="#week1">4. 第 1 周章节入口</a>
-          <a href="#checkin">5. 学习打卡区</a>
-          <a href="#next">6. 下一步建议</a>
+          <p>先把这页看顺，再决定今天要跳到哪里。</p>
+          <a href="#commands">1. 核心命令</a>
+          <a href="#words">2. 常用英文</a>
+          <a href="#quiz">3. 1 分钟小测试</a>
+          <a href="#overview">4. 学习总览</a>
+          <a href="#plan30">5. 30 天路线</a>
+          <a href="#week1">6. 第 1 周章节入口</a>
+          <a href="#checkin">7. 学习打卡区</a>
+          <a href="#next">8. 下一步建议</a>
         </aside>
 
         <div class="content">
+          <section class="section-card reveal" id="commands">
+            <h2>1. 核心命令</h2>
+            <p>先掌握这些高频命令，你看很多入门代码时就不会再是完全陌生的状态。这里不要求你全背下来，只要求先看熟、先知道作用。</p>
+            <div class="surface-grid cols-3" style="margin-top: 18px;">
+              <article class="word-card">
+                <div class="word-top">
+                  <span class="word-token">print()</span>
+                  <span class="word-tag">输出</span>
+                </div>
+                <h3>把内容显示到屏幕上</h3>
+                <p>它的作用就是告诉程序：“把这句话、这个数字或者这个结果打印出来给我看。”</p>
+                <div class="code">print("你好，Python")</div>
+              </article>
+
+              <article class="word-card">
+                <div class="word-top">
+                  <span class="word-token">input()</span>
+                  <span class="word-tag">输入</span>
+                </div>
+                <h3>从用户那里拿到信息</h3>
+                <p>它会先停下来，等你输入内容，再把输入的东西交给程序继续处理。</p>
+                <div class="code">name = input("请输入名字：")</div>
+              </article>
+
+              <article class="word-card">
+                <div class="word-top">
+                  <span class="word-token">type()</span>
+                  <span class="word-tag">类型</span>
+                </div>
+                <h3>查看数据属于什么类型</h3>
+                <p>当你不确定一个值是字符串还是数字时，可以用它来检查。</p>
+                <div class="code">print(type(18))</div>
+              </article>
+
+              <article class="word-card">
+                <div class="word-top">
+                  <span class="word-token">if</span>
+                  <span class="word-tag">如果</span>
+                </div>
+                <h3>满足条件时执行某件事</h3>
+                <p>它像在问程序：“如果这个条件成立，那你就这样做。”</p>
+                <div class="code">if score &gt;= 60:
+    print("及格")</div>
+              </article>
+
+              <article class="word-card">
+                <div class="word-top">
+                  <span class="word-token">else</span>
+                  <span class="word-tag">否则</span>
+                </div>
+                <h3>条件不成立时怎么做</h3>
+                <p>当 `if` 里的条件不满足，就执行 `else` 里面的内容。</p>
+                <div class="code">else:
+    print("不及格")</div>
+              </article>
+
+              <article class="word-card">
+                <div class="word-top">
+                  <span class="word-token">for</span>
+                  <span class="word-tag">循环</span>
+                </div>
+                <h3>重复做同一类事情</h3>
+                <p>当你不想把同样的代码写很多次时，就会用到循环。</p>
+                <div class="code">for i in range(3):
+    print("继续练习")</div>
+              </article>
+            </div>
+            <div class="info">
+              <strong>先抓住动作，不要先背语法：</strong> 看到 `print` 想到“输出”，看到 `input` 想到“接收输入”，看到 `if` 想到“条件判断”，这一步就够了。
+            </div>
+          </section>
+
+          <section class="section-card reveal" id="words">
+            <h2>2. 常用英文</h2>
+            <p>这些英文会在入门阶段高频出现。你不用一次性全部背会，先做到“看见它就知道大概是什么意思”。</p>
+            <div class="surface-grid cols-2" style="margin-top: 18px;">
+              <article class="section-card">
+                <div class="card-kicker">W1</div>
+                <h3>数据相关</h3>
+                <div class="memory-grid">
+                  <div class="memory-item">
+                    <strong>variable = 变量</strong>
+                    <p>可以把它理解成一个有名字的盒子。</p>
+                  </div>
+                  <div class="memory-item">
+                    <strong>value = 值</strong>
+                    <p>盒子里装着的内容就是值。</p>
+                  </div>
+                  <div class="memory-item">
+                    <strong>string = 字符串</strong>
+                    <p>被引号包起来的一段文字。</p>
+                  </div>
+                  <div class="memory-item">
+                    <strong>number = 数字</strong>
+                    <p>包括整数和小数。</p>
+                  </div>
+                </div>
+              </article>
+
+              <article class="section-card">
+                <div class="card-kicker">W2</div>
+                <h3>判断相关</h3>
+                <div class="memory-grid">
+                  <div class="memory-item">
+                    <strong>condition = 条件</strong>
+                    <p>程序做判断时要先看条件。</p>
+                  </div>
+                  <div class="memory-item">
+                    <strong>True = 真</strong>
+                    <p>表示条件成立。</p>
+                  </div>
+                  <div class="memory-item">
+                    <strong>False = 假</strong>
+                    <p>表示条件不成立。</p>
+                  </div>
+                  <div class="memory-item">
+                    <strong>compare = 比较</strong>
+                    <p>比如大于、小于、是否相等。</p>
+                  </div>
+                </div>
+              </article>
+
+              <article class="section-card">
+                <div class="card-kicker">W3</div>
+                <h3>动作相关</h3>
+                <div class="memory-grid">
+                  <div class="memory-item">
+                    <strong>output = 输出</strong>
+                    <p>让程序把结果显示出来。</p>
+                  </div>
+                  <div class="memory-item">
+                    <strong>input = 输入</strong>
+                    <p>从用户那里接收内容。</p>
+                  </div>
+                  <div class="memory-item">
+                    <strong>loop = 循环</strong>
+                    <p>重复做某件事。</p>
+                  </div>
+                  <div class="memory-item">
+                    <strong>function = 函数</strong>
+                    <p>把一段逻辑打包，方便重复使用。</p>
+                  </div>
+                </div>
+              </article>
+
+              <article class="light-card">
+                <div class="card-kicker">Tip</div>
+                <h3>零基础怎么记这些词更有效</h3>
+                <p>不要把它们当成纯英语单词去硬背，而是把它们和“程序动作”绑在一起记。</p>
+                <ul>
+                  <li>`print` 一看到就想到“输出”。</li>
+                  <li>`input` 一看到就想到“等用户输入”。</li>
+                  <li>`if` 一看到就想到“如果满足条件”。</li>
+                  <li>`for` 一看到就想到“重复做几次”。</li>
+                </ul>
+              </article>
+            </div>
+          </section>
+
+          <section class="section-card reveal" id="quiz">
+            <h2>3. 1 分钟小测试</h2>
+            <p>不是为了考试，是为了确认你有没有把最基础的命令含义记住。答对后会自动切到下一题。</p>
+            <div class="quiz-card" style="margin-top: 18px;">
+              <h3 id="quizQuestion">`print()` 的作用是什么？</h3>
+              <p id="quizHint">选一个最接近的答案。</p>
+              <div class="quiz-actions" id="quizActions"></div>
+              <div class="quiz-feedback" id="quizFeedback"></div>
+            </div>
+          </section>
+
           <section class="section-card reveal" id="overview">
-            <h2>1. 学习总览</h2>
-            <p>对零基础用户来说，最容易卡住的不是“不会敲代码”，而是不知道从哪里开始、为什么先学这个、学到哪里算入门。这个总览页就是为了解决这些问题。</p>
+            <h2>4. 学习总览</h2>
+            <p>对零基础用户来说，最容易卡住的不是“不会敲代码”，而是不知道从哪里开始、为什么先学这个、学到哪里算入门。现在这些问题都收在这一页里，你只需要顺着往下走。</p>
             <div class="surface-grid cols-3" style="margin-top: 18px;">
               <article class="light-card">
                 <div class="card-kicker">01</div>
@@ -752,7 +1052,7 @@
           </section>
 
           <section class="section-card reveal" id="plan30">
-            <h2>2. 30 天学习路线</h2>
+            <h2>5. 30 天学习路线</h2>
             <p>这份路线不是为了让你机械打卡 30 次，而是把入门阶段最核心的内容拆成四个阶段，让你知道每一段到底在解决什么问题。</p>
             <div class="phase-grid">
               <article class="phase-card">
@@ -833,7 +1133,7 @@
           </section>
 
           <section class="section-card reveal" id="day1">
-            <h2>3. 第 1 天正式课程：认识 Python 和程序</h2>
+            <h2>6. 第 1 天正式课程：认识 Python 和程序</h2>
             <p>如果你是第一次学编程，第 1 天的目标不要定得太大。今天只需要理解“程序是什么”“代码是怎么执行的”，并且会用 `print()` 输出内容就够了。</p>
             <div class="surface-grid cols-2" style="margin-top: 18px;">
               <article class="light-card">
@@ -874,14 +1174,14 @@ print("欢迎开始学习编程")</div>
           </section>
 
           <section class="section-card reveal" id="week1">
-            <h2>4. 第 1 周章节入口</h2>
-            <p>下面这些入口直接接到你现有的学习文件。建议学习顺序是：核心命令页 → 变量 → 类型 → 输入输出 → 运算符 → 判断与案例。</p>
+            <h2>7. 第 1 周章节入口</h2>
+            <p>下面这些入口直接接到你现有的学习文件。建议学习顺序是：新手核心内容页 → 变量 → 类型 → 输入输出 → 运算符 → 判断与案例。</p>
             <div class="phase-grid">
               <article class="link-card">
-                <h3>核心命令和常用英文</h3>
-                <p>如果你对 `print`、`input`、`if`、`else` 这些词还不熟，建议先从这个页面开始，把读懂代码的门槛先降下来。</p>
+                <h3>新手核心内容</h3>
+                <p>如果你还需要回头复习 `print`、`input`、`if`、`else` 和整体路线，就回到本页最前面的核心命令、常用英文和总览区。</p>
                 <div class="section-actions">
-                  <a class="button button-inline" href="python_basics_words.html">打开核心命令页</a>
+                  <a class="button button-inline" href="#commands">回到本页前半段</a>
                 </div>
               </article>
 
@@ -929,7 +1229,7 @@ print("欢迎开始学习编程")</div>
           </section>
 
           <section class="section-card reveal" id="checkin">
-            <h2>5. 学习打卡区</h2>
+            <h2>8. 学习打卡区</h2>
             <p>打卡不是形式主义。对初学者来说，持续感非常重要。你每完成一天就勾掉一项，能明显看到自己在往前走。</p>
             <div class="check-grid">
               <div class="check-item"><label><input type="checkbox" data-day="1"><span>第 1 天：认识程序和 `print()`</span></label><small>先理解代码是按顺序执行的</small></div>
@@ -973,19 +1273,19 @@ print("欢迎开始学习编程")</div>
           </section>
 
           <section class="section-card reveal" id="next">
-            <h2>6. 下一步建议</h2>
+            <h2>9. 下一步建议</h2>
             <p>如果你现在准备继续推进，这里是最稳的执行方式。</p>
             <div class="surface-grid cols-2" style="margin-top: 18px;">
               <article class="light-card">
                 <div class="card-kicker">Go</div>
                 <h3>推荐马上做的事</h3>
                 <ul>
-                  <li>先打开核心命令页，把 `print / input / if / else` 看熟。</li>
+                  <li>先回到本页前面的核心命令区，把 `print / input / if / else` 看熟。</li>
                   <li>再学变量和数据类型，不要急着直接上复杂语法。</li>
                   <li>学完一个章节就做当天练习，再打卡。</li>
                 </ul>
                 <div class="section-actions">
-                  <a class="button button-inline" href="python_basics_words.html">先去学核心命令</a>
+                  <a class="button button-inline" href="#commands">先去看核心命令</a>
                 </div>
               </article>
 
@@ -1006,10 +1306,10 @@ print("欢迎开始学习编程")</div>
 
           <section class="section reveal">
             <div class="cta-card">
-              <h2>先把核心命令学明白，再进入正式章节。</h2>
-              <p>如果你现在最大的障碍还是“看不懂代码里的英文”，那最值得先做的不是继续往后翻，而是先把高频命令和常用词汇页过一遍。学会读，后面的吸收速度会明显快很多。</p>
+              <h2>把“看懂”和“知道顺序”先在这一页解决，再进入正式章节。</h2>
+              <p>如果你现在最大的障碍还是“看不懂代码里的英文”，就先回到本页上面的核心命令和常用英文区；如果你已经看懂了，就直接去 Day 02。这个单页入口的目的，就是不再让新手在两个入门页之间反复切换。</p>
               <div class="section-actions">
-                <a class="button button-primary" href="python_basics_words.html">打开核心命令页</a>
+                <a class="button button-primary" href="#commands">回到新手核心内容开头</a>
                 <a class="button button-secondary" href="day02_variables.html">进入第 2 天学习</a>
               </div>
             </div>
@@ -1023,7 +1323,7 @@ print("欢迎开始学习编程")</div>
     <div class="container">
       <div class="footer-row">
         <div>当前页面：<strong>python_study.html</strong></div>
-        <div>推荐起点：核心命令页 → 变量 → 类型 → 输入输出 → 运算符 → 判断逻辑</div>
+        <div>推荐起点：新手核心内容页 → 变量 → 类型 → 输入输出 → 运算符 → 判断逻辑</div>
       </div>
     </div>
   </footer>
@@ -1033,9 +1333,39 @@ print("欢迎开始学习编程")</div>
     const checkboxes = Array.from(document.querySelectorAll('input[type="checkbox"][data-day]'));
     const progressBar = document.getElementById("progressBar");
     const progressText = document.getElementById("progressText");
+    const quizQuestion = document.getElementById("quizQuestion");
+    const quizHint = document.getElementById("quizHint");
+    const quizActions = document.getElementById("quizActions");
+    const quizFeedback = document.getElementById("quizFeedback");
     const menuToggle = document.querySelector("[data-menu-toggle]");
     const navLinks = document.querySelector("[data-nav-links]");
     const revealItems = document.querySelectorAll(".reveal");
+
+    const quizItems = [
+      {
+        question: "`print()` 的作用是什么？",
+        hint: "选一个最接近的答案。",
+        answers: ["把内容输出到屏幕", "从用户那里接收输入", "定义一个变量"],
+        correct: 0,
+        feedback: "对。`print()` 就是输出结果，是入门阶段最常见的命令之一。"
+      },
+      {
+        question: "`input()` 更接近下面哪个意思？",
+        hint: "它和人机互动有关。",
+        answers: ["重复执行", "接收用户输入", "判断条件真假"],
+        correct: 1,
+        feedback: "对。`input()` 的作用是让程序停下来，等待用户输入内容。"
+      },
+      {
+        question: "`if` 在代码里通常表示什么？",
+        hint: "它和条件有关。",
+        answers: ["如果满足条件", "重复很多次", "把内容删除"],
+        correct: 0,
+        feedback: "对。看到 `if`，就可以先理解成“如果这个条件成立”。"
+      }
+    ];
+
+    let currentQuizIndex = 0;
 
     function loadChecks() {
       try {
@@ -1079,15 +1409,49 @@ print("欢迎开始学习编程")</div>
       refreshProgress();
     }
 
+    function renderQuiz() {
+      if (!quizQuestion || !quizHint || !quizActions || !quizFeedback) return;
+
+      const item = quizItems[currentQuizIndex];
+      quizQuestion.textContent = item.question;
+      quizHint.textContent = item.hint;
+      quizFeedback.textContent = "";
+      quizActions.innerHTML = "";
+
+      item.answers.forEach((answer, index) => {
+        const button = document.createElement("button");
+        button.type = "button";
+        button.className = "quiz-button";
+        button.textContent = answer;
+        button.addEventListener("click", () => {
+          if (index === item.correct) {
+            quizFeedback.textContent = item.feedback;
+            window.setTimeout(() => {
+              currentQuizIndex = (currentQuizIndex + 1) % quizItems.length;
+              renderQuiz();
+            }, 1200);
+          } else {
+            quizFeedback.textContent = "这题不对。再看一下命令含义，重点抓住它的动作。";
+          }
+        });
+        quizActions.appendChild(button);
+      });
+    }
+
     window.resetChecks = resetChecks;
 
     if (menuToggle && navLinks) {
+      const setMenuOpen = (isOpen) => {
+        navLinks.classList.toggle("is-open", isOpen);
+        menuToggle.setAttribute("aria-expanded", String(isOpen));
+      };
+
       menuToggle.addEventListener("click", () => {
-        navLinks.classList.toggle("is-open");
+        setMenuOpen(!navLinks.classList.contains("is-open"));
       });
 
       navLinks.querySelectorAll("a").forEach((link) => {
-        link.addEventListener("click", () => navLinks.classList.remove("is-open"));
+        link.addEventListener("click", () => setMenuOpen(false));
       });
     }
 
@@ -1107,6 +1471,7 @@ print("欢迎开始学习编程")</div>
     }
 
     refreshProgress();
+    renderQuiz();
   </script>
 </body>
 </html>

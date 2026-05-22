@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Python 核心命令和常用英文 | 零基础第一步</title>
+  <title>Python 核心命令和常用英文 | 新手核心内容的命令部分</title>
   <style>
     :root {
       --bg: #07111f;
@@ -566,10 +566,10 @@
             <span>读懂代码的第一步</span>
           </div>
         </div>
-        <button class="menu-toggle" type="button" aria-label="打开菜单" data-menu-toggle>☰</button>
-        <div class="nav-links" data-nav-links>
+        <button class="menu-toggle" type="button" aria-label="打开菜单" aria-expanded="false" aria-controls="basics-nav" data-menu-toggle>☰</button>
+        <div class="nav-links" id="basics-nav" data-nav-links>
           <a href="index.html">首页</a>
-          <a href="python_study.html">系统总览</a>
+          <a href="python_study.html">新手核心内容</a>
           <a href="#commands">核心命令</a>
           <a href="#words">常用英文</a>
           <a href="#quiz" class="is-active">小测试</a>
@@ -589,7 +589,7 @@
               <p>很多初学者不是不会学，而是一打开代码就被 `print`、`input`、`if`、`else` 这些词挡住了。这个页面就是把最常见的关键词拆开讲，让你先过“看懂”这一关。</p>
               <div class="hero-actions">
                 <a class="button button-primary" href="#commands">开始学核心命令</a>
-                <a class="button button-secondary" href="python_study.html">回到系统总览</a>
+                <a class="button button-secondary" href="python_study.html">回到新手核心内容</a>
               </div>
               <div class="hero-stats">
                 <div class="stat-card">
@@ -862,9 +862,9 @@ else:
       <div class="container">
         <div class="cta-card reveal">
           <h2>看懂这些词之后，再进入正式章节会轻松很多。</h2>
-          <p>你现在不需要马上全部默写出来。只要做到了“看见这些命令和英文不会发怵”，就已经跨过了零基础最难的第一道门槛。接下来可以去系统总览页，按顺序开始学变量和数据类型。</p>
+          <p>你现在不需要马上全部默写出来。只要做到了“看见这些命令和英文不会发怵”，就已经跨过了零基础最难的第一道门槛。接下来可以回到“新手核心内容”主入口，按顺序开始学变量和数据类型。</p>
           <div class="section-actions">
-            <a class="button button-primary" href="python_study.html">进入系统总览</a>
+            <a class="button button-primary" href="python_study.html">进入新手核心内容</a>
             <a class="button button-secondary" href="day02_variables.html">直接去变量章节</a>
           </div>
         </div>
@@ -876,7 +876,7 @@ else:
     <div class="container">
       <div class="footer-row">
         <div>当前页面：<strong>python_basics_words.html</strong></div>
-        <div>推荐下一步：系统总览 → 变量 → 类型 → 输入输出 → 运算符 → 判断逻辑</div>
+        <div>推荐下一步：新手核心内容 → 变量 → 类型 → 输入输出 → 运算符 → 判断逻辑</div>
       </div>
     </div>
   </footer>
@@ -944,12 +944,17 @@ else:
     }
 
     if (menuToggle && navLinks) {
+      const setMenuOpen = (isOpen) => {
+        navLinks.classList.toggle("is-open", isOpen);
+        menuToggle.setAttribute("aria-expanded", String(isOpen));
+      };
+
       menuToggle.addEventListener("click", () => {
-        navLinks.classList.toggle("is-open");
+        setMenuOpen(!navLinks.classList.contains("is-open"));
       });
 
       navLinks.querySelectorAll("a").forEach((link) => {
-        link.addEventListener("click", () => navLinks.classList.remove("is-open"));
+        link.addEventListener("click", () => setMenuOpen(false));
       });
     }
 
