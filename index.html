@@ -340,6 +340,33 @@
       margin-bottom: 18px;
     }
 
+    .newbie-note {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 18px;
+      padding: 10px 14px;
+      border-radius: 18px;
+      background: rgba(88, 168, 255, 0.08);
+      border: 1px solid rgba(127, 213, 255, 0.18);
+      color: var(--silver);
+      font-size: 0.92rem;
+    }
+
+    .newbie-note::before {
+      content: "01";
+      display: inline-grid;
+      place-items: center;
+      width: 26px;
+      height: 26px;
+      border-radius: 999px;
+      background: linear-gradient(135deg, var(--blue), var(--cyan));
+      color: #04101a;
+      font-family: var(--font-display);
+      font-size: 0.8rem;
+      font-weight: 700;
+    }
+
     .hero h1 {
       margin: 0;
       font-family: var(--font-display);
@@ -481,6 +508,7 @@
     .hero-stage {
       position: relative;
       min-height: 620px;
+      padding: 24px;
       border-radius: calc(var(--radius-xl) - 8px);
       background:
         linear-gradient(180deg, rgba(8, 18, 31, 0.9), rgba(6, 14, 24, 0.8)),
@@ -504,95 +532,143 @@
     .hero-stage::after {
       content: "";
       position: absolute;
-      left: -30%;
-      right: -30%;
-      top: 48%;
+      left: 24px;
+      right: 24px;
+      top: 96px;
       height: 1px;
       background: linear-gradient(90deg, transparent, rgba(119, 243, 235, 0.22), transparent);
     }
 
-    .orbital-field {
-      position: absolute;
-      inset: 0;
-    }
-
-    .orbital-ring {
-      position: absolute;
-      left: 50%;
-      top: 49%;
-      border-radius: 50%;
-      border: 1px solid rgba(127, 213, 255, 0.16);
-      transform: translate(-50%, -50%);
-    }
-
-    .orbital-ring.ring-a {
-      width: 280px;
-      height: 280px;
-    }
-
-    .orbital-ring.ring-b {
-      width: 400px;
-      height: 400px;
-      border-style: dashed;
-      opacity: 0.55;
-    }
-
-    .orbital-ring.ring-c {
-      width: 520px;
-      height: 520px;
-      opacity: 0.32;
-    }
-
-    .orbital-ring.ring-d {
-      width: 620px;
-      height: 620px;
-      opacity: 0.24;
-    }
-
-    .signal-orb {
-      position: absolute;
-      left: 50%;
-      top: 48%;
-      width: 214px;
-      height: 214px;
-      transform: translate(-50%, -50%);
-      border-radius: 50%;
-      background:
-        radial-gradient(circle at 35% 30%, rgba(255, 255, 255, 0.46), transparent 24%),
-        radial-gradient(circle at center, rgba(102, 220, 255, 0.36), rgba(19, 58, 97, 0.16) 50%, rgba(3, 10, 18, 0.95) 72%);
-      border: 1px solid rgba(170, 231, 255, 0.24);
-      box-shadow:
-        0 0 0 18px rgba(88, 168, 255, 0.04),
-        0 0 56px rgba(88, 168, 255, 0.16),
-        inset 0 -14px 30px rgba(1, 6, 12, 0.38);
-      display: grid;
-      place-items: center;
-      text-align: center;
-    }
-
-    .signal-core {
+    .starter-board {
       position: relative;
       z-index: 2;
+      display: grid;
+      gap: 16px;
+      height: 100%;
     }
 
-    .signal-core span {
-      display: block;
-      font-size: 0.74rem;
-      letter-spacing: 0.3em;
-      text-transform: uppercase;
-      color: var(--muted-strong);
+    .mission-card,
+    .starter-card,
+    .today-card {
+      border-radius: 24px;
+      background: linear-gradient(180deg, rgba(10, 24, 40, 0.88), rgba(7, 16, 28, 0.74));
+      border: 1px solid rgba(127, 213, 255, 0.14);
+      box-shadow: var(--shadow-lg);
     }
 
-    .signal-core strong {
-      display: block;
-      margin-top: 8px;
+    .mission-card {
+      padding: 20px 20px 18px;
+    }
+
+    .mission-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 14px;
+      margin-bottom: 14px;
+    }
+
+    .mission-top strong {
       font-family: var(--font-display);
-      font-size: 1.45rem;
-      line-height: 1.1;
-      letter-spacing: 0.08em;
+      font-size: 1.18rem;
     }
 
+    .mission-card p,
+    .starter-card p,
+    .today-card p {
+      margin: 0;
+      color: var(--muted);
+    }
+
+    .starter-stack {
+      display: grid;
+      gap: 14px;
+    }
+
+    .starter-card {
+      display: grid;
+      grid-template-columns: auto minmax(0, 1fr);
+      gap: 16px;
+      padding: 18px;
+      align-items: start;
+    }
+
+    .step-badge {
+      width: 48px;
+      height: 48px;
+      border-radius: 18px;
+      display: grid;
+      place-items: center;
+      font-family: var(--font-display);
+      font-size: 0.98rem;
+      color: var(--silver);
+      background: linear-gradient(135deg, rgba(88, 168, 255, 0.22), rgba(119, 243, 235, 0.18));
+      border: 1px solid rgba(127, 213, 255, 0.18);
+    }
+
+    .starter-copy strong,
+    .today-card strong {
+      display: block;
+      font-size: 1.02rem;
+      margin-bottom: 6px;
+    }
+
+    .starter-copy span,
+    .today-card span {
+      display: block;
+      color: var(--muted);
+      font-size: 0.92rem;
+      line-height: 1.55;
+    }
+
+    .today-card {
+      padding: 18px;
+    }
+
+    .today-card ul {
+      margin: 14px 0 0;
+      padding: 0;
+      list-style: none;
+      display: grid;
+      gap: 10px;
+    }
+
+    .today-card li {
+      position: relative;
+      padding-left: 18px;
+      color: var(--muted-strong);
+      font-size: 0.93rem;
+    }
+
+    .today-card li::before {
+      content: "";
+      position: absolute;
+      left: 0;
+      top: 0.72em;
+      width: 8px;
+      height: 8px;
+      border-radius: 999px;
+      background: linear-gradient(135deg, var(--cyan), var(--blue));
+      transform: translateY(-50%);
+    }
+
+    .starter-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 16px;
+    }
+
+    .orbital-field,
+    .data-lines,
+    .signal-orb,
     .stage-card,
+    .code-panel {
+      display: none;
+    }
+
+    .panel-card,
+    .quickstart-card,
     .panel-card,
     .route-card,
     .module-card,
@@ -603,7 +679,7 @@
       overflow: hidden;
     }
 
-    .stage-card::before,
+    .quickstart-card::before,
     .panel-card::before,
     .route-card::before,
     .module-card::before,
@@ -619,7 +695,7 @@
       pointer-events: none;
     }
 
-    .stage-card:hover::before,
+    .quickstart-card:hover::before,
     .panel-card:hover::before,
     .route-card:hover::before,
     .module-card:hover::before,
@@ -629,173 +705,24 @@
       transform: translateX(130%);
     }
 
-    .stage-card {
-      position: absolute;
-      width: 188px;
-      padding: 16px 16px 15px;
-      border-radius: 20px;
-      background: linear-gradient(180deg, rgba(10, 24, 40, 0.9), rgba(6, 15, 26, 0.78));
-      border: 1px solid rgba(127, 213, 255, 0.16);
-      box-shadow: var(--shadow-lg);
-    }
-
-    .stage-card small {
-      display: block;
-      margin-bottom: 8px;
-      color: var(--cyan);
-      font-size: 0.74rem;
-      letter-spacing: 0.16em;
-      text-transform: uppercase;
-    }
-
-    .stage-card strong {
-      display: block;
-      font-size: 1rem;
-      margin-bottom: 8px;
-    }
-
-    .stage-card p {
-      margin: 0;
-      color: var(--muted);
-      font-size: 0.88rem;
-      line-height: 1.55;
-    }
-
-    .stage-card.card-a {
-      top: 52px;
-      left: 28px;
-    }
-
-    .stage-card.card-b {
-      top: 88px;
-      right: 30px;
-    }
-
-    .stage-card.card-c {
-      left: 46px;
-      bottom: 78px;
-    }
-
-    .stage-card.card-d {
-      right: 44px;
-      bottom: 58px;
-    }
-
-    .data-lines {
-      position: absolute;
-      inset: 0;
-      pointer-events: none;
-    }
-
-    .data-lines span {
-      position: absolute;
-      display: block;
-      height: 1px;
-      background: linear-gradient(90deg, transparent, rgba(119, 243, 235, 0.34), transparent);
-      box-shadow: 0 0 16px rgba(119, 243, 235, 0.16);
-    }
-
-    .data-lines span:nth-child(1) {
-      top: 24%;
-      left: 8%;
-      width: 42%;
-      transform: rotate(12deg);
-    }
-
-    .data-lines span:nth-child(2) {
-      top: 30%;
-      right: 8%;
-      width: 34%;
-      transform: rotate(-12deg);
-    }
-
-    .data-lines span:nth-child(3) {
-      left: 18%;
-      bottom: 24%;
-      width: 32%;
-      transform: rotate(-18deg);
-    }
-
-    .data-lines span:nth-child(4) {
-      right: 16%;
-      bottom: 22%;
-      width: 30%;
-      transform: rotate(20deg);
-    }
-
-    .code-panel {
-      position: absolute;
-      left: 50%;
-      bottom: 28px;
-      width: min(540px, calc(100% - 40px));
-      transform: translateX(-50%);
-      padding: 18px 18px 16px;
-      border-radius: 24px;
-      background: linear-gradient(180deg, rgba(8, 20, 34, 0.92), rgba(5, 12, 22, 0.84));
-      border: 1px solid rgba(127, 213, 255, 0.16);
-      box-shadow: var(--shadow-lg);
-    }
-
-    .code-panel-top {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 14px;
-      margin-bottom: 14px;
-    }
-
-    .code-dots {
-      display: inline-flex;
-      gap: 8px;
-    }
-
-    .code-dots span {
-      width: 8px;
-      height: 8px;
-      border-radius: 999px;
-      background: rgba(255, 255, 255, 0.28);
-    }
-
-    .code-panel-top strong {
-      font-size: 0.94rem;
-      color: var(--muted-strong);
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-    }
-
-    pre {
-      margin: 0;
-      white-space: pre-wrap;
-      font-family: Consolas, "Cascadia Code", monospace;
-      font-size: 0.91rem;
-      line-height: 1.7;
-      color: #d5f0ff;
-    }
-
-    .token-key {
-      color: #74ebf0;
-    }
-
-    .token-value {
-      color: #8dbfff;
-    }
-
-    .token-comment {
-      color: #7f97af;
-    }
-
     .overview-grid,
+    .quickstart-grid,
     .project-grid,
     .trust-grid {
       display: grid;
       gap: 20px;
     }
 
+    .quickstart-grid {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+
     .overview-grid {
       grid-template-columns: minmax(0, 1.08fr) minmax(320px, 0.92fr);
     }
 
-    .panel-card {
+    .panel-card,
+    .quickstart-card {
       border-radius: var(--radius-lg);
       padding: 26px;
       background: linear-gradient(180deg, rgba(10, 23, 38, 0.8), rgba(8, 18, 30, 0.74));
@@ -804,6 +731,7 @@
     }
 
     .panel-card h3,
+    .quickstart-card h3,
     .route-card h3,
     .module-card h3,
     .project-card h3,
@@ -818,7 +746,12 @@
       font-size: clamp(1.45rem, 2vw, 2rem);
     }
 
+    .quickstart-card h3 {
+      font-size: 1.34rem;
+    }
+
     .panel-card p,
+    .quickstart-card p,
     .route-card p,
     .module-card p,
     .project-card p,
@@ -826,6 +759,31 @@
     .cta-card p {
       margin: 0;
       color: var(--muted);
+    }
+
+    .quickstart-step {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      color: var(--muted-strong);
+      font-size: 0.8rem;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      margin-bottom: 8px;
+    }
+
+    .quickstart-step::before {
+      content: "";
+      width: 26px;
+      height: 1px;
+      background: linear-gradient(90deg, var(--cyan), transparent);
+    }
+
+    .quickstart-card strong {
+      display: block;
+      margin: 18px 0 8px;
+      color: var(--silver);
+      font-size: 0.98rem;
     }
 
     .metric-grid {
@@ -1238,11 +1196,12 @@
       }
 
       .button,
+      .quickstart-card,
       .route-card,
       .module-card,
       .project-card,
       .trust-card,
-      .stage-card::before,
+      .quickstart-card::before,
       .panel-card::before,
       .route-card::before,
       .module-card::before,
@@ -1255,6 +1214,7 @@
 
     @media (max-width: 1140px) {
       .hero-grid,
+      .quickstart-grid,
       .overview-grid,
       .trust-grid,
       .section-head {
@@ -1271,7 +1231,7 @@
       }
 
       .hero-stage {
-        min-height: 560px;
+        min-height: auto;
       }
     }
 
@@ -1319,6 +1279,7 @@
 
       .hero-proof,
       .metric-grid,
+      .quickstart-grid,
       .road-grid,
       .modules-grid,
       .project-grid {
@@ -1326,31 +1287,7 @@
       }
 
       .hero-stage {
-        min-height: 620px;
-      }
-
-      .stage-card {
-        width: 170px;
-      }
-
-      .stage-card.card-a {
-        top: 30px;
-        left: 16px;
-      }
-
-      .stage-card.card-b {
-        top: 84px;
-        right: 16px;
-      }
-
-      .stage-card.card-c {
-        left: 12px;
-        bottom: 110px;
-      }
-
-      .stage-card.card-d {
-        right: 16px;
-        bottom: 108px;
+        min-height: auto;
       }
 
       .roadmap-shell::before {
@@ -1396,47 +1333,12 @@
       }
 
       .hero-stage {
-        min-height: 660px;
-      }
-
-      .orbital-ring.ring-b {
-        width: 340px;
-        height: 340px;
-      }
-
-      .orbital-ring.ring-c {
-        width: 420px;
-        height: 420px;
-      }
-
-      .orbital-ring.ring-d {
-        width: 480px;
-        height: 480px;
-      }
-
-      .signal-orb {
-        width: 190px;
-        height: 190px;
-      }
-
-      .stage-card {
-        position: absolute;
-        width: 152px;
-        padding: 14px;
-      }
-
-      .stage-card p,
-      pre {
-        font-size: 0.83rem;
-      }
-
-      .code-panel {
-        width: calc(100% - 24px);
-        bottom: 12px;
-        padding: 16px 14px 14px;
+        min-height: auto;
+        padding: 18px;
       }
 
       .panel-card,
+      .quickstart-card,
       .route-card,
       .module-card,
       .project-card,
@@ -1484,44 +1386,92 @@
             <div class="hero-grid">
               <div class="hero-copy">
                 <div class="hero-kicker section-tag">Python Intelligence Launchpad</div>
+                <div class="newbie-note">第一次打开时，只做这一件事：先看“核心命令”</div>
                 <h1>
                   从 0 开始
-                  <span>进入 Python 的智能世界</span>
+                  <span>先知道第一步该做什么</span>
                 </h1>
                 <p>
-                  这不是传统培训站的首页，而是一套面向零基础学习者设计的科技化学习入口。
-                  你会从最基础的语法认知出发，逐步进入逻辑训练、项目实战，再延伸到 AI 时代真正有价值的能力方向。
+                  如果你现在完全是小白，这个首页不需要你一次看完。
+                  你现在只要先做第一步：打开“核心命令”，先把最常见的词和代码动作看懂。
                 </p>
 
                 <div class="hero-actions">
-                  <a class="button button-primary" href="python_basics_words.html">立即开始</a>
-                  <a class="button button-secondary" href="#roadmap">查看学习路线</a>
+                  <a class="button button-primary" href="python_basics_words.html">第一步：先看核心命令</a>
+                  <a class="button button-secondary" href="#start-here">我是小白，先看怎么学</a>
                 </div>
 
                 <div class="signal-row" aria-label="学习标签">
-                  <span class="signal-chip">7 天建立编程思维</span>
-                  <span class="signal-chip">30 节核心内容</span>
-                  <span class="signal-chip">项目驱动学习</span>
-                  <span class="signal-chip">连接 AI 方向拓展</span>
+                  <span class="signal-chip">先做第一步，不用全看完</span>
+                  <span class="signal-chip">先看得懂，再学代码</span>
+                  <span class="signal-chip">按顺序往下走</span>
                 </div>
 
                 <div class="hero-proof">
                   <div class="proof-pill">
-                    <strong>零基础友好</strong>
-                    <span>先理解命令和逻辑，再进入语法与代码表达。</span>
+                    <strong>现在先做什么</strong>
+                    <span>先看核心命令页，不要先去看所有模块。</span>
                   </div>
                   <div class="proof-pill">
-                    <strong>系统化推进</strong>
-                    <span>每个阶段都有明确任务、顺序和可见输出。</span>
+                    <strong>看完后做什么</strong>
+                    <span>再看学习总览，知道后面的学习顺序。</span>
                   </div>
                   <div class="proof-pill">
-                    <strong>未来方向衔接</strong>
-                    <span>让 Python 学习自然走向自动化、数据处理和 AI。</span>
+                    <strong>什么时候再往下看</strong>
+                    <span>当你已经开始学变量、输入输出和判断时再往下走。</span>
                   </div>
                 </div>
               </div>
 
-              <div class="hero-stage" aria-hidden="true">
+              <div class="hero-stage">
+                <div class="starter-board">
+                  <div class="mission-card">
+                    <div class="mission-top">
+                      <span class="status-badge">Start Here</span>
+                      <strong>你现在的任务只有一个：先看得懂</strong>
+                    </div>
+                    <p>不要先研究路线、模块、项目或者 AI。对 0 基础来说，先读懂常见命令、词和代码动作，才是最合理的第一步。</p>
+                  </div>
+
+                  <div class="starter-stack">
+                    <article class="starter-card">
+                      <div class="step-badge">01</div>
+                      <div class="starter-copy">
+                        <strong>先点“核心命令”</strong>
+                        <span>目标是先读一遍，知道 `print`、`input`、`if` 这些词是什么意思。</span>
+                      </div>
+                    </article>
+
+                    <article class="starter-card">
+                      <div class="step-badge">02</div>
+                      <div class="starter-copy">
+                        <strong>再看“学习总览”</strong>
+                        <span>你不用记住所有内容，只要知道“我接下来会学到什么”就够了。</span>
+                      </div>
+                    </article>
+
+                    <article class="starter-card">
+                      <div class="step-badge">03</div>
+                      <div class="starter-copy">
+                        <strong>从 Day 02 开始按顺序学</strong>
+                        <span>按顺序学变量、类型、输入输出、判断等基础内容，不要乱跳。</span>
+                      </div>
+                    </article>
+                  </div>
+
+                  <div class="today-card">
+                    <strong>如果你今天只愿意学 10 分钟</strong>
+                    <span>那就只做这两件事，其他内容先不用管。</span>
+                    <ul>
+                      <li>打开“核心命令”页，看完最常见的基础词汇</li>
+                      <li>再回来看“学习总览”，知道接下来的顺序</li>
+                    </ul>
+                    <div class="starter-actions">
+                      <a class="button button-primary" href="python_basics_words.html">现在就去第一步</a>
+                      <a class="button button-secondary" href="python_study.html">第二步：看总览</a>
+                    </div>
+                  </div>
+                </div>
                 <div class="orbital-field">
                   <div class="orbital-ring ring-a"></div>
                   <div class="orbital-ring ring-b"></div>
@@ -1593,15 +1543,64 @@ path = [
         </div>
       </section>
 
+      <section class="section" id="start-here">
+        <div class="container">
+          <div class="section-head reveal">
+            <div>
+              <div class="section-tag">Beginner First</div>
+              <h2>如果你现在一片空白，就只按这三步走。</h2>
+            </div>
+            <p class="section-note">
+              下面的模块、路线和项目，不是让你现在一口气全看完的。你只需要按顺序做当前这一步。
+            </p>
+          </div>
+
+          <div class="quickstart-grid">
+            <article class="quickstart-card reveal">
+              <div class="quickstart-step">Step 01</div>
+              <h3>先熟悉基础词</h3>
+              <p>先把你最容易卡住的地方搞定：常见英文命令和代码动作。</p>
+              <strong>你要达到的结果</strong>
+              <p>看到 `print`、`input`、`if` 这些词时，不会再害怕。</p>
+              <div class="starter-actions">
+                <a class="button button-primary" href="python_basics_words.html">打开核心命令</a>
+              </div>
+            </article>
+
+            <article class="quickstart-card reveal">
+              <div class="quickstart-step">Step 02</div>
+              <h3>再知道全局顺序</h3>
+              <p>等你对常见词有一点感觉之后，再去看总览，理解后面要学什么。</p>
+              <strong>你要达到的结果</strong>
+              <p>知道自己会先学变量，再学类型、输入输出、判断等内容。</p>
+              <div class="starter-actions">
+                <a class="button button-secondary" href="python_study.html">打开学习总览</a>
+              </div>
+            </article>
+
+            <article class="quickstart-card reveal">
+              <div class="quickstart-step">Step 03</div>
+              <h3>再按天数顺序学</h3>
+              <p>不要到处点，也不要先研究 AI 和项目。先从 Day 02 开始，一天一天往后推。</p>
+              <strong>你要达到的结果</strong>
+              <p>慢慢建立变量、输入输出、判断等最基础的编程思维。</p>
+              <div class="starter-actions">
+                <a class="button button-secondary" href="day02_variables.html">从 Day 02 开始</a>
+              </div>
+            </article>
+          </div>
+        </div>
+      </section>
+
       <section class="section" id="overview">
         <div class="container">
           <div class="overview-grid">
             <div class="panel-card reveal">
               <div class="section-tag">System Overview</div>
-              <h3>不是把语法堆在一起，而是把 Python 学习做成一套有秩序的智能系统。</h3>
+              <h3>你不需要一次把这个站点全看完，只需要按顺序往下走。</h3>
               <p>
-                这个首页的核心不是“内容很多”，而是“路径很清晰”。对零基础用户来说，
-                真正重要的是降低混乱感、建立掌控感，并在每个阶段都看到自己正在接近怎样的能力结果。
+                后面这些区块是给你在开始之后逐步理解用的，不是让你现在全部记住。
+                先从核心命令开始，再看总览，再按天数往后学，这样就不会乱。
               </p>
 
               <div class="metric-grid">
