@@ -670,6 +670,15 @@
       box-shadow: 0 10px 24px rgba(126, 217, 255, 0.16);
     }
 
+    .check-link.is-disabled {
+      background: rgba(255, 255, 255, 0.08);
+      color: var(--muted);
+      cursor: not-allowed;
+      pointer-events: none;
+      box-shadow: none;
+      transform: none;
+    }
+
     input[type="checkbox"] {
       width: 18px;
       height: 18px;
@@ -1258,7 +1267,7 @@ print("欢迎开始学习编程")</div>
 
           <section class="section-card reveal" id="checkin">
             <h2>8. 学习打卡区</h2>
-            <p>打卡不是形式主义。对初学者来说，持续感非常重要。你每完成一天就勾掉一项，能明显看到自己在往前走。每张卡片右侧都可以直接点“去学习”。</p>
+            <p>打卡不是形式主义。对初学者来说，持续感非常重要。你每完成一天就勾掉一项，能明显看到自己在往前走。前 7 天可以直接去学习，第 8 天以后内容还在补充中。</p>
             <div class="check-grid">
               <div class="check-item">
                 <div class="check-item-head">
@@ -1312,161 +1321,161 @@ print("欢迎开始学习编程")</div>
               <div class="check-item">
                 <div class="check-item-head">
                   <label><input type="checkbox" data-day="8"><span>第 8 天：循环入门</span></label>
-                  <a class="check-link" href="#phase2">去学习</a>
+                  <span class="check-link is-disabled">待补内容</span>
                 </div>
                 <small>开始处理重复任务</small>
               </div>
               <div class="check-item">
                 <div class="check-item-head">
                   <label><input type="checkbox" data-day="9"><span>第 9 天：列表</span></label>
-                  <a class="check-link" href="#phase2">去学习</a>
+                  <span class="check-link is-disabled">待补内容</span>
                 </div>
                 <small>学会保存多个数据</small>
               </div>
               <div class="check-item">
                 <div class="check-item-head">
                   <label><input type="checkbox" data-day="10"><span>第 10 天：字典</span></label>
-                  <a class="check-link" href="#phase2">去学习</a>
+                  <span class="check-link is-disabled">待补内容</span>
                 </div>
                 <small>开始用键值对组织信息</small>
               </div>
               <div class="check-item">
                 <div class="check-item-head">
                   <label><input type="checkbox" data-day="11"><span>第 11 天：字符串处理</span></label>
-                  <a class="check-link" href="#phase2">去学习</a>
+                  <span class="check-link is-disabled">待补内容</span>
                 </div>
                 <small>切片、长度、常见方法</small>
               </div>
               <div class="check-item">
                 <div class="check-item-head">
                   <label><input type="checkbox" data-day="12"><span>第 12 天：循环练习</span></label>
-                  <a class="check-link" href="#phase2">去学习</a>
+                  <span class="check-link is-disabled">待补内容</span>
                 </div>
                 <small>做批量输出和统计</small>
               </div>
               <div class="check-item">
                 <div class="check-item-head">
                   <label><input type="checkbox" data-day="13"><span>第 13 天：函数概念</span></label>
-                  <a class="check-link" href="#phase2">去学习</a>
+                  <span class="check-link is-disabled">待补内容</span>
                 </div>
                 <small>把重复逻辑封装起来</small>
               </div>
               <div class="check-item">
                 <div class="check-item-head">
                   <label><input type="checkbox" data-day="14"><span>第 14 天：函数参数</span></label>
-                  <a class="check-link" href="#phase2">去学习</a>
+                  <span class="check-link is-disabled">待补内容</span>
                 </div>
                 <small>让函数更灵活</small>
               </div>
               <div class="check-item">
                 <div class="check-item-head">
                   <label><input type="checkbox" data-day="15"><span>第 15 天：阶段复习</span></label>
-                  <a class="check-link" href="#phase2">去学习</a>
+                  <span class="check-link is-disabled">待补内容</span>
                 </div>
                 <small>把前两周内容连起来</small>
               </div>
               <div class="check-item">
                 <div class="check-item-head">
                   <label><input type="checkbox" data-day="16"><span>第 16 天：模块导入</span></label>
-                  <a class="check-link" href="#phase3">去学习</a>
+                  <span class="check-link is-disabled">待补内容</span>
                 </div>
                 <small>学会 `import`</small>
               </div>
               <div class="check-item">
                 <div class="check-item-head">
                   <label><input type="checkbox" data-day="17"><span>第 17 天：文件读写</span></label>
-                  <a class="check-link" href="#phase3">去学习</a>
+                  <span class="check-link is-disabled">待补内容</span>
                 </div>
                 <small>开始处理文本文件</small>
               </div>
               <div class="check-item">
                 <div class="check-item-head">
                   <label><input type="checkbox" data-day="18"><span>第 18 天：异常处理</span></label>
-                  <a class="check-link" href="#phase3">去学习</a>
+                  <span class="check-link is-disabled">待补内容</span>
                 </div>
                 <small>学会面对报错</small>
               </div>
               <div class="check-item">
                 <div class="check-item-head">
                   <label><input type="checkbox" data-day="19"><span>第 19 天：函数综合</span></label>
-                  <a class="check-link" href="#phase3">去学习</a>
+                  <span class="check-link is-disabled">待补内容</span>
                 </div>
                 <small>多个函数配合写程序</small>
               </div>
               <div class="check-item">
                 <div class="check-item-head">
                   <label><input type="checkbox" data-day="20"><span>第 20 天：文件项目练习</span></label>
-                  <a class="check-link" href="#phase3">去学习</a>
+                  <span class="check-link is-disabled">待补内容</span>
                 </div>
                 <small>保存和读取数据</small>
               </div>
               <div class="check-item">
                 <div class="check-item-head">
                   <label><input type="checkbox" data-day="21"><span>第 21 天：调试能力</span></label>
-                  <a class="check-link" href="#phase3">去学习</a>
+                  <span class="check-link is-disabled">待补内容</span>
                 </div>
                 <small>看懂常见报错</small>
               </div>
               <div class="check-item">
                 <div class="check-item-head">
                   <label><input type="checkbox" data-day="22"><span>第 22 天：小型综合程序</span></label>
-                  <a class="check-link" href="#phase3">去学习</a>
+                  <span class="check-link is-disabled">待补内容</span>
                 </div>
                 <small>做一个完整练习</small>
               </div>
               <div class="check-item">
                 <div class="check-item-head">
                   <label><input type="checkbox" data-day="23"><span>第 23 天：第三周复盘</span></label>
-                  <a class="check-link" href="#phase3">去学习</a>
+                  <span class="check-link is-disabled">待补内容</span>
                 </div>
                 <small>补漏洞，查缺补漏</small>
               </div>
               <div class="check-item">
                 <div class="check-item-head">
                   <label><input type="checkbox" data-day="24"><span>第 24 天：类和对象</span></label>
-                  <a class="check-link" href="#phase4">去学习</a>
+                  <span class="check-link is-disabled">待补内容</span>
                 </div>
                 <small>接触面向对象概念</small>
               </div>
               <div class="check-item">
                 <div class="check-item-head">
                   <label><input type="checkbox" data-day="25"><span>第 25 天：项目结构</span></label>
-                  <a class="check-link" href="#phase4">去学习</a>
+                  <span class="check-link is-disabled">待补内容</span>
                 </div>
                 <small>学会拆分功能</small>
               </div>
               <div class="check-item">
                 <div class="check-item-head">
                   <label><input type="checkbox" data-day="26"><span>第 26 天：代码规范</span></label>
-                  <a class="check-link" href="#phase4">去学习</a>
+                  <span class="check-link is-disabled">待补内容</span>
                 </div>
                 <small>命名、缩进和注释</small>
               </div>
               <div class="check-item">
                 <div class="check-item-head">
                   <label><input type="checkbox" data-day="27"><span>第 27 天：项目 1</span></label>
-                  <a class="check-link" href="#phase4">去学习</a>
+                  <span class="check-link is-disabled">待补内容</span>
                 </div>
                 <small>比如成绩管理或待办清单</small>
               </div>
               <div class="check-item">
                 <div class="check-item-head">
                   <label><input type="checkbox" data-day="28"><span>第 28 天：项目 2</span></label>
-                  <a class="check-link" href="#phase4">去学习</a>
+                  <span class="check-link is-disabled">待补内容</span>
                 </div>
                 <small>比如记账本或通讯录</small>
               </div>
               <div class="check-item">
                 <div class="check-item-head">
                   <label><input type="checkbox" data-day="29"><span>第 29 天：调优和复盘</span></label>
-                  <a class="check-link" href="#phase4">去学习</a>
+                  <span class="check-link is-disabled">待补内容</span>
                 </div>
                 <small>修改程序，让它更稳</small>
               </div>
               <div class="check-item">
                 <div class="check-item-head">
                   <label><input type="checkbox" data-day="30"><span>第 30 天：总结与下一步</span></label>
-                  <a class="check-link" href="#phase4">去学习</a>
+                  <span class="check-link is-disabled">待补内容</span>
                 </div>
                 <small>判断接下来学什么方向</small>
               </div>
