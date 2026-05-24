@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>第 15 天：阶段复习 | Python 学习页</title>
+  <title>第 20 天：文件项目练习 | Python 学习页</title>
   <style>
     :root {
       --bg: #07111f;
@@ -271,23 +271,6 @@
     .success { border-left-color: #0f9f7a; background: rgba(15, 159, 122, 0.1); }
     .warn { border-left-color: #ea7c3c; background: rgba(234, 124, 60, 0.1); }
     .info strong, .success strong, .warn strong { color: #fff; }
-    .flow-row {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 10px;
-      margin-top: 16px;
-    }
-    .flow-row span {
-      display: inline-flex;
-      align-items: center;
-      min-height: 34px;
-      padding: 0 12px;
-      border-radius: 999px;
-      background: linear-gradient(135deg, #d7fff7, #dbeeff);
-      color: #0d2238;
-      font-weight: 700;
-      font-size: 0.84rem;
-    }
     .cta-card {
       padding: 34px;
       background:
@@ -340,17 +323,17 @@
     <div class="container">
       <nav class="nav glass">
         <div class="brand">
-          <div class="brand-mark">D15</div>
+          <div class="brand-mark">D20</div>
           <div class="brand-copy">
-            <strong>第 15 天：阶段复习</strong>
-            <span>把第二阶段知识真正连成一套基础能力</span>
+            <strong>第 20 天：文件项目练习</strong>
+            <span>把读写文件接成第一个真正保存数据的小工具</span>
           </div>
         </div>
         <div class="nav-links">
           <a href="index.html">首页</a>
           <a href="python_study.html">新手核心内容</a>
-          <a href="day14_function_params.html">上一天</a>
-          <a href="day16_modules_import.html" class="is-active">下一天</a>
+          <a href="day19_functions_workflow.html">上一站</a>
+          <a href="day21_debugging.html" class="is-active">下一站</a>
         </div>
       </nav>
     </div>
@@ -362,37 +345,37 @@
         <div class="hero-card glass">
           <div class="hero-grid">
             <div>
-              <div class="eyebrow">Day 15 / Stage Review</div>
-              <h1>第二阶段真正重要的，不是你记住了几个词，<br />而是你能不能把它们拼成一个稳定的程序思路。</h1>
-              <p>今天不是继续追新语法，而是做阶段收束。你要回头确认：循环、列表、字典、字符串和函数，是否已经能在你的脑子里互相连接，而不是散成 5 块孤立知识。</p>
+              <div class="eyebrow">Day 20 / File Project</div>
+              <h1>文件读写真正有结果感的时刻，是它开始服务一个完整小工具，而不是只做单独演示。</h1>
+              <p>今天你会围绕“记录学习内容”或“保存待办事项”这种小场景，把函数、输入和文件连起来。</p>
               <div class="hero-actions">
-                <a class="button button-primary" href="#map">先看阶段知识地图</a>
-                <a class="button button-secondary" href="day14_function_params.html">回看函数参数</a>
+                <a class="button button-primary" href="#example">先看示例代码</a>
+                <a class="button button-secondary" href="day19_functions_workflow.html">回看函数综合</a>
               </div>
               <div class="hero-stats">
                 <div class="stat-card">
-                  <strong>5 个模块</strong>
-                  <span>循环、列表、字典、字符串、函数</span>
+                  <strong>1 个小项目</strong>
+                  <span>记录并读取内容</span>
+                </div>
+                <div class="stat-card">
+                  <strong>3 个动作</strong>
+                  <span>输入 / 保存 / 查看</span>
                 </div>
                 <div class="stat-card">
                   <strong>1 个目标</strong>
-                  <span>从知识点进入程序组合能力</span>
-                </div>
-                <div class="stat-card">
-                  <strong>1 个下一步</strong>
-                  <span>开始进入组织代码与小项目阶段</span>
+                  <span>开始接近工具思维</span>
                 </div>
               </div>
             </div>
             <div class="hero-panel">
-              <h3>你今天会复盘的综合例子</h3>
-              <p>一段短代码就能同时用到函数、循环、列表和判断。</p>
-              <div class="panel-box">def show_pass_scores(scores):
-    for score in scores:
-        if score >= 60:
-            print("及格分：", score)
+              <h3>最小记录工具</h3>
+              <p>先把用户输入保存进文件。</p>
+              <div class="panel-box">note = input(&quot;请输入今天的学习记录：&quot;)
 
-show_pass_scores([88, 59, 91, 45, 73])</div>
+with open(&quot;notes.txt&quot;, &quot;a&quot;, encoding=&quot;utf-8&quot;) as file:
+    file.write(note + &quot;\n&quot;)
+
+print(&quot;保存成功&quot;)</div>
             </div>
           </div>
         </div>
@@ -403,160 +386,105 @@ show_pass_scores([88, 59, 91, 45, 73])</div>
       <div class="container page-grid">
         <aside class="toc">
           <h2>本页目录</h2>
-          <p>今天的任务是建立“我已经会把这些基础拼起来”的感觉。</p>
+          <p>今天重点是把多个基础能力接成一个小成品。</p>
           <a href="#goal">1. 今天目标</a>
-          <a href="#map">2. 阶段知识地图</a>
-          <a href="#program">3. 综合复盘案例</a>
-          <a href="#split">4. 这段代码分别用到了什么</a>
-          <a href="#check">5. 自测清单</a>
-          <a href="#practice">6. 今日练习</a>
-          <a href="#summary">7. 今日总结</a>
+          <a href="#concept">2. 核心概念</a>
+          <a href="#example">3. 示例代码</a>
+          <a href="#tips">4. 关键提醒</a>
+          <a href="#practice">5. 今日练习</a>
+          <a href="#summary">6. 今日总结</a>
         </aside>
 
         <div class="content">
           <section class="section-card" id="goal">
             <h2>1. 今天目标</h2>
-            <p>今天不是继续扩张，而是检查你有没有真的拥有一层稳定基础。如果你能把这一阶段的内容串起来，接下来进入第 16 天到第 23 天的“组织代码”阶段时会明显更稳。</p>
+            <p>今天的目标是做出一个能真正保存结果的小练习，让你从“会几个语法点”进入“能做一个小工具”。</p>
           </section>
 
-          <section class="section-card" id="map">
-            <h2>2. 阶段知识地图</h2>
+          <section class="section-card" id="concept">
+            <h2>2. 核心概念</h2>
+            <p>文件项目练习的意义，不是功能多复杂，而是第一次让程序产生“下一次打开还能继续用”的感觉。</p>
             <div class="surface-grid cols-2">
               <article class="light-card">
-                <div class="card-kicker">8</div>
-                <h3>循环</h3>
-                <p>负责重复执行，是程序批量处理任务的起点。</p>
+                <div class="card-kicker">Save</div>
+                <h3>保存输入内容</h3>
+                <p>把用户输入的文字写进文件，让数据留在程序外部。</p>
               </article>
               <article class="light-card">
-                <div class="card-kicker">9</div>
-                <h3>列表</h3>
-                <p>负责保存一组同类数据，让循环有对象可处理。</p>
+                <div class="card-kicker">Read</div>
+                <h3>重新读取历史记录</h3>
+                <p>下次运行程序时，能够把之前保存的内容再显示出来。</p>
               </article>
-              <article class="light-card">
-                <div class="card-kicker">10</div>
-                <h3>字典</h3>
-                <p>负责保存一条更完整的资料，让数据不只是排成一排。</p>
-              </article>
-              <article class="light-card">
-                <div class="card-kicker">11</div>
-                <h3>字符串处理</h3>
-                <p>负责整理和切分文字内容，是输入输出中的高频需求。</p>
-              </article>
-              <article class="light-card">
-                <div class="card-kicker">13</div>
-                <h3>函数</h3>
-                <p>负责封装重复逻辑，让程序开始按功能分块。</p>
-              </article>
-              <article class="light-card">
-                <div class="card-kicker">14</div>
-                <h3>函数参数</h3>
-                <p>负责让函数更灵活，同一份逻辑能处理不同数据。</p>
-              </article>
-            </div>
-            <div class="flow-row">
-              <span>先有数据</span>
-              <span>再批量处理</span>
-              <span>按条件筛选</span>
-              <span>必要时整理文本</span>
-              <span>最后封装成函数</span>
             </div>
           </section>
 
-          <section class="section-card" id="program">
-            <h2>3. 综合复盘案例</h2>
-            <p>下面这段代码虽然不长，但已经把这一阶段的几个关键点连起来了。</p>
-            <div class="code">def show_pass_scores(scores):
-    for score in scores:
-        if score >= 60:
-            print("及格分：", score)
+          <section class="section-card" id="example">
+            <h2>3. 示例代码</h2>
+            <p>下面是一个最小的学习记录工具：先追加一条记录，再把全部记录读出来。</p>
+            <div class="code">note = input(&quot;请输入今天的学习记录：&quot;)
 
-show_pass_scores([88, 59, 91, 45, 73])</div>
+with open(&quot;study_notes.txt&quot;, &quot;a&quot;, encoding=&quot;utf-8&quot;) as file:
+    file.write(note + &quot;\n&quot;)
+
+with open(&quot;study_notes.txt&quot;, &quot;r&quot;, encoding=&quot;utf-8&quot;) as file:
+    print(file.read())</div>
             <div class="success">
-              <strong>你现在应该开始有这种感觉：</strong> 学到这里，你写的已经不只是零散语句，而是一段能接收数据、遍历数据、做判断并输出结果的小程序。
+              <strong>示例在说明什么：</strong> 程序不只是收一个输入然后结束，而是把内容保留下来，并能立刻看到历史记录。
             </div>
           </section>
 
-          <section class="section-card" id="split">
-            <h2>4. 这段代码分别用到了什么</h2>
-            <div class="surface-grid cols-2">
-              <article class="light-card">
-                <div class="card-kicker">Fn</div>
-                <h3>函数和参数</h3>
-                <p>`show_pass_scores(scores)` 表示把一组分数交给这个函数处理。</p>
-              </article>
-              <article class="light-card">
-                <div class="card-kicker">List</div>
-                <h3>列表</h3>
-                <p>传进去的是一组分数，而不是单个值。</p>
-              </article>
-              <article class="light-card">
-                <div class="card-kicker">Loop</div>
-                <h3>循环</h3>
-                <p>`for score in scores` 逐个检查每一个分数。</p>
-              </article>
-              <article class="light-card">
-                <div class="card-kicker">If</div>
-                <h3>条件判断</h3>
-                <p>只有满足 `score >= 60` 的分数才会被输出。</p>
-              </article>
-            </div>
-          </section>
-
-          <section class="section-card" id="check">
-            <h2>5. 自测清单</h2>
+          <section class="section-card" id="tips">
+            <h2>4. 关键提醒</h2>
             <ul>
-              <li>我能写出 `for` 和简单 `while`，并解释它们什么时候结束。</li>
-              <li>我能创建列表并遍历它。</li>
-              <li>我能创建字典并按字段取值。</li>
-              <li>我能做长度、切片和基本字符串处理。</li>
-              <li>我能定义函数，并给函数传入参数。</li>
-              <li>我能写出“列表 + 循环 + 判断 + 函数”的小练习。</li>
+              <li>a 模式表示追加写入，适合记录型工具。</li>
+              <li>项目的重点不是炫技，而是把输入、保存、显示这条链路跑通。</li>
+              <li>保存后最好立刻读一次，确认结果确实落盘。</li>
+              <li>这类项目特别适合反复改功能。</li>
             </ul>
             <div class="info">
-              <strong>如果以上有两项以上还不稳：</strong> 不要急着往后赶，先回头重新练 day08 到 day14，对后面帮助会更大。
+              <strong>今天最该抓住的点：</strong> 真正的进步往往来自“把语法拼成小工具”，而不是继续无止境地看零散例子。
             </div>
           </section>
 
           <section class="section-card" id="practice">
-            <h2>6. 今日练习</h2>
+            <h2>5. 今日练习</h2>
             <div class="light-card">
               <div class="card-kicker">P1</div>
-              <h3>重写综合例子</h3>
-              <p>不看页面，自己重新写一遍 `show_pass_scores`，然后换一组分数测试。</p>
+              <h3>学习记录本</h3>
+              <p>让用户输入一条学习记录，保存到 txt 文件并显示全部历史记录。</p>
             </div>
             <div class="light-card">
               <div class="card-kicker">P2</div>
-              <h3>写一个欢迎名单函数</h3>
-              <p>让函数接收一个名字列表，循环输出“欢迎你，某某”。</p>
+              <h3>待办事项追加</h3>
+              <p>把今天要做的 3 件事逐条追加到一个待办文件里。</p>
             </div>
             <div class="light-card">
               <div class="card-kicker">P3</div>
-              <h3>整理联系人资料</h3>
-              <p>创建一个字典表示联系人，再把联系人姓名单独取出来，用字符串方法做格式整理后输出。</p>
+              <h3>加入异常保护</h3>
+              <p>如果文件读取出问题，给出友好提示，不要直接报错结束。</p>
             </div>
           </section>
 
           <section class="section-card" id="summary">
-            <h2>7. 今日总结</h2>
+            <h2>6. 今日总结</h2>
             <ul>
-              <li>第二阶段的重点不是新增多少知识，而是把基础语法连成程序思路。</li>
-              <li>循环负责处理重复，列表和字典负责组织数据。</li>
-              <li>字符串处理负责整理文本输入输出。</li>
-              <li>函数和参数负责封装与复用。</li>
-              <li>这一阶段完成后，你已经明显进入“会写基础程序”的状态。</li>
+              <li>文件项目练习是把基础语法拼起来的重要一步。</li>
+              <li>追加写入比覆盖写入更适合日志和记录类工具。</li>
+              <li>程序开始真正保存数据时，结果感会明显提升。</li>
+              <li>小项目不必复杂，但链路要完整。</li>
             </ul>
             <div class="success">
-              <strong>今天过关标准：</strong> 你能独立写出一个接收列表参数、遍历数据并按条件输出结果的函数，就说明第 8 天到第 15 天的主线已经真正打通了。
+              <strong>今天过关标准：</strong> 你能自己做出一个“输入内容 -> 写入文件 -> 读取显示”的最小工具，并确保它能重复使用，就说明今天真正过关。
             </div>
           </section>
 
           <section class="section">
             <div class="cta-card">
-              <h2>第二阶段已经补齐，接下来就该进入“组织代码”的第三阶段。</h2>
-              <p>如果第二阶段的循环、数据结构、字符串和函数已经基本稳住，下一步最合理的动作就是继续进入 Day 16，开始学习模块、文件、异常、调试和小型综合程序。</p>
+              <h2>项目一跑起来，下一步就该培养调试能力，不然问题一多就会卡住。</h2>
+              <p>第 21 天会进入调试能力。你会开始学会看 traceback、定位问题和用更有章法的方式改错。</p>
               <div class="section-actions">
-                <a class="button button-primary" href="day16_modules_import.html">进入第 16 天：模块导入</a>
-                <a class="button button-secondary" href="study_checkin.html">回到打卡总入口</a>
+                <a class="button button-primary" href="day21_debugging.html">进入第 21 天：调试能力</a>
+                <a class="button button-secondary" href="study_checkin.html">回到学习打卡总入口</a>
               </div>
             </div>
           </section>
@@ -568,8 +496,8 @@ show_pass_scores([88, 59, 91, 45, 73])</div>
   <footer class="footer">
     <div class="container">
       <div class="footer-row">
-        <div>当前页面：<strong>day15_stage_review.html</strong></div>
-        <div>相邻导航：Day 14 函数参数 · Day 16 模块导入</div>
+        <div>当前页面：<strong>day20_file_project.html</strong></div>
+        <div>相邻导航：Day 19 函数组合 · Day 21 调试能力</div>
       </div>
     </div>
   </footer>

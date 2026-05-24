@@ -827,7 +827,7 @@
         <button class="menu-toggle" type="button" aria-label="打开菜单" aria-expanded="false" aria-controls="study-nav" data-menu-toggle>☰</button>
         <div class="nav-links" id="study-nav" data-nav-links>
           <a href="index.html">首页</a>
-          <a href="#checkin">打卡区</a>
+          <a href="study_checkin.html">打卡总入口</a>
           <a href="#next">下一步</a>
         </div>
       </nav>
@@ -842,11 +842,11 @@
             <div>
               <div class="eyebrow">适合零基础用户的一站式起步页</div>
               <h1>先看懂核心命令，<span>再按路线进入真正的学习。</span></h1>
-              <p>这个页面把原来的“核心命令”和“系统总览”合成了一个入口。你不用在两个入门页之间来回跳，只要先在这里看懂高频命令、常用英文和学习顺序，再进入 Day 02 即可。</p>
+              <p>这个页面把原来的“核心命令”和“系统总览”合成了一个入口。你不用在两个入门页之间来回跳，只要先在这里看懂高频命令、常用英文和学习顺序，再进入 Day 01 或直接打开 30 天打卡总入口即可。</p>
               <div class="hero-actions">
                 <a class="button button-primary" href="#commands">开始新手核心内容</a>
-                <a class="button button-secondary" href="day02_variables.html">进入变量章节</a>
-                <a class="button button-secondary" href="#checkin">打开学习打卡</a>
+                <a class="button button-secondary" href="day01_intro.html">进入 Day 01</a>
+                <a class="button button-secondary" href="study_checkin.html">打开学习打卡总入口</a>
               </div>
               <div class="hero-stats">
                 <div class="stat-card">
@@ -866,11 +866,11 @@
 
             <div class="hero-panel">
               <h3>建议学习顺序</h3>
-              <p>如果你现在完全没有编程基础，最稳妥的方式不是乱跳章节，而是先在这一页把“看懂”和“知道顺序”一起解决，再去学变量、类型和输入输出。</p>
+              <p>如果你现在完全没有编程基础，最稳妥的方式不是乱跳章节，而是先在这一页把“看懂”和“知道顺序”一起解决，再去 Day 01 或学习打卡总入口按天推进。</p>
               <div class="panel-box">学习流程
 1. 看懂 print / input / if / else
-2. 知道 30 天路线和第一周入口
-3. 从 Day 02 开始往后学</div>
+2. 知道 30 天路线和 4 个阶段入口
+3. 从 Day 01 或打卡总入口开始</div>
             </div>
           </div>
         </div>
@@ -887,10 +887,13 @@
           <a href="#quiz">3. 1 分钟小测试</a>
           <a href="#overview">4. 学习总览</a>
           <a href="#plan30">5. 30 天路线</a>
-          <a href="#week1">6. 第 1 周章节入口</a>
-          <a href="#week2">7. 第 2 周章节入口</a>
-          <a href="#checkin">8. 学习打卡区</a>
-          <a href="#next">9. 下一步建议</a>
+          <a href="#day1">6. 第 1 天入口</a>
+          <a href="#week1">7. 第 1 周章节入口</a>
+          <a href="#week2">8. 第 2 周章节入口</a>
+          <a href="#week3">9. 第 3 周章节入口</a>
+          <a href="#week4">10. 第 4 周章节入口</a>
+          <a href="#checkin">11. 学习打卡总入口</a>
+          <a href="#next">12. 下一步建议</a>
         </aside>
 
         <div class="content">
@@ -1209,50 +1212,43 @@
           </section>
 
           <section class="section-card reveal" id="day1">
-            <h2>6. 第 1 天正式课程：认识 Python 和程序</h2>
-            <p>如果你是第一次学编程，第 1 天的目标不要定得太大。今天只需要理解“程序是什么”“代码是怎么执行的”，并且会用 `print()` 输出内容就够了。</p>
+            <h2>6. 第 1 天正式课程入口</h2>
+            <p>从这个版本开始，第 1 天也不再放在当前长页面里直接学习。正式内容已经单独拆成独立页，和 day02-day30 保持一致。</p>
             <div class="surface-grid cols-2" style="margin-top: 18px;">
               <article class="light-card">
-                <div class="card-kicker">1A</div>
-                <h3>程序到底是什么</h3>
-                <p>程序本质上就是一组写给电脑的明确步骤。你写得越清楚，电脑执行得越准确。</p>
-                <div class="flow-row">
-                  <span>拿杯子</span>
-                  <span>放咖啡粉</span>
-                  <span>倒热水</span>
-                  <span>搅拌</span>
+                <div class="card-kicker">D1</div>
+                <h3>第 1 天：认识 Python 和程序</h3>
+                <p>学习程序是什么、代码为什么默认从上到下执行，以及 `print()` 最基础的输出作用。</p>
+                <div class="section-actions">
+                  <a class="button button-inline" href="day01_intro.html">进入 Day 01 独立页</a>
                 </div>
               </article>
               <article class="light-card">
-                <div class="card-kicker">1B</div>
-                <h3>代码默认如何执行</h3>
-                <p>默认是从上到下、一句一句执行。这就叫顺序结构。</p>
-                <div class="code">print("第一句")
-print("第二句")
-print("第三句")</div>
+                <div class="card-kicker">Go</div>
+                <h3>建议从哪里开始</h3>
+                <p>如果你现在完全零基础，先读完本页前面的核心命令和常用英文，再进入 Day 01，会比直接跳进去更稳。</p>
+                <div class="section-actions">
+                  <a class="button button-secondary" href="study_checkin.html">去 30 天打卡总入口</a>
+                </div>
               </article>
             </div>
-            <div class="light-card" style="margin-top: 18px;">
-              <div class="card-kicker">1C</div>
-              <h3>认识 `print()`</h3>
-              <p>`print()` 的作用就是把内容输出到屏幕上。你可以把它理解成“让程序开口说话”。</p>
-              <div class="code">print("你好，Python")
-print("欢迎开始学习编程")</div>
-              <ul>
-                <li>先把 `print` 记成“输出”。</li>
-                <li>括号现在先接受它的写法，不用急着深究。</li>
-                <li>字符串可以先理解成：被引号包起来的一段文字。</li>
-              </ul>
-            </div>
-            <div class="success">
-              <strong>今天学完的标准：</strong> 你能自己写出 3 行 `print()`，并理解代码是按顺序执行的，就算第 1 天真正过关。
+            <div class="info">
+              <strong>结构调整说明：</strong> `python_study.html` 现在只承担路线入口作用，不再让你在长页面里做正式按天学习。
             </div>
           </section>
 
           <section class="section-card reveal" id="week1">
             <h2>7. 第 1 周章节入口</h2>
-            <p>下面这些入口直接接到你现有的学习文件。建议学习顺序是：新手核心内容页 → 变量 → 类型 → 输入输出 → 运算符 → 判断与案例。</p>
+            <p>第 1 周现在已经全部是独立学习页。建议学习顺序是：Day 01 → 变量 → 类型 → 输入输出 → 运算符 → 判断与案例。</p>
             <div class="phase-grid">
+              <article class="link-card">
+                <h3>Day 01：认识 Python 和程序</h3>
+                <p>如果你是第一次接触编程，就从这里开始建立“程序是步骤、代码会顺序执行”的感觉。</p>
+                <div class="section-actions">
+                  <a class="button button-inline" href="day01_intro.html">进入 Day 01</a>
+                </div>
+              </article>
+
               <article class="link-card">
                 <h3>新手核心内容</h3>
                 <p>如果你还需要回头复习 `print`、`input`、`if`、`else` 和整体路线，就回到本页最前面的核心命令、常用英文和总览区。</p>
@@ -1374,232 +1370,167 @@ print("欢迎开始学习编程")</div>
             </div>
           </section>
 
-          <section class="section-card reveal" id="checkin">
-            <h2>9. 学习打卡区</h2>
-            <p>打卡不是形式主义。对初学者来说，持续感非常重要。你每完成一天就勾掉一项，能明显看到自己在往前走。前 15 天现在都可以直接去学习，第 16 天以后内容还在继续补充中。</p>
-            <div class="check-grid">
-              <div class="check-item">
-                <div class="check-item-head">
-                  <label><input type="checkbox" data-day="1"><span>第 1 天：认识程序和 `print()`</span></label>
-                  <a class="check-link" href="#day1">去学习</a>
+          <section class="section-card reveal" id="week3">
+            <h2>9. 第 3 周章节入口</h2>
+            <p>第 16 天到第 23 天的重点是“开始组织代码”。建议学习顺序是：模块导入 → 文件读写 → 异常处理 → 函数综合 → 文件项目 → 调试 → 小型综合程序 → 第三周复盘。</p>
+            <div class="phase-grid">
+              <article class="link-card">
+                <h3>模块导入 Import</h3>
+                <p>先理解模块和 `import`，知道为什么程序不该永远只堆在一个文件里。</p>
+                <div class="section-actions">
+                  <a class="button button-inline" href="day16_modules_import.html">进入 Day 16</a>
                 </div>
-                <small>先理解代码是按顺序执行的</small>
-              </div>
-              <div class="check-item">
-                <div class="check-item-head">
-                  <label><input type="checkbox" data-day="2"><span>第 2 天：变量</span></label>
-                  <a class="check-link" href="day02_variables.html">去学习</a>
+              </article>
+
+              <article class="link-card">
+                <h3>文件读写 Files</h3>
+                <p>让程序开始保存文本数据，第一次接触程序外部的持久信息。</p>
+                <div class="section-actions">
+                  <a class="button button-inline" href="day17_file_read_write.html">进入 Day 17</a>
                 </div>
-                <small>学会保存名字、价格、分数</small>
-              </div>
-              <div class="check-item">
-                <div class="check-item-head">
-                  <label><input type="checkbox" data-day="3"><span>第 3 天：数据类型</span></label>
-                  <a class="check-link" href="day03_types.html">去学习</a>
+              </article>
+
+              <article class="link-card">
+                <h3>异常处理 Exceptions</h3>
+                <p>学会用 `try / except` 处理输入错误和常见报错，让程序更稳。</p>
+                <div class="section-actions">
+                  <a class="button button-inline" href="day18_try_except.html">进入 Day 18</a>
                 </div>
-                <small>理解字符串、整数、浮点数</small>
-              </div>
-              <div class="check-item">
-                <div class="check-item-head">
-                  <label><input type="checkbox" data-day="4"><span>第 4 天：输入输出</span></label>
-                  <a class="check-link" href="day04_input_output.html">去学习</a>
+              </article>
+
+              <article class="link-card">
+                <h3>函数综合 Workflow</h3>
+                <p>把输入、处理和输出拆成不同函数，让程序开始有清楚内部流程。</p>
+                <div class="section-actions">
+                  <a class="button button-inline" href="day19_functions_workflow.html">进入 Day 19</a>
                 </div>
-                <small>用 `input()` 和 `print()` 做交互</small>
-              </div>
-              <div class="check-item">
-                <div class="check-item-head">
-                  <label><input type="checkbox" data-day="5"><span>第 5 天：运算符</span></label>
-                  <a class="check-link" href="day05_operators.html">去学习</a>
+              </article>
+
+              <article class="link-card">
+                <h3>文件项目练习 File Project</h3>
+                <p>把读写文件接到一个最小工具上，让程序真的开始保存和读取结果。</p>
+                <div class="section-actions">
+                  <a class="button button-inline" href="day20_file_project.html">进入 Day 20</a>
                 </div>
-                <small>开始做计算和比较</small>
-              </div>
-              <div class="check-item">
-                <div class="check-item-head">
-                  <label><input type="checkbox" data-day="6"><span>第 6 天：条件判断</span></label>
-                  <a class="check-link" href="day06_if_else.html">去学习</a>
+              </article>
+
+              <article class="link-card">
+                <h3>调试能力 Debugging</h3>
+                <p>学会看懂 traceback、定位问题和用更有章法的方式排错。</p>
+                <div class="section-actions">
+                  <a class="button button-inline" href="day21_debugging.html">进入 Day 21</a>
                 </div>
-                <small>理解 `if / else`</small>
-              </div>
-              <div class="check-item">
-                <div class="check-item-head">
-                  <label><input type="checkbox" data-day="7"><span>第 7 天：成绩程序</span></label>
-                  <a class="check-link" href="day07_score_program.html">去学习</a>
+              </article>
+
+              <article class="link-card">
+                <h3>小型综合程序 Mini Program</h3>
+                <p>把函数、数据结构、异常和文件思路接成一个真正完整的小练习。</p>
+                <div class="section-actions">
+                  <a class="button button-inline" href="day22_mini_program.html">进入 Day 22</a>
                 </div>
-                <small>把第一周知识串起来</small>
-              </div>
-              <div class="check-item">
-                <div class="check-item-head">
-                  <label><input type="checkbox" data-day="8"><span>第 8 天：循环入门</span></label>
-                  <a class="check-link" href="day08_loops.html">去学习</a>
+              </article>
+
+              <article class="link-card">
+                <h3>第三周复盘 Week 3 Review</h3>
+                <p>把组织代码、处理数据和面对错误这些能力重新收成一条主线。</p>
+                <div class="section-actions">
+                  <a class="button button-inline" href="day23_week3_review.html">进入 Day 23</a>
                 </div>
-                <small>开始处理重复任务</small>
-              </div>
-              <div class="check-item">
-                <div class="check-item-head">
-                  <label><input type="checkbox" data-day="9"><span>第 9 天：列表</span></label>
-                  <a class="check-link" href="day09_lists.html">去学习</a>
-                </div>
-                <small>学会保存多个数据</small>
-              </div>
-              <div class="check-item">
-                <div class="check-item-head">
-                  <label><input type="checkbox" data-day="10"><span>第 10 天：字典</span></label>
-                  <a class="check-link" href="day10_dictionaries.html">去学习</a>
-                </div>
-                <small>开始用键值对组织信息</small>
-              </div>
-              <div class="check-item">
-                <div class="check-item-head">
-                  <label><input type="checkbox" data-day="11"><span>第 11 天：字符串处理</span></label>
-                  <a class="check-link" href="day11_strings.html">去学习</a>
-                </div>
-                <small>切片、长度、常见方法</small>
-              </div>
-              <div class="check-item">
-                <div class="check-item-head">
-                  <label><input type="checkbox" data-day="12"><span>第 12 天：循环练习</span></label>
-                  <a class="check-link" href="day12_loop_practice.html">去学习</a>
-                </div>
-                <small>做批量输出和统计</small>
-              </div>
-              <div class="check-item">
-                <div class="check-item-head">
-                  <label><input type="checkbox" data-day="13"><span>第 13 天：函数概念</span></label>
-                  <a class="check-link" href="day13_functions_intro.html">去学习</a>
-                </div>
-                <small>把重复逻辑封装起来</small>
-              </div>
-              <div class="check-item">
-                <div class="check-item-head">
-                  <label><input type="checkbox" data-day="14"><span>第 14 天：函数参数</span></label>
-                  <a class="check-link" href="day14_function_params.html">去学习</a>
-                </div>
-                <small>让函数更灵活</small>
-              </div>
-              <div class="check-item">
-                <div class="check-item-head">
-                  <label><input type="checkbox" data-day="15"><span>第 15 天：阶段复习</span></label>
-                  <a class="check-link" href="day15_stage_review.html">去学习</a>
-                </div>
-                <small>把前两周内容连起来</small>
-              </div>
-              <div class="check-item">
-                <div class="check-item-head">
-                  <label><input type="checkbox" data-day="16"><span>第 16 天：模块导入</span></label>
-                  <span class="check-link is-disabled">待补内容</span>
-                </div>
-                <small>学会 `import`</small>
-              </div>
-              <div class="check-item">
-                <div class="check-item-head">
-                  <label><input type="checkbox" data-day="17"><span>第 17 天：文件读写</span></label>
-                  <span class="check-link is-disabled">待补内容</span>
-                </div>
-                <small>开始处理文本文件</small>
-              </div>
-              <div class="check-item">
-                <div class="check-item-head">
-                  <label><input type="checkbox" data-day="18"><span>第 18 天：异常处理</span></label>
-                  <span class="check-link is-disabled">待补内容</span>
-                </div>
-                <small>学会面对报错</small>
-              </div>
-              <div class="check-item">
-                <div class="check-item-head">
-                  <label><input type="checkbox" data-day="19"><span>第 19 天：函数综合</span></label>
-                  <span class="check-link is-disabled">待补内容</span>
-                </div>
-                <small>多个函数配合写程序</small>
-              </div>
-              <div class="check-item">
-                <div class="check-item-head">
-                  <label><input type="checkbox" data-day="20"><span>第 20 天：文件项目练习</span></label>
-                  <span class="check-link is-disabled">待补内容</span>
-                </div>
-                <small>保存和读取数据</small>
-              </div>
-              <div class="check-item">
-                <div class="check-item-head">
-                  <label><input type="checkbox" data-day="21"><span>第 21 天：调试能力</span></label>
-                  <span class="check-link is-disabled">待补内容</span>
-                </div>
-                <small>看懂常见报错</small>
-              </div>
-              <div class="check-item">
-                <div class="check-item-head">
-                  <label><input type="checkbox" data-day="22"><span>第 22 天：小型综合程序</span></label>
-                  <span class="check-link is-disabled">待补内容</span>
-                </div>
-                <small>做一个完整练习</small>
-              </div>
-              <div class="check-item">
-                <div class="check-item-head">
-                  <label><input type="checkbox" data-day="23"><span>第 23 天：第三周复盘</span></label>
-                  <span class="check-link is-disabled">待补内容</span>
-                </div>
-                <small>补漏洞，查缺补漏</small>
-              </div>
-              <div class="check-item">
-                <div class="check-item-head">
-                  <label><input type="checkbox" data-day="24"><span>第 24 天：类和对象</span></label>
-                  <span class="check-link is-disabled">待补内容</span>
-                </div>
-                <small>接触面向对象概念</small>
-              </div>
-              <div class="check-item">
-                <div class="check-item-head">
-                  <label><input type="checkbox" data-day="25"><span>第 25 天：项目结构</span></label>
-                  <span class="check-link is-disabled">待补内容</span>
-                </div>
-                <small>学会拆分功能</small>
-              </div>
-              <div class="check-item">
-                <div class="check-item-head">
-                  <label><input type="checkbox" data-day="26"><span>第 26 天：代码规范</span></label>
-                  <span class="check-link is-disabled">待补内容</span>
-                </div>
-                <small>命名、缩进和注释</small>
-              </div>
-              <div class="check-item">
-                <div class="check-item-head">
-                  <label><input type="checkbox" data-day="27"><span>第 27 天：项目 1</span></label>
-                  <span class="check-link is-disabled">待补内容</span>
-                </div>
-                <small>比如成绩管理或待办清单</small>
-              </div>
-              <div class="check-item">
-                <div class="check-item-head">
-                  <label><input type="checkbox" data-day="28"><span>第 28 天：项目 2</span></label>
-                  <span class="check-link is-disabled">待补内容</span>
-                </div>
-                <small>比如记账本或通讯录</small>
-              </div>
-              <div class="check-item">
-                <div class="check-item-head">
-                  <label><input type="checkbox" data-day="29"><span>第 29 天：调优和复盘</span></label>
-                  <span class="check-link is-disabled">待补内容</span>
-                </div>
-                <small>修改程序，让它更稳</small>
-              </div>
-              <div class="check-item">
-                <div class="check-item-head">
-                  <label><input type="checkbox" data-day="30"><span>第 30 天：总结与下一步</span></label>
-                  <span class="check-link is-disabled">待补内容</span>
-                </div>
-                <small>判断接下来学什么方向</small>
-              </div>
+              </article>
             </div>
-            <div class="progress-wrap">
-              <div class="progress-bar"><div class="progress-fill" id="progressBar"></div></div>
-              <div class="progress-meta">
-                <span id="progressText">已完成 0 / 30 天（0%）</span>
-                <button class="reset-button" type="button" onclick="resetChecks()">清空全部打卡</button>
-              </div>
+          </section>
+
+          <section class="section-card reveal" id="week4">
+            <h2>10. 第 4 周章节入口</h2>
+            <p>第 24 天到第 30 天的重点是“进入项目与方向期”。建议学习顺序是：类和对象 → 项目结构 → 代码规范 → 项目 1 → 项目 2 → 调优复盘 → 总结与下一步。</p>
+            <div class="phase-grid">
+              <article class="link-card">
+                <h3>类和对象 Classes</h3>
+                <p>轻量接触面向对象，先理解类和对象为什么存在，不追求一次性学深。</p>
+                <div class="section-actions">
+                  <a class="button button-inline" href="day24_classes_objects.html">进入 Day 24</a>
+                </div>
+              </article>
+
+              <article class="link-card">
+                <h3>项目结构 Project Structure</h3>
+                <p>学会拆分入口、功能和数据文件，让代码从“能跑”进入“可维护”。</p>
+                <div class="section-actions">
+                  <a class="button button-inline" href="day25_project_structure.html">进入 Day 25</a>
+                </div>
+              </article>
+
+              <article class="link-card">
+                <h3>代码规范 Code Style</h3>
+                <p>整理命名、缩进、注释和函数长度，让项目写法更清楚。</p>
+                <div class="section-actions">
+                  <a class="button button-inline" href="day26_code_style.html">进入 Day 26</a>
+                </div>
+              </article>
+
+              <article class="link-card">
+                <h3>项目 1 成绩管理器</h3>
+                <p>围绕成绩记录做第一个项目型练习，重点是结构清楚和功能闭环。</p>
+                <div class="section-actions">
+                  <a class="button button-inline" href="day27_project_score_manager.html">进入 Day 27</a>
+                </div>
+              </article>
+
+              <article class="link-card">
+                <h3>项目 2 记账本</h3>
+                <p>换一个生活化场景继续练数据结构、统计和项目迁移能力。</p>
+                <div class="section-actions">
+                  <a class="button button-inline" href="day28_project_expense_book.html">进入 Day 28</a>
+                </div>
+              </article>
+
+              <article class="link-card">
+                <h3>调优和复盘 Refactor</h3>
+                <p>回头整理重复代码、输入保护和结构问题，让项目更稳更清楚。</p>
+                <div class="section-actions">
+                  <a class="button button-inline" href="day29_refactor_review.html">进入 Day 29</a>
+                </div>
+              </article>
+
+              <article class="link-card">
+                <h3>总结与下一步 Next Steps</h3>
+                <p>用一张路线图判断 30 天之后更适合往自动化、数据、Web 还是 AI 继续。</p>
+                <div class="section-actions">
+                  <a class="button button-inline" href="day30_next_steps.html">进入 Day 30</a>
+                </div>
+              </article>
+            </div>
+          </section>
+
+          <section class="section-card reveal" id="checkin">
+            <h2>11. 学习打卡总入口</h2>
+            <p>打卡区已经单独拆成 <a href="study_checkin.html">study_checkin.html</a>。以后 1 到 30 天所有正式学习入口都统一从那个页面进入，这一页不再承载长列表打卡功能。</p>
+            <div class="surface-grid cols-2" style="margin-top: 18px;">
+              <article class="light-card">
+                <div class="card-kicker">30D</div>
+                <h3>30 天统一入口</h3>
+                <p>Day 01 到 Day 30 现在都接到真实独立学习页。你只要从总入口点当天内容，再回来打卡即可。</p>
+                <div class="section-actions">
+                  <a class="button button-inline" href="study_checkin.html">打开打卡总入口</a>
+                </div>
+              </article>
+
+              <article class="light-card">
+                <div class="card-kicker">Use</div>
+                <h3>这个页面接下来做什么</h3>
+                <p>`python_study.html` 现在只负责路线、命令、英文和阶段入口。正式按天学习与进度记录，都交给独立页面处理。</p>
+                <div class="section-actions">
+                  <a class="button button-secondary" href="day01_intro.html">直接进入 Day 01</a>
+                </div>
+              </article>
+            </div>
+            <div class="info">
+              <strong>这样调整的原因：</strong> 当 day16-day30 补齐后，打卡列表继续留在当前长页面里会越来越难维护，也不利于以后继续扩展更多内容。
             </div>
           </section>
 
           <section class="section-card reveal" id="next">
-            <h2>10. 下一步建议</h2>
+            <h2>12. 下一步建议</h2>
             <p>如果你现在准备继续推进，这里是最稳的执行方式。</p>
             <div class="surface-grid cols-2" style="margin-top: 18px;">
               <article class="light-card">
@@ -1607,8 +1538,8 @@ print("欢迎开始学习编程")</div>
                 <h3>推荐马上做的事</h3>
                 <ul>
                   <li>先回到本页前面的核心命令区，把 `print / input / if / else` 看熟。</li>
-                  <li>再学变量和数据类型，不要急着直接上复杂语法。</li>
-                  <li>学完一个章节就做当天练习，再打卡。</li>
+                  <li>再去 `study_checkin.html`，从 Day 01 或你当前所在天数直接进入正式学习页。</li>
+                  <li>学完一个独立页就做当天练习，然后回打卡总入口记录进度。</li>
                 </ul>
                 <div class="section-actions">
                   <a class="button button-inline" href="#commands">先去看核心命令</a>
@@ -1617,11 +1548,11 @@ print("欢迎开始学习编程")</div>
 
               <article class="light-card">
                 <div class="card-kicker">Up</div>
-                <h3>这个项目下一步还能继续扩展</h3>
+                <h3>这套课程现在可以继续怎么用</h3>
                 <ul>
-                  <li>继续补 Day 8 之后的独立学习页</li>
-                  <li>增加每章练习答案页和代码下载区</li>
-                  <li>补一个面向青少年版和一个面向成人版的文案分支</li>
+                  <li>把练习答案页和代码示例区继续补全</li>
+                  <li>给项目型页面增加“进阶挑战”版本</li>
+                  <li>后续可以再拆一个自动化方向和一个 AI 工具方向分支</li>
                 </ul>
                 <div class="section-actions">
                   <a class="button button-secondary" href="index.html">返回课程首页</a>
@@ -1632,11 +1563,11 @@ print("欢迎开始学习编程")</div>
 
           <section class="section reveal">
             <div class="cta-card">
-              <h2>把“看懂”和“知道顺序”先在这一页解决，再进入正式章节。</h2>
-              <p>如果你现在最大的障碍还是“看不懂代码里的英文”，就先回到本页上面的核心命令和常用英文区；如果你已经看懂了，就直接去 Day 02。这个单页入口的目的，就是不再让新手在两个入门页之间反复切换。</p>
+              <h2>把“看懂”和“知道顺序”先在这一页解决，再进入独立的正式学习页。</h2>
+              <p>如果你现在最大的障碍还是“看不懂代码里的英文”，就先回到本页上面的核心命令和常用英文区；如果你已经看懂了，就直接去 `study_checkin.html` 或 Day 01。这个入口页的目的，是让你先建立路线感，再去真实学习页完成每天任务。</p>
               <div class="section-actions">
                 <a class="button button-primary" href="#commands">回到新手核心内容开头</a>
-                <a class="button button-secondary" href="day02_variables.html">进入第 2 天学习</a>
+                <a class="button button-secondary" href="study_checkin.html">打开打卡总入口</a>
               </div>
             </div>
           </section>
@@ -1646,13 +1577,13 @@ print("欢迎开始学习编程")</div>
   </main>
 
   <footer class="footer">
-    <div class="container">
-      <div class="footer-row">
-        <div>当前页面：<strong>python_study.html</strong></div>
-        <div>推荐起点：新手核心内容页 → 变量 → 类型 → 输入输出 → 运算符 → 判断逻辑</div>
+      <div class="container">
+        <div class="footer-row">
+          <div>当前页面：<strong>python_study.html</strong></div>
+          <div>推荐起点：新手核心内容页 → Day 01 → 30 天打卡总入口</div>
+        </div>
       </div>
-    </div>
-  </footer>
+    </footer>
 
   <script>
     const storageKey = "python-study-checkin-v2";
@@ -1707,6 +1638,7 @@ print("欢迎开始学习编程")</div>
     }
 
     function refreshProgress() {
+      if (!progressBar || !progressText) return;
       const state = loadChecks();
       let done = 0;
 

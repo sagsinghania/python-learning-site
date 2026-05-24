@@ -1,0 +1,520 @@
+﻿<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>30 天学习打卡总入口 | Python 学习站</title>
+  <style>
+    :root {
+      --bg: #07111f;
+      --panel: rgba(10, 24, 42, 0.82);
+      --line: rgba(123, 196, 255, 0.18);
+      --text: #e9f6ff;
+      --muted: #9cb7cb;
+      --accent: #8ef2e4;
+      --shadow: 0 24px 70px rgba(0, 10, 22, 0.3);
+      --radius-lg: 24px;
+      --max-width: 1240px;
+      --font-display: "Segoe UI Variable Display", "PingFang SC", "Microsoft YaHei UI", sans-serif;
+      --font-body: "Segoe UI Variable Text", "PingFang SC", "Microsoft YaHei", sans-serif;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      color: var(--text);
+      font-family: var(--font-body);
+      line-height: 1.7;
+      background:
+        radial-gradient(circle at top left, rgba(54, 215, 196, 0.15), transparent 24%),
+        radial-gradient(circle at 85% 12%, rgba(59, 130, 246, 0.22), transparent 26%),
+        linear-gradient(180deg, #07111f 0%, #0a1830 45%, #0d2238 100%);
+    }
+    a { color: inherit; text-decoration: none; }
+    .container { width: min(var(--max-width), calc(100% - 28px)); margin: 0 auto; }
+    .section { padding: 26px 0; }
+    .glass {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(16px);
+    }
+    .site-header {
+      position: sticky;
+      top: 0;
+      z-index: 40;
+      padding: 14px 0;
+      background: linear-gradient(180deg, rgba(7, 17, 31, 0.86), rgba(7, 17, 31, 0.32));
+      backdrop-filter: blur(12px);
+    }
+    .nav { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 14px 18px; border-radius: 999px; }
+    .brand { display: flex; align-items: center; gap: 14px; }
+    .brand-mark { width: 44px; height: 44px; display: grid; place-items: center; border-radius: 14px; font-weight: 800; letter-spacing: 0.08em; color: var(--accent); background: linear-gradient(135deg, rgba(54, 215, 196, 0.28), rgba(59, 130, 246, 0.28)); border: 1px solid rgba(142, 242, 228, 0.18); }
+    .brand-copy strong { display: block; font-size: 1rem; font-family: var(--font-display); }
+    .brand-copy span { display: block; color: var(--muted); font-size: 0.88rem; }
+    .nav-links { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; justify-content: flex-end; }
+    .nav-links a { padding: 10px 14px; border-radius: 999px; color: var(--muted); transition: 0.2s ease; }
+    .nav-links a:hover, .nav-links a.is-active { color: #fff; background: rgba(255,255,255,0.07); }
+    .hero-card, .section-card, .cta-card { border-radius: var(--radius-lg); box-shadow: var(--shadow); }
+    .hero-card { position: relative; overflow: hidden; padding: 36px; }
+    .hero-card::before, .hero-card::after { content: ""; position: absolute; border-radius: 999px; filter: blur(10px); }
+    .hero-card::before { width: 260px; height: 260px; top: -110px; right: -70px; background: radial-gradient(circle, rgba(54, 215, 196, 0.28), transparent 68%); }
+    .hero-card::after { width: 300px; height: 300px; bottom: -150px; left: -110px; background: radial-gradient(circle, rgba(59, 130, 246, 0.24), transparent 68%); }
+    .hero-grid { position: relative; display: grid; grid-template-columns: minmax(0, 1.08fr) minmax(320px, 0.92fr); gap: 28px; align-items: center; }
+    .eyebrow { display: inline-flex; align-items: center; gap: 8px; padding: 8px 14px; border-radius: 999px; color: var(--accent); font-size: 0.9rem; background: rgba(142, 242, 228, 0.08); border: 1px solid rgba(142, 242, 228, 0.14); }
+    .hero h1 { margin: 18px 0 14px; font-size: clamp(2.45rem, 4.8vw, 4rem); line-height: 1.04; letter-spacing: -0.03em; font-family: var(--font-display); }
+    .hero p { margin: 0; max-width: 700px; color: #c8ddef; font-size: 1.05rem; }
+    .hero-actions, .section-actions { display: flex; flex-wrap: wrap; gap: 14px; margin-top: 28px; }
+    .button { display: inline-flex; align-items: center; justify-content: center; min-height: 52px; padding: 0 22px; border-radius: 999px; border: 1px solid transparent; font-weight: 700; cursor: pointer; transition: transform 0.2s ease; }
+    .button:hover { transform: translateY(-2px); }
+    .button-primary { color: #07131e; background: linear-gradient(135deg, var(--accent), #7ed9ff); }
+    .button-secondary { color: #fff; background: rgba(255,255,255,0.07); border-color: rgba(255,255,255,0.12); }
+    .hero-stats { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 18px; margin-top: 28px; }
+    .stat-card, .section-card { background: linear-gradient(180deg, rgba(12, 27, 46, 0.95), rgba(8, 21, 36, 0.98)); border: 1px solid var(--line); }
+    .stat-card { padding: 18px; border-radius: 18px; }
+    .stat-card strong { display: block; color: #fff; font-size: 1.45rem; font-family: var(--font-display); }
+    .stat-card span { color: #bdd5e8; font-size: 0.92rem; }
+    .hero-panel { padding: 24px; border-radius: 28px; background: linear-gradient(180deg, rgba(255,255,255,0.08), rgba(255,255,255,0.04)); border: 1px solid rgba(255,255,255,0.08); }
+    .hero-panel h3 { margin: 0 0 10px; font-size: 1.12rem; }
+    .hero-panel p { margin: 0; color: #c6daeb; font-size: 0.96rem; }
+    .section-card { padding: 24px; }
+    .section-card h2 { margin-top: 0; font-family: var(--font-display); }
+    .phase-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 18px; margin-top: 18px; }
+    .phase-card { padding: 20px; border-radius: 22px; background: linear-gradient(180deg, rgba(255,255,255,0.07), rgba(255,255,255,0.03)); border: 1px solid rgba(255,255,255,0.08); }
+    .phase-card h3 { margin: 0 0 10px; font-size: 1.08rem; }
+    .check-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; margin-top: 22px; }
+    .check-item { padding: 18px; border-radius: 20px; border: 1px solid rgba(255,255,255,0.08); background: linear-gradient(180deg, rgba(255,255,255,0.06), rgba(255,255,255,0.03)); }
+    .check-item-head { display: flex; justify-content: space-between; gap: 12px; align-items: flex-start; }
+    .check-item-head label { display: flex; gap: 10px; align-items: flex-start; font-weight: 700; }
+    input[type="checkbox"] { width: 18px; height: 18px; accent-color: #8ef2e4; margin-top: 4px; }
+    .check-link { display: inline-flex; align-items: center; justify-content: center; min-width: 92px; min-height: 38px; padding: 0 14px; border-radius: 999px; background: linear-gradient(135deg, #d8fff6, #dceeff); color: #12406c; font-weight: 800; white-space: nowrap; }
+    .check-item small { display: block; margin-top: 10px; color: #bdd5e8; }
+    .check-phase { display: inline-flex; margin-top: 14px; padding: 6px 12px; border-radius: 999px; background: rgba(142, 242, 228, 0.08); border: 1px solid rgba(142, 242, 228, 0.14); color: var(--accent); font-size: 0.84rem; }
+    .progress-wrap { margin-top: 24px; }
+    .progress-bar { height: 14px; border-radius: 999px; background: rgba(255,255,255,0.08); overflow: hidden; border: 1px solid rgba(255,255,255,0.08); }
+    .progress-fill { width: 0; height: 100%; background: linear-gradient(135deg, #8ef2e4, #7ed9ff); }
+    .progress-meta { display: flex; justify-content: space-between; gap: 16px; align-items: center; flex-wrap: wrap; margin-top: 12px; color: #cfe5f5; }
+    .reset-button { min-height: 42px; padding: 0 16px; border-radius: 999px; border: 1px solid rgba(255,255,255,0.12); background: rgba(255,255,255,0.06); color: #fff; cursor: pointer; }
+    .info { margin-top: 18px; padding: 16px 18px; border-radius: 18px; border-left: 5px solid #3b82f6; background: rgba(222,245,255,0.08); }
+    .info strong { color: #fff; }
+    .cta-card { padding: 34px; background: radial-gradient(circle at 10% 20%, rgba(142,242,228,0.18), transparent 32%), radial-gradient(circle at 88% 24%, rgba(59,130,246,0.24), transparent 30%), linear-gradient(135deg, #071726, #102843 52%, #0e3341); border: 1px solid rgba(142, 242, 228, 0.16); }
+    .cta-card h2 { margin: 0 0 14px; font-family: var(--font-display); font-size: clamp(2rem, 3vw, 3rem); line-height: 1.05; }
+    .cta-card p { margin: 0; max-width: 760px; color: #cae1f2; font-size: 1.04rem; }
+    .footer { padding: 16px 0 42px; color: #9ab3c7; font-size: 0.95rem; }
+    .footer-row { display: flex; justify-content: space-between; gap: 18px; align-items: center; flex-wrap: wrap; }
+    @media (max-width: 1100px) { .hero-grid, .phase-grid, .check-grid { grid-template-columns: 1fr 1fr; } }
+    @media (max-width: 860px) { .hero-grid, .phase-grid, .check-grid { grid-template-columns: 1fr; } .hero-card, .section-card, .cta-card { padding: 24px; } .hero-stats { grid-template-columns: 1fr; } }
+    @media (max-width: 560px) { .container { width: min(var(--max-width), calc(100% - 20px)); } .button { width: 100%; } .hero-actions, .section-actions { flex-direction: column; } .check-item-head { flex-direction: column; } .check-link { width: 100%; } }
+  </style>
+</head>
+<body>
+  <header class="site-header">
+    <div class="container">
+      <nav class="nav glass">
+        <div class="brand">
+          <div class="brand-mark">30D</div>
+          <div class="brand-copy">
+            <strong>30 天学习打卡总入口</strong>
+            <span>所有正式学习页统一从这里进入</span>
+          </div>
+        </div>
+        <div class="nav-links">
+          <a href="index.html">首页</a>
+          <a href="python_study.html">新手核心内容</a>
+          <a href="study_checkin.html" class="is-active">学习打卡总入口</a>
+        </div>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="section hero">
+      <div class="container">
+        <div class="hero-card glass">
+          <div class="hero-grid">
+            <div>
+              <div class="eyebrow">Check-in / Day 01 - Day 30</div>
+              <h1>从现在开始，打卡区不再嵌在长页面里。<br />1 到 30 天的正式学习入口全部集中在这里。</h1>
+              <p>这个页面只负责两件事：打开真实学习页，以及记录你的学习进度。以后无论课程再补多少内容，你都可以在这里直接进入当天内容，不需要在长页面里来回找锚点。</p>
+              <div class="hero-actions">
+                <a class="button button-primary" href="#all-days">直接看 30 天入口</a>
+                <a class="button button-secondary" href="python_study.html">回到新手核心内容页</a>
+              </div>
+              <div class="hero-stats">
+                <div class="stat-card">
+                  <strong>30 天</strong>
+                  <span>全部接到真实学习页</span>
+                </div>
+                <div class="stat-card">
+                  <strong>4 个阶段</strong>
+                  <span>从入门到项目再到方向选择</span>
+                </div>
+                <div class="stat-card">
+                  <strong>1 个总入口</strong>
+                  <span>以后直接从这里开始或续学</span>
+                </div>
+              </div>
+            </div>
+            <div class="hero-panel">
+              <h3>你现在会看到什么</h3>
+              <p>每一天都有独立链接，打卡状态会保存在本地。你今天学到哪，就从这里继续哪一天。</p>
+              <div class="info"><strong>建议节奏：</strong> 每天 30 到 50 分钟。先看正式学习页，再做当天练习，最后回来打卡。</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container">
+        <section class="section-card">
+          <h2>4 个阶段怎么理解</h2>
+          <div class="phase-grid">
+            <article class="phase-card">
+              <h3>阶段 1：第 1 到 7 天</h3>
+              <p>建立编程感觉，先理解程序、变量、类型、输入输出、运算和条件判断。</p>
+            </article>
+            <article class="phase-card">
+              <h3>阶段 2：第 8 到 15 天</h3>
+              <p>强化基础语法，重点进入循环、数据结构、字符串和函数。</p>
+            </article>
+            <article class="phase-card">
+              <h3>阶段 3：第 16 到 23 天</h3>
+              <p>开始组织代码，接触模块、文件、异常、调试和小型综合程序。</p>
+            </article>
+            <article class="phase-card">
+              <h3>阶段 4：第 24 到 30 天</h3>
+              <p>进入项目与方向期，开始接触类、结构、规范、项目和后续路线选择。</p>
+            </article>
+          </div>
+          <div class="info"><strong>课程设计逻辑：</strong> 先会写语句，再会处理数据，再会组织代码，最后会做小项目和选方向。这样比一上来追求复杂框架更适合零基础。</div>
+        </section>
+
+        <section class="section-card" id="all-days" style="margin-top: 22px;">
+          <h2>30 天正式学习入口</h2>
+          <p>每个按钮都直接进入真实学习页。完成后勾选，就能看到整体进度。</p>
+          <div class="check-grid">
+        <div class="check-item">
+          <div class="check-item-head">
+            <label><input type="checkbox" data-day="1"><span>第 1 天：认识 Python 和程序</span></label>
+            <a class="check-link" href="day01_intro.html">去学习</a>
+          </div>
+          <small>先理解程序和顺序执行</small>
+          <div class="check-phase">阶段 1</div>
+        </div>
+        <div class="check-item">
+          <div class="check-item-head">
+            <label><input type="checkbox" data-day="2"><span>第 2 天：变量</span></label>
+            <a class="check-link" href="day02_variables.html">去学习</a>
+          </div>
+          <small>学会保存名字、价格、分数</small>
+          <div class="check-phase">阶段 1</div>
+        </div>
+        <div class="check-item">
+          <div class="check-item-head">
+            <label><input type="checkbox" data-day="3"><span>第 3 天：数据类型</span></label>
+            <a class="check-link" href="day03_types.html">去学习</a>
+          </div>
+          <small>理解字符串、整数、浮点数</small>
+          <div class="check-phase">阶段 1</div>
+        </div>
+        <div class="check-item">
+          <div class="check-item-head">
+            <label><input type="checkbox" data-day="4"><span>第 4 天：输入输出</span></label>
+            <a class="check-link" href="day04_input_output.html">去学习</a>
+          </div>
+          <small>用 input 和 print 做交互</small>
+          <div class="check-phase">阶段 1</div>
+        </div>
+        <div class="check-item">
+          <div class="check-item-head">
+            <label><input type="checkbox" data-day="5"><span>第 5 天：运算符</span></label>
+            <a class="check-link" href="day05_operators.html">去学习</a>
+          </div>
+          <small>开始做计算和比较</small>
+          <div class="check-phase">阶段 1</div>
+        </div>
+        <div class="check-item">
+          <div class="check-item-head">
+            <label><input type="checkbox" data-day="6"><span>第 6 天：条件判断</span></label>
+            <a class="check-link" href="day06_if_else.html">去学习</a>
+          </div>
+          <small>理解 if / else 的分支逻辑</small>
+          <div class="check-phase">阶段 1</div>
+        </div>
+        <div class="check-item">
+          <div class="check-item-head">
+            <label><input type="checkbox" data-day="7"><span>第 7 天：成绩程序</span></label>
+            <a class="check-link" href="day07_score_program.html">去学习</a>
+          </div>
+          <small>把第一周知识串起来</small>
+          <div class="check-phase">阶段 1</div>
+        </div>
+        <div class="check-item">
+          <div class="check-item-head">
+            <label><input type="checkbox" data-day="8"><span>第 8 天：循环入门</span></label>
+            <a class="check-link" href="day08_loops.html">去学习</a>
+          </div>
+          <small>开始处理重复任务</small>
+          <div class="check-phase">阶段 2</div>
+        </div>
+        <div class="check-item">
+          <div class="check-item-head">
+            <label><input type="checkbox" data-day="9"><span>第 9 天：列表</span></label>
+            <a class="check-link" href="day09_lists.html">去学习</a>
+          </div>
+          <small>学会保存多个数据</small>
+          <div class="check-phase">阶段 2</div>
+        </div>
+        <div class="check-item">
+          <div class="check-item-head">
+            <label><input type="checkbox" data-day="10"><span>第 10 天：字典</span></label>
+            <a class="check-link" href="day10_dictionaries.html">去学习</a>
+          </div>
+          <small>开始用键值对组织信息</small>
+          <div class="check-phase">阶段 2</div>
+        </div>
+        <div class="check-item">
+          <div class="check-item-head">
+            <label><input type="checkbox" data-day="11"><span>第 11 天：字符串处理</span></label>
+            <a class="check-link" href="day11_strings.html">去学习</a>
+          </div>
+          <small>切片、长度、常见方法</small>
+          <div class="check-phase">阶段 2</div>
+        </div>
+        <div class="check-item">
+          <div class="check-item-head">
+            <label><input type="checkbox" data-day="12"><span>第 12 天：循环练习</span></label>
+            <a class="check-link" href="day12_loop_practice.html">去学习</a>
+          </div>
+          <small>做批量输出和统计</small>
+          <div class="check-phase">阶段 2</div>
+        </div>
+        <div class="check-item">
+          <div class="check-item-head">
+            <label><input type="checkbox" data-day="13"><span>第 13 天：函数概念</span></label>
+            <a class="check-link" href="day13_functions_intro.html">去学习</a>
+          </div>
+          <small>把重复逻辑封装起来</small>
+          <div class="check-phase">阶段 2</div>
+        </div>
+        <div class="check-item">
+          <div class="check-item-head">
+            <label><input type="checkbox" data-day="14"><span>第 14 天：函数参数</span></label>
+            <a class="check-link" href="day14_function_params.html">去学习</a>
+          </div>
+          <small>让函数更灵活</small>
+          <div class="check-phase">阶段 2</div>
+        </div>
+        <div class="check-item">
+          <div class="check-item-head">
+            <label><input type="checkbox" data-day="15"><span>第 15 天：阶段复习</span></label>
+            <a class="check-link" href="day15_stage_review.html">去学习</a>
+          </div>
+          <small>把前两周内容连起来</small>
+          <div class="check-phase">阶段 2</div>
+        </div>
+        <div class="check-item">
+          <div class="check-item-head">
+            <label><input type="checkbox" data-day="16"><span>第 16 天：模块导入</span></label>
+            <a class="check-link" href="day16_modules_import.html">去学习</a>
+          </div>
+          <small>学会 import 和借用模块能力</small>
+          <div class="check-phase">阶段 3</div>
+        </div>
+        <div class="check-item">
+          <div class="check-item-head">
+            <label><input type="checkbox" data-day="17"><span>第 17 天：文件读写</span></label>
+            <a class="check-link" href="day17_file_read_write.html">去学习</a>
+          </div>
+          <small>开始处理文本文件</small>
+          <div class="check-phase">阶段 3</div>
+        </div>
+        <div class="check-item">
+          <div class="check-item-head">
+            <label><input type="checkbox" data-day="18"><span>第 18 天：异常处理</span></label>
+            <a class="check-link" href="day18_try_except.html">去学习</a>
+          </div>
+          <small>学会面对报错</small>
+          <div class="check-phase">阶段 3</div>
+        </div>
+        <div class="check-item">
+          <div class="check-item-head">
+            <label><input type="checkbox" data-day="19"><span>第 19 天：函数综合</span></label>
+            <a class="check-link" href="day19_functions_workflow.html">去学习</a>
+          </div>
+          <small>多个函数配合写程序</small>
+          <div class="check-phase">阶段 3</div>
+        </div>
+        <div class="check-item">
+          <div class="check-item-head">
+            <label><input type="checkbox" data-day="20"><span>第 20 天：文件项目练习</span></label>
+            <a class="check-link" href="day20_file_project.html">去学习</a>
+          </div>
+          <small>保存和读取真实数据</small>
+          <div class="check-phase">阶段 3</div>
+        </div>
+        <div class="check-item">
+          <div class="check-item-head">
+            <label><input type="checkbox" data-day="21"><span>第 21 天：调试能力</span></label>
+            <a class="check-link" href="day21_debugging.html">去学习</a>
+          </div>
+          <small>看懂常见报错并定位问题</small>
+          <div class="check-phase">阶段 3</div>
+        </div>
+        <div class="check-item">
+          <div class="check-item-head">
+            <label><input type="checkbox" data-day="22"><span>第 22 天：小型综合程序</span></label>
+            <a class="check-link" href="day22_mini_program.html">去学习</a>
+          </div>
+          <small>完成一个完整练习</small>
+          <div class="check-phase">阶段 3</div>
+        </div>
+        <div class="check-item">
+          <div class="check-item-head">
+            <label><input type="checkbox" data-day="23"><span>第 23 天：第三周复盘</span></label>
+            <a class="check-link" href="day23_week3_review.html">去学习</a>
+          </div>
+          <small>把组织代码的主线理顺</small>
+          <div class="check-phase">阶段 3</div>
+        </div>
+        <div class="check-item">
+          <div class="check-item-head">
+            <label><input type="checkbox" data-day="24"><span>第 24 天：类和对象</span></label>
+            <a class="check-link" href="day24_classes_objects.html">去学习</a>
+          </div>
+          <small>轻量进入面向对象</small>
+          <div class="check-phase">阶段 4</div>
+        </div>
+        <div class="check-item">
+          <div class="check-item-head">
+            <label><input type="checkbox" data-day="25"><span>第 25 天：项目结构</span></label>
+            <a class="check-link" href="day25_project_structure.html">去学习</a>
+          </div>
+          <small>学会拆分功能和文件</small>
+          <div class="check-phase">阶段 4</div>
+        </div>
+        <div class="check-item">
+          <div class="check-item-head">
+            <label><input type="checkbox" data-day="26"><span>第 26 天：代码规范</span></label>
+            <a class="check-link" href="day26_code_style.html">去学习</a>
+          </div>
+          <small>命名、缩进和注释</small>
+          <div class="check-phase">阶段 4</div>
+        </div>
+        <div class="check-item">
+          <div class="check-item-head">
+            <label><input type="checkbox" data-day="27"><span>第 27 天：项目 1 成绩管理器</span></label>
+            <a class="check-link" href="day27_project_score_manager.html">去学习</a>
+          </div>
+          <small>做第一个项目型练习</small>
+          <div class="check-phase">阶段 4</div>
+        </div>
+        <div class="check-item">
+          <div class="check-item-head">
+            <label><input type="checkbox" data-day="28"><span>第 28 天：项目 2 记账本</span></label>
+            <a class="check-link" href="day28_project_expense_book.html">去学习</a>
+          </div>
+          <small>换一个场景继续做项目</small>
+          <div class="check-phase">阶段 4</div>
+        </div>
+        <div class="check-item">
+          <div class="check-item-head">
+            <label><input type="checkbox" data-day="29"><span>第 29 天：调优和复盘</span></label>
+            <a class="check-link" href="day29_refactor_review.html">去学习</a>
+          </div>
+          <small>把项目写得更稳更清楚</small>
+          <div class="check-phase">阶段 4</div>
+        </div>
+        <div class="check-item">
+          <div class="check-item-head">
+            <label><input type="checkbox" data-day="30"><span>第 30 天：总结与下一步</span></label>
+            <a class="check-link" href="day30_next_steps.html">去学习</a>
+          </div>
+          <small>判断接下来继续学什么方向</small>
+          <div class="check-phase">阶段 4</div>
+        </div>
+          </div>
+          <div class="progress-wrap">
+            <div class="progress-bar"><div class="progress-fill" id="progressBar"></div></div>
+            <div class="progress-meta">
+              <span id="progressText">已完成 0 / 30 天（0%）</span>
+              <button class="reset-button" type="button" onclick="resetChecks()">清空全部打卡</button>
+            </div>
+          </div>
+        </section>
+
+        <section class="section" style="padding-bottom: 0;">
+          <div class="cta-card">
+            <h2>这个页面以后就是 30 天课程的统一入口，不再让学习动作散在多个长页面里。</h2>
+            <p>如果你今天是第一次来，建议从 Day 01 开始。如果你已经学到一半，就直接打开对应天数继续。完成一页后，再回来打卡。</p>
+            <div class="section-actions">
+              <a class="button button-primary" href="day01_intro.html">从 Day 01 开始</a>
+              <a class="button button-secondary" href="day30_next_steps.html">查看 Day 30 总结页</a>
+            </div>
+          </div>
+        </section>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-row">
+        <div>当前页面：<strong>study_checkin.html</strong></div>
+        <div>推荐用法：打开当天正式学习页 → 做练习 → 回这里打卡</div>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    const storageKey = "python-study-checkin-v2";
+    const checkboxes = Array.from(document.querySelectorAll('input[type="checkbox"][data-day]'));
+    const progressBar = document.getElementById("progressBar");
+    const progressText = document.getElementById("progressText");
+
+    function loadChecks() {
+      try {
+        const raw = localStorage.getItem(storageKey);
+        return raw ? JSON.parse(raw) : {};
+      } catch {
+        return {};
+      }
+    }
+
+    function saveChecks(state) {
+      localStorage.setItem(storageKey, JSON.stringify(state));
+    }
+
+    function refreshProgress() {
+      const state = loadChecks();
+      let done = 0;
+      checkboxes.forEach((checkbox) => {
+        checkbox.checked = !!state[checkbox.dataset.day];
+        if (checkbox.checked) done += 1;
+      });
+      const total = checkboxes.length;
+      const percent = total ? (done / total) * 100 : 0;
+      progressBar.style.width = percent + "%";
+      progressText.textContent = `已完成 ${done} / ${total} 天（${Math.round(percent)}%）`;
+    }
+
+    checkboxes.forEach((checkbox) => {
+      checkbox.addEventListener("change", () => {
+        const state = loadChecks();
+        state[checkbox.dataset.day] = checkbox.checked;
+        saveChecks(state);
+        refreshProgress();
+      });
+    });
+
+    function resetChecks() {
+      localStorage.removeItem(storageKey);
+      refreshProgress();
+    }
+
+    window.resetChecks = resetChecks;
+    refreshProgress();
+  </script>
+</body>
+</html>
+
