@@ -1,0 +1,548 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>第 14 天：函数参数 | Python 学习页</title>
+  <style>
+    :root {
+      --bg: #07111f;
+      --panel: rgba(10, 24, 42, 0.82);
+      --line: rgba(123, 196, 255, 0.18);
+      --text: #e9f6ff;
+      --muted: #9cb7cb;
+      --accent: #8ef2e4;
+      --shadow: 0 24px 70px rgba(0, 10, 22, 0.3);
+      --radius-lg: 24px;
+      --max-width: 1180px;
+      --font-display: "Segoe UI Variable Display", "PingFang SC", "Microsoft YaHei UI", sans-serif;
+      --font-body: "Segoe UI Variable Text", "PingFang SC", "Microsoft YaHei", sans-serif;
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      color: var(--text);
+      font-family: var(--font-body);
+      line-height: 1.72;
+      background:
+        radial-gradient(circle at top left, rgba(54, 215, 196, 0.15), transparent 24%),
+        radial-gradient(circle at 85% 12%, rgba(59, 130, 246, 0.22), transparent 26%),
+        linear-gradient(180deg, #07111f 0%, #0a1830 45%, #0d2238 100%);
+    }
+    a { color: inherit; text-decoration: none; }
+    .container { width: min(var(--max-width), calc(100% - 28px)); margin: 0 auto; }
+    .section { padding: 26px 0; }
+    .glass {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(16px);
+    }
+    .site-header {
+      position: sticky;
+      top: 0;
+      z-index: 40;
+      padding: 14px 0;
+      background: linear-gradient(180deg, rgba(7, 17, 31, 0.86), rgba(7, 17, 31, 0.32));
+      backdrop-filter: blur(12px);
+    }
+    .nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      padding: 14px 18px;
+      border-radius: 999px;
+    }
+    .brand { display: flex; align-items: center; gap: 14px; }
+    .brand-mark {
+      width: 44px;
+      height: 44px;
+      display: grid;
+      place-items: center;
+      border-radius: 14px;
+      font-weight: 800;
+      letter-spacing: 0.08em;
+      color: var(--accent);
+      background: linear-gradient(135deg, rgba(54, 215, 196, 0.28), rgba(59, 130, 246, 0.28));
+      border: 1px solid rgba(142, 242, 228, 0.18);
+    }
+    .brand-copy strong {
+      display: block;
+      font-size: 1rem;
+      font-family: var(--font-display);
+    }
+    .brand-copy span { display: block; color: var(--muted); font-size: 0.88rem; }
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+    }
+    .nav-links a {
+      padding: 10px 14px;
+      border-radius: 999px;
+      color: var(--muted);
+      transition: 0.2s ease;
+    }
+    .nav-links a:hover,
+    .nav-links a.is-active {
+      color: #fff;
+      background: rgba(255, 255, 255, 0.07);
+    }
+    .hero-card, .section-card, .light-card, .cta-card, .toc { border-radius: var(--radius-lg); box-shadow: var(--shadow); }
+    .hero-card {
+      position: relative;
+      overflow: hidden;
+      padding: 36px;
+    }
+    .hero-card::before,
+    .hero-card::after {
+      content: "";
+      position: absolute;
+      border-radius: 999px;
+      filter: blur(10px);
+    }
+    .hero-card::before {
+      width: 260px;
+      height: 260px;
+      top: -110px;
+      right: -70px;
+      background: radial-gradient(circle, rgba(54, 215, 196, 0.28), transparent 68%);
+    }
+    .hero-card::after {
+      width: 300px;
+      height: 300px;
+      bottom: -150px;
+      left: -110px;
+      background: radial-gradient(circle, rgba(59, 130, 246, 0.24), transparent 68%);
+    }
+    .hero-grid {
+      position: relative;
+      display: grid;
+      grid-template-columns: minmax(0, 1.08fr) minmax(320px, 0.92fr);
+      gap: 28px;
+      align-items: center;
+    }
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 14px;
+      border-radius: 999px;
+      color: var(--accent);
+      font-size: 0.9rem;
+      background: rgba(142, 242, 228, 0.08);
+      border: 1px solid rgba(142, 242, 228, 0.14);
+    }
+    .hero h1 {
+      margin: 18px 0 14px;
+      font-size: clamp(2.45rem, 4.8vw, 4rem);
+      line-height: 1.04;
+      letter-spacing: -0.03em;
+      font-family: var(--font-display);
+    }
+    .hero p {
+      margin: 0;
+      max-width: 680px;
+      color: #c8ddef;
+      font-size: 1.05rem;
+    }
+    .hero-actions, .section-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 14px;
+      margin-top: 28px;
+    }
+    .button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 52px;
+      padding: 0 22px;
+      border-radius: 999px;
+      border: 1px solid transparent;
+      font-weight: 700;
+      cursor: pointer;
+      transition: transform 0.2s ease;
+    }
+    .button:hover { transform: translateY(-2px); }
+    .button-primary { color: #07131e; background: linear-gradient(135deg, var(--accent), #7ed9ff); }
+    .button-secondary { color: #fff; background: rgba(255,255,255,0.07); border-color: rgba(255,255,255,0.12); }
+    .button-inline { color: #12406c; background: linear-gradient(135deg, #d8fff6, #dceeff); }
+    .hero-stats, .surface-grid { display: grid; gap: 18px; }
+    .hero-stats { grid-template-columns: repeat(3, minmax(0, 1fr)); margin-top: 28px; }
+    .surface-grid.cols-2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .stat-card, .section-card, .toc {
+      background: linear-gradient(180deg, rgba(12, 27, 46, 0.95), rgba(8, 21, 36, 0.98));
+      border: 1px solid var(--line);
+    }
+    .stat-card { padding: 18px; border-radius: 18px; }
+    .stat-card strong {
+      display: block;
+      color: #fff;
+      font-size: 1.45rem;
+      font-family: var(--font-display);
+    }
+    .stat-card span { color: #bdd5e8; font-size: 0.92rem; }
+    .hero-panel {
+      padding: 24px;
+      border-radius: 28px;
+      background: linear-gradient(180deg, rgba(255,255,255,0.08), rgba(255,255,255,0.04));
+      border: 1px solid rgba(255,255,255,0.08);
+    }
+    .hero-panel h3 { margin: 0 0 10px; font-size: 1.12rem; }
+    .hero-panel p { margin: 0; color: #c6daeb; font-size: 0.96rem; }
+    .panel-box, .code {
+      margin-top: 16px;
+      padding: 18px;
+      border-radius: 18px;
+      background: #09111f;
+      border: 1px solid rgba(120, 194, 255, 0.12);
+      color: #e4f4ff;
+      font-family: "Cascadia Code", "Consolas", monospace;
+      line-height: 1.8;
+      white-space: pre-wrap;
+      overflow-x: auto;
+    }
+    .page-grid {
+      display: grid;
+      grid-template-columns: 280px 1fr;
+      gap: 24px;
+      align-items: start;
+    }
+    .toc {
+      position: sticky;
+      top: 92px;
+      padding: 20px;
+    }
+    .toc h2 {
+      margin: 0 0 10px;
+      font-size: 1.02rem;
+      font-family: var(--font-display);
+    }
+    .toc p {
+      margin: 0 0 14px;
+      color: var(--muted);
+      font-size: 0.92rem;
+    }
+    .toc a {
+      display: block;
+      padding: 10px 12px;
+      border-radius: 14px;
+      color: #cbe1f1;
+      transition: 0.2s ease;
+    }
+    .toc a:hover {
+      color: #fff;
+      background: rgba(255,255,255,0.07);
+    }
+    .content { display: grid; gap: 20px; }
+    .section-card { padding: 24px; }
+    .section-card h2 { margin-top: 0; font-family: var(--font-display); }
+    .light-card {
+      padding: 20px;
+      border-radius: 22px;
+      background: linear-gradient(180deg, rgba(255,255,255,0.07), rgba(255,255,255,0.03));
+      border: 1px solid rgba(255,255,255,0.08);
+    }
+    .light-card h3 { margin: 0 0 10px; font-size: 1.08rem; }
+    .card-kicker {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 44px;
+      height: 44px;
+      margin-bottom: 16px;
+      border-radius: 14px;
+      font-weight: 800;
+      color: #0d2238;
+      background: linear-gradient(135deg, #8ef2e4, #8ec5ff);
+    }
+    .info, .success, .warn {
+      margin-top: 18px;
+      padding: 16px 18px;
+      border-radius: 18px;
+      border-left: 5px solid #3b82f6;
+      background: rgba(222, 245, 255, 0.08);
+    }
+    .success { border-left-color: #0f9f7a; background: rgba(15, 159, 122, 0.1); }
+    .warn { border-left-color: #ea7c3c; background: rgba(234, 124, 60, 0.1); }
+    .info strong, .success strong, .warn strong { color: #fff; }
+    .flow-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 16px;
+    }
+    .flow-row span {
+      display: inline-flex;
+      align-items: center;
+      min-height: 34px;
+      padding: 0 12px;
+      border-radius: 999px;
+      background: linear-gradient(135deg, #d7fff7, #dbeeff);
+      color: #0d2238;
+      font-weight: 700;
+      font-size: 0.84rem;
+    }
+    .cta-card {
+      padding: 34px;
+      background:
+        radial-gradient(circle at 10% 20%, rgba(142, 242, 228, 0.18), transparent 32%),
+        radial-gradient(circle at 88% 24%, rgba(59, 130, 246, 0.24), transparent 30%),
+        linear-gradient(135deg, #071726, #102843 52%, #0e3341);
+      border: 1px solid rgba(142, 242, 228, 0.16);
+    }
+    .cta-card h2 {
+      margin: 0 0 14px;
+      font-family: var(--font-display);
+      font-size: clamp(2rem, 3vw, 3rem);
+      line-height: 1.05;
+    }
+    .cta-card p {
+      margin: 0;
+      max-width: 760px;
+      color: #cae1f2;
+      font-size: 1.04rem;
+    }
+    .footer {
+      padding: 16px 0 42px;
+      color: #9ab3c7;
+      font-size: 0.95rem;
+    }
+    .footer-row {
+      display: flex;
+      justify-content: space-between;
+      gap: 18px;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+    @media (max-width: 1080px) {
+      .hero-grid, .page-grid, .surface-grid.cols-2 { grid-template-columns: 1fr; }
+      .toc { position: static; }
+    }
+    @media (max-width: 860px) {
+      .hero-card, .section-card, .light-card, .cta-card { padding: 24px; }
+      .hero-stats { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 560px) {
+      .container { width: min(var(--max-width), calc(100% - 20px)); }
+      .button { width: 100%; }
+      .hero-actions, .section-actions { flex-direction: column; }
+    }
+  </style>
+</head>
+<body>
+  <header class="site-header">
+    <div class="container">
+      <nav class="nav glass">
+        <div class="brand">
+          <div class="brand-mark">D14</div>
+          <div class="brand-copy">
+            <strong>第 14 天：函数参数</strong>
+            <span>让同一个函数根据不同输入产生不同结果</span>
+          </div>
+        </div>
+        <div class="nav-links">
+          <a href="index.html">首页</a>
+          <a href="python_study.html">新手核心内容</a>
+          <a href="day13_functions_intro.html">上一天</a>
+          <a href="day15_stage_review.html" class="is-active">下一天</a>
+        </div>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="section hero">
+      <div class="container">
+        <div class="hero-card glass">
+          <div class="hero-grid">
+            <div>
+              <div class="eyebrow">Day 14 / Function Parameters</div>
+              <h1>函数如果永远只能做一件固定小事，<br />它就还不够灵活，参数就是让它变通的关键。</h1>
+              <p>今天你会从“固定内容函数”升级到“可接收数据的函数”。同一个函数，不同参数，就能输出不同结果，这会让你的程序结构明显上一个台阶。</p>
+              <div class="hero-actions">
+                <a class="button button-primary" href="#basic">先看参数基本写法</a>
+                <a class="button button-secondary" href="day13_functions_intro.html">回看函数概念</a>
+              </div>
+              <div class="hero-stats">
+                <div class="stat-card">
+                  <strong>2 个位置</strong>
+                  <span>定义时写参数，调用时传值</span>
+                </div>
+                <div class="stat-card">
+                  <strong>1 个结果</strong>
+                  <span>同一个函数能服务不同场景</span>
+                </div>
+                <div class="stat-card">
+                  <strong>1 个升级</strong>
+                  <span>程序开始更像“可配置工具”</span>
+                </div>
+              </div>
+            </div>
+            <div class="hero-panel">
+              <h3>你今天会写出的最小参数函数</h3>
+              <p>先感受“函数根据输入变化”的效果。</p>
+              <div class="panel-box">def say_hello(name):
+    print("你好，", name)
+
+say_hello("小林")
+say_hello("小周")</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container page-grid">
+        <aside class="toc">
+          <h2>本页目录</h2>
+          <p>重点是理解参数的角色，而不是死记术语。</p>
+          <a href="#goal">1. 今天目标</a>
+          <a href="#basic">2. 参数是什么</a>
+          <a href="#define-call">3. 定义时和调用时分别写什么</a>
+          <a href="#case">4. 分数判断函数案例</a>
+          <a href="#benefit">5. 参数为什么重要</a>
+          <a href="#practice">6. 今日练习</a>
+          <a href="#summary">7. 今日总结</a>
+        </aside>
+
+        <div class="content">
+          <section class="section-card" id="goal">
+            <h2>1. 今天目标</h2>
+            <p>今天你要理解的核心是：函数不应该只能写死一种结果。通过参数，我们可以把数据交给函数，让它根据不同输入执行相同结构但不同内容的逻辑。</p>
+          </section>
+
+          <section class="section-card" id="basic">
+            <h2>2. 参数是什么</h2>
+            <p>参数可以理解成“函数预留出来的输入位置”。调用函数时，把实际数据填进去，函数就知道该处理谁、该处理什么值。</p>
+            <div class="code">def say_hello(name):
+    print("你好，", name)</div>
+            <ul>
+              <li>`name` 是参数名。</li>
+              <li>它像一个临时变量，专门接收调用时传进来的数据。</li>
+              <li>函数内部就能用这个参数继续做处理。</li>
+            </ul>
+          </section>
+
+          <section class="section-card" id="define-call">
+            <h2>3. 定义时和调用时分别写什么</h2>
+            <div class="surface-grid cols-2">
+              <article class="light-card">
+                <div class="card-kicker">Def</div>
+                <h3>定义函数时</h3>
+                <p>写的是参数名。它表示“将来这里会收到一个值”。</p>
+                <div class="code">def say_hello(name):</div>
+              </article>
+              <article class="light-card">
+                <div class="card-kicker">Call</div>
+                <h3>调用函数时</h3>
+                <p>写的是实际值。它表示“这次就把这个内容传进去”。</p>
+                <div class="code">say_hello("小林")</div>
+              </article>
+            </div>
+            <div class="flow-row">
+              <span>定义参数位置</span>
+              <span>调用时传入值</span>
+              <span>函数内部使用这个值</span>
+            </div>
+          </section>
+
+          <section class="section-card" id="case">
+            <h2>4. 分数判断函数案例</h2>
+            <p>把前面学过的条件判断和函数参数结合起来，就能写出一个更像工具的小功能。</p>
+            <div class="code">def check_score(score):
+    if score >= 60:
+        print("及格")
+    else:
+        print("不及格")
+
+check_score(88)
+check_score(45)</div>
+            <div class="success">
+              <strong>这个例子很关键：</strong> `check_score` 的逻辑只写一次，但可以处理很多不同分数。这就是参数真正的价值。
+            </div>
+          </section>
+
+          <section class="section-card" id="benefit">
+            <h2>5. 参数为什么重要</h2>
+            <div class="surface-grid cols-2">
+              <article class="light-card">
+                <div class="card-kicker">1</div>
+                <h3>减少重复函数</h3>
+                <p>不需要为小林、小周、小王分别写 3 个函数，一个带参数的函数就够了。</p>
+              </article>
+              <article class="light-card">
+                <div class="card-kicker">2</div>
+                <h3>程序更灵活</h3>
+                <p>同样的结构可以处理不同数据，这才是程序真正擅长的地方。</p>
+              </article>
+            </div>
+            <div class="info">
+              <strong>你可以把函数想成机器：</strong> 参数就是投进去的原料。原料不同，机器输出就不同，但机器本身的工作流程不需要重写。
+            </div>
+          </section>
+
+          <section class="section-card" id="practice">
+            <h2>6. 今日练习</h2>
+            <div class="light-card">
+              <div class="card-kicker">P1</div>
+              <h3>问候不同的人</h3>
+              <p>定义一个带 `name` 参数的函数，分别向 3 个不同名字打招呼。</p>
+            </div>
+            <div class="light-card">
+              <div class="card-kicker">P2</div>
+              <h3>判断是否成年</h3>
+              <p>定义一个带 `age` 参数的函数，如果年龄大于等于 18 输出“已成年”，否则输出“未成年”。</p>
+            </div>
+            <div class="light-card">
+              <div class="card-kicker">P3</div>
+              <h3>打印课程信息</h3>
+              <p>定义一个函数，接收课程名和天数两个参数，输出“我今天学习的是 XX，第 XX 天”。</p>
+            </div>
+          </section>
+
+          <section class="section-card" id="summary">
+            <h2>7. 今日总结</h2>
+            <ul>
+              <li>参数是函数预留出来的输入位置。</li>
+              <li>定义函数时写参数名，调用时传实际值。</li>
+              <li>参数让同一个函数可以处理不同数据。</li>
+              <li>函数和参数结合后，程序会明显更灵活。</li>
+              <li>函数参数是后面模块化写代码的重要基础。</li>
+            </ul>
+            <div class="success">
+              <strong>今天过关标准：</strong> 你能自己写出至少 2 个带参数的函数，并理解“参数名”和“传入值”的区别，就说明今天真正过关了。
+            </div>
+          </section>
+
+          <section class="section">
+            <div class="cta-card">
+              <h2>第二阶段的核心基础到这里已经拼得差不多了，最后需要一次完整复盘。</h2>
+              <p>第 15 天会带你做阶段复习，把循环、列表、字典、字符串和函数放到同一张地图里，再做一次综合检查，确认这 8 天不是零散记忆，而是连成体系。</p>
+              <div class="section-actions">
+                <a class="button button-primary" href="day15_stage_review.html">进入第 15 天：阶段复习</a>
+                <a class="button button-secondary" href="python_study.html#week2">回到第 2 周入口</a>
+              </div>
+            </div>
+          </section>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-row">
+        <div>当前页面：<strong>day14_function_params.html</strong></div>
+        <div>相邻导航：Day 13 函数概念 · Day 15 阶段复习</div>
+      </div>
+    </div>
+  </footer>
+</body>
+</html>

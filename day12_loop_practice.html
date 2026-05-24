@@ -1,0 +1,554 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>第 12 天：循环练习 | Python 学习页</title>
+  <style>
+    :root {
+      --bg: #07111f;
+      --panel: rgba(10, 24, 42, 0.82);
+      --line: rgba(123, 196, 255, 0.18);
+      --text: #e9f6ff;
+      --muted: #9cb7cb;
+      --accent: #8ef2e4;
+      --shadow: 0 24px 70px rgba(0, 10, 22, 0.3);
+      --radius-lg: 24px;
+      --max-width: 1180px;
+      --font-display: "Segoe UI Variable Display", "PingFang SC", "Microsoft YaHei UI", sans-serif;
+      --font-body: "Segoe UI Variable Text", "PingFang SC", "Microsoft YaHei", sans-serif;
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      color: var(--text);
+      font-family: var(--font-body);
+      line-height: 1.72;
+      background:
+        radial-gradient(circle at top left, rgba(54, 215, 196, 0.15), transparent 24%),
+        radial-gradient(circle at 85% 12%, rgba(59, 130, 246, 0.22), transparent 26%),
+        linear-gradient(180deg, #07111f 0%, #0a1830 45%, #0d2238 100%);
+    }
+    a { color: inherit; text-decoration: none; }
+    .container { width: min(var(--max-width), calc(100% - 28px)); margin: 0 auto; }
+    .section { padding: 26px 0; }
+    .glass {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(16px);
+    }
+    .site-header {
+      position: sticky;
+      top: 0;
+      z-index: 40;
+      padding: 14px 0;
+      background: linear-gradient(180deg, rgba(7, 17, 31, 0.86), rgba(7, 17, 31, 0.32));
+      backdrop-filter: blur(12px);
+    }
+    .nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      padding: 14px 18px;
+      border-radius: 999px;
+    }
+    .brand { display: flex; align-items: center; gap: 14px; }
+    .brand-mark {
+      width: 44px;
+      height: 44px;
+      display: grid;
+      place-items: center;
+      border-radius: 14px;
+      font-weight: 800;
+      letter-spacing: 0.08em;
+      color: var(--accent);
+      background: linear-gradient(135deg, rgba(54, 215, 196, 0.28), rgba(59, 130, 246, 0.28));
+      border: 1px solid rgba(142, 242, 228, 0.18);
+    }
+    .brand-copy strong {
+      display: block;
+      font-size: 1rem;
+      font-family: var(--font-display);
+    }
+    .brand-copy span { display: block; color: var(--muted); font-size: 0.88rem; }
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+    }
+    .nav-links a {
+      padding: 10px 14px;
+      border-radius: 999px;
+      color: var(--muted);
+      transition: 0.2s ease;
+    }
+    .nav-links a:hover,
+    .nav-links a.is-active {
+      color: #fff;
+      background: rgba(255, 255, 255, 0.07);
+    }
+    .hero-card, .section-card, .light-card, .cta-card, .toc { border-radius: var(--radius-lg); box-shadow: var(--shadow); }
+    .hero-card {
+      position: relative;
+      overflow: hidden;
+      padding: 36px;
+    }
+    .hero-card::before,
+    .hero-card::after {
+      content: "";
+      position: absolute;
+      border-radius: 999px;
+      filter: blur(10px);
+    }
+    .hero-card::before {
+      width: 260px;
+      height: 260px;
+      top: -110px;
+      right: -70px;
+      background: radial-gradient(circle, rgba(54, 215, 196, 0.28), transparent 68%);
+    }
+    .hero-card::after {
+      width: 300px;
+      height: 300px;
+      bottom: -150px;
+      left: -110px;
+      background: radial-gradient(circle, rgba(59, 130, 246, 0.24), transparent 68%);
+    }
+    .hero-grid {
+      position: relative;
+      display: grid;
+      grid-template-columns: minmax(0, 1.08fr) minmax(320px, 0.92fr);
+      gap: 28px;
+      align-items: center;
+    }
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 14px;
+      border-radius: 999px;
+      color: var(--accent);
+      font-size: 0.9rem;
+      background: rgba(142, 242, 228, 0.08);
+      border: 1px solid rgba(142, 242, 228, 0.14);
+    }
+    .hero h1 {
+      margin: 18px 0 14px;
+      font-size: clamp(2.45rem, 4.8vw, 4rem);
+      line-height: 1.04;
+      letter-spacing: -0.03em;
+      font-family: var(--font-display);
+    }
+    .hero p {
+      margin: 0;
+      max-width: 680px;
+      color: #c8ddef;
+      font-size: 1.05rem;
+    }
+    .hero-actions, .section-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 14px;
+      margin-top: 28px;
+    }
+    .button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 52px;
+      padding: 0 22px;
+      border-radius: 999px;
+      border: 1px solid transparent;
+      font-weight: 700;
+      cursor: pointer;
+      transition: transform 0.2s ease;
+    }
+    .button:hover { transform: translateY(-2px); }
+    .button-primary { color: #07131e; background: linear-gradient(135deg, var(--accent), #7ed9ff); }
+    .button-secondary { color: #fff; background: rgba(255,255,255,0.07); border-color: rgba(255,255,255,0.12); }
+    .button-inline { color: #12406c; background: linear-gradient(135deg, #d8fff6, #dceeff); }
+    .hero-stats, .surface-grid { display: grid; gap: 18px; }
+    .hero-stats { grid-template-columns: repeat(3, minmax(0, 1fr)); margin-top: 28px; }
+    .surface-grid.cols-2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .stat-card, .section-card, .toc {
+      background: linear-gradient(180deg, rgba(12, 27, 46, 0.95), rgba(8, 21, 36, 0.98));
+      border: 1px solid var(--line);
+    }
+    .stat-card { padding: 18px; border-radius: 18px; }
+    .stat-card strong {
+      display: block;
+      color: #fff;
+      font-size: 1.45rem;
+      font-family: var(--font-display);
+    }
+    .stat-card span { color: #bdd5e8; font-size: 0.92rem; }
+    .hero-panel {
+      padding: 24px;
+      border-radius: 28px;
+      background: linear-gradient(180deg, rgba(255,255,255,0.08), rgba(255,255,255,0.04));
+      border: 1px solid rgba(255,255,255,0.08);
+    }
+    .hero-panel h3 { margin: 0 0 10px; font-size: 1.12rem; }
+    .hero-panel p { margin: 0; color: #c6daeb; font-size: 0.96rem; }
+    .panel-box, .code {
+      margin-top: 16px;
+      padding: 18px;
+      border-radius: 18px;
+      background: #09111f;
+      border: 1px solid rgba(120, 194, 255, 0.12);
+      color: #e4f4ff;
+      font-family: "Cascadia Code", "Consolas", monospace;
+      line-height: 1.8;
+      white-space: pre-wrap;
+      overflow-x: auto;
+    }
+    .page-grid {
+      display: grid;
+      grid-template-columns: 280px 1fr;
+      gap: 24px;
+      align-items: start;
+    }
+    .toc {
+      position: sticky;
+      top: 92px;
+      padding: 20px;
+    }
+    .toc h2 {
+      margin: 0 0 10px;
+      font-size: 1.02rem;
+      font-family: var(--font-display);
+    }
+    .toc p {
+      margin: 0 0 14px;
+      color: var(--muted);
+      font-size: 0.92rem;
+    }
+    .toc a {
+      display: block;
+      padding: 10px 12px;
+      border-radius: 14px;
+      color: #cbe1f1;
+      transition: 0.2s ease;
+    }
+    .toc a:hover {
+      color: #fff;
+      background: rgba(255,255,255,0.07);
+    }
+    .content { display: grid; gap: 20px; }
+    .section-card { padding: 24px; }
+    .section-card h2 { margin-top: 0; font-family: var(--font-display); }
+    .light-card {
+      padding: 20px;
+      border-radius: 22px;
+      background: linear-gradient(180deg, rgba(255,255,255,0.07), rgba(255,255,255,0.03));
+      border: 1px solid rgba(255,255,255,0.08);
+    }
+    .light-card h3 { margin: 0 0 10px; font-size: 1.08rem; }
+    .card-kicker {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 44px;
+      height: 44px;
+      margin-bottom: 16px;
+      border-radius: 14px;
+      font-weight: 800;
+      color: #0d2238;
+      background: linear-gradient(135deg, #8ef2e4, #8ec5ff);
+    }
+    .info, .success, .warn {
+      margin-top: 18px;
+      padding: 16px 18px;
+      border-radius: 18px;
+      border-left: 5px solid #3b82f6;
+      background: rgba(222, 245, 255, 0.08);
+    }
+    .success { border-left-color: #0f9f7a; background: rgba(15, 159, 122, 0.1); }
+    .warn { border-left-color: #ea7c3c; background: rgba(234, 124, 60, 0.1); }
+    .info strong, .success strong, .warn strong { color: #fff; }
+    .flow-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 16px;
+    }
+    .flow-row span {
+      display: inline-flex;
+      align-items: center;
+      min-height: 34px;
+      padding: 0 12px;
+      border-radius: 999px;
+      background: linear-gradient(135deg, #d7fff7, #dbeeff);
+      color: #0d2238;
+      font-weight: 700;
+      font-size: 0.84rem;
+    }
+    .cta-card {
+      padding: 34px;
+      background:
+        radial-gradient(circle at 10% 20%, rgba(142, 242, 228, 0.18), transparent 32%),
+        radial-gradient(circle at 88% 24%, rgba(59, 130, 246, 0.24), transparent 30%),
+        linear-gradient(135deg, #071726, #102843 52%, #0e3341);
+      border: 1px solid rgba(142, 242, 228, 0.16);
+    }
+    .cta-card h2 {
+      margin: 0 0 14px;
+      font-family: var(--font-display);
+      font-size: clamp(2rem, 3vw, 3rem);
+      line-height: 1.05;
+    }
+    .cta-card p {
+      margin: 0;
+      max-width: 760px;
+      color: #cae1f2;
+      font-size: 1.04rem;
+    }
+    .footer {
+      padding: 16px 0 42px;
+      color: #9ab3c7;
+      font-size: 0.95rem;
+    }
+    .footer-row {
+      display: flex;
+      justify-content: space-between;
+      gap: 18px;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+    @media (max-width: 1080px) {
+      .hero-grid, .page-grid, .surface-grid.cols-2 { grid-template-columns: 1fr; }
+      .toc { position: static; }
+    }
+    @media (max-width: 860px) {
+      .hero-card, .section-card, .light-card, .cta-card { padding: 24px; }
+      .hero-stats { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 560px) {
+      .container { width: min(var(--max-width), calc(100% - 20px)); }
+      .button { width: 100%; }
+      .hero-actions, .section-actions { flex-direction: column; }
+    }
+  </style>
+</head>
+<body>
+  <header class="site-header">
+    <div class="container">
+      <nav class="nav glass">
+        <div class="brand">
+          <div class="brand-mark">D12</div>
+          <div class="brand-copy">
+            <strong>第 12 天：循环练习</strong>
+            <span>把循环、列表和判断连成真实流程</span>
+          </div>
+        </div>
+        <div class="nav-links">
+          <a href="index.html">首页</a>
+          <a href="python_study.html">新手核心内容</a>
+          <a href="day11_strings.html">上一天</a>
+          <a href="day13_functions_intro.html" class="is-active">下一天</a>
+        </div>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="section hero">
+      <div class="container">
+        <div class="hero-card glass">
+          <div class="hero-grid">
+            <div>
+              <div class="eyebrow">Day 12 / Loop Practice</div>
+              <h1>循环真正有价值的时刻，<br />是它开始批量处理一组真实数据。</h1>
+              <p>今天不再只是单独学一个语法点，而是把循环、列表和判断放到一起。你会第一次明显感受到，程序在“遍历数据并给出结果”。</p>
+              <div class="hero-actions">
+                <a class="button button-primary" href="#case">先看成绩统计案例</a>
+                <a class="button button-secondary" href="day11_strings.html">回看字符串处理</a>
+              </div>
+              <div class="hero-stats">
+                <div class="stat-card">
+                  <strong>1 个案例</strong>
+                  <span>批量统计成绩是否及格</span>
+                </div>
+                <div class="stat-card">
+                  <strong>3 个动作</strong>
+                  <span>遍历、判断、计数</span>
+                </div>
+                <div class="stat-card">
+                  <strong>1 个目标</strong>
+                  <span>让程序处理一组数据而不是一个值</span>
+                </div>
+              </div>
+            </div>
+            <div class="hero-panel">
+              <h3>你今天会看到的组合</h3>
+              <p>一个循环里不只输出，还会顺手做判断和统计。</p>
+              <div class="panel-box">scores = [88, 59, 91, 73, 45]
+pass_count = 0
+
+for score in scores:
+    if score >= 60:
+        pass_count = pass_count + 1
+
+print("及格人数：", pass_count)</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container page-grid">
+        <aside class="toc">
+          <h2>本页目录</h2>
+          <p>重点不是新语法，而是把前几天学过的东西组合起来。</p>
+          <a href="#goal">1. 今天目标</a>
+          <a href="#case">2. 成绩统计案例</a>
+          <a href="#breakdown">3. 分步拆解这段程序</a>
+          <a href="#count">4. 计数思路</a>
+          <a href="#upgrade">5. 还能怎么升级</a>
+          <a href="#practice">6. 今日练习</a>
+          <a href="#summary">7. 今日总结</a>
+        </aside>
+
+        <div class="content">
+          <section class="section-card" id="goal">
+            <h2>1. 今天目标</h2>
+            <p>你今天的关键任务是学会“用一套逻辑处理一组数据”。这比单独写 `for`、单独写 `if` 更像真实程序，也更接近后面的小项目写法。</p>
+          </section>
+
+          <section class="section-card" id="case">
+            <h2>2. 成绩统计案例</h2>
+            <p>先看一个最典型的组合案例：统计一组分数里有多少人及格。</p>
+            <div class="code">scores = [88, 59, 91, 73, 45]
+pass_count = 0
+
+for score in scores:
+    if score >= 60:
+        pass_count = pass_count + 1
+
+print("及格人数：", pass_count)</div>
+            <div class="success">
+              <strong>为什么这个案例很关键：</strong> 它不再是“输出几次文字”，而是在遍历数据、检查条件、累计结果。这已经很接近真正的数据处理程序了。
+            </div>
+          </section>
+
+          <section class="section-card" id="breakdown">
+            <h2>3. 分步拆解这段程序</h2>
+            <div class="surface-grid cols-2">
+              <article class="light-card">
+                <div class="card-kicker">1</div>
+                <h3>准备一组数据</h3>
+                <p>`scores` 列表里放了多个分数，这是程序要处理的对象。</p>
+              </article>
+              <article class="light-card">
+                <div class="card-kicker">2</div>
+                <h3>准备一个计数器</h3>
+                <p>`pass_count = 0` 表示一开始还没有统计到任何及格人数。</p>
+              </article>
+              <article class="light-card">
+                <div class="card-kicker">3</div>
+                <h3>逐个检查每个分数</h3>
+                <p>循环每次拿到一个 `score`，再用 `if` 判断它是否及格。</p>
+              </article>
+              <article class="light-card">
+                <div class="card-kicker">4</div>
+                <h3>条件成立就加 1</h3>
+                <p>每发现一个及格分数，就把计数器加 1。循环结束后，结果自然就统计出来了。</p>
+              </article>
+            </div>
+          </section>
+
+          <section class="section-card" id="count">
+            <h2>4. 计数思路</h2>
+            <p>很多入门程序都会用到“计数器”这个概念。它的套路很固定：先从 0 开始，满足条件就加 1。</p>
+            <div class="flow-row">
+              <span>先设成 0</span>
+              <span>循环检查</span>
+              <span>满足条件加 1</span>
+              <span>循环结束得到结果</span>
+            </div>
+            <div class="info">
+              <strong>你可以把它理解成记账：</strong> 每发现一个符合条件的对象，就在账本上加一次。最终这个数字就是统计结果。
+            </div>
+          </section>
+
+          <section class="section-card" id="upgrade">
+            <h2>5. 还能怎么升级</h2>
+            <p>如果只统计及格人数已经会了，你还可以继续升级这段程序。</p>
+            <div class="surface-grid cols-2">
+              <article class="light-card">
+                <div class="card-kicker">Up1</div>
+                <h3>同时统计总分</h3>
+                <p>再加一个 `total` 变量，每轮把当前分数累加进去，最后就能算平均分。</p>
+              </article>
+              <article class="light-card">
+                <div class="card-kicker">Up2</div>
+                <h3>把不及格分数输出出来</h3>
+                <p>在 `else` 分支里输出没及格的分数，程序就能告诉你哪些值需要重点关注。</p>
+              </article>
+            </div>
+          </section>
+
+          <section class="section-card" id="practice">
+            <h2>6. 今日练习</h2>
+            <div class="light-card">
+              <div class="card-kicker">P1</div>
+              <h3>统计偶数个数</h3>
+              <p>给一个数字列表，用循环和判断统计里面有多少个偶数。</p>
+            </div>
+            <div class="light-card">
+              <div class="card-kicker">P2</div>
+              <h3>输出所有高分</h3>
+              <p>准备一组分数，把大于等于 90 的分数单独输出出来。</p>
+            </div>
+            <div class="light-card">
+              <div class="card-kicker">P3</div>
+              <h3>统计单词长度</h3>
+              <p>给一个字符串列表，循环输出每个单词以及它的长度。</p>
+            </div>
+          </section>
+
+          <section class="section-card" id="summary">
+            <h2>7. 今日总结</h2>
+            <ul>
+              <li>循环真正常见的用法，是批量处理一组数据。</li>
+              <li>列表提供数据集合，循环负责逐个处理。</li>
+              <li>判断可以放在循环里筛选符合条件的项。</li>
+              <li>计数器是从 0 开始、满足条件就加 1 的固定套路。</li>
+              <li>这类组合题比单独语法更接近真实程序。</li>
+            </ul>
+            <div class="success">
+              <strong>今天过关标准：</strong> 你能自己写出一个“遍历列表 + 条件判断 + 计数统计”的小程序，就说明今天真正把循环练熟了。
+            </div>
+          </section>
+
+          <section class="section">
+            <div class="cta-card">
+              <h2>当你开始反复写相似逻辑时，下一步就该学会把它们封装起来。</h2>
+              <p>第 13 天会进入函数概念。你会理解为什么程序不能一直复制粘贴，而要把重复逻辑打包成可以反复调用的功能块。</p>
+              <div class="section-actions">
+                <a class="button button-primary" href="day13_functions_intro.html">进入第 13 天：函数概念</a>
+                <a class="button button-secondary" href="python_study.html#week2">回到第 2 周入口</a>
+              </div>
+            </div>
+          </section>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-row">
+        <div>当前页面：<strong>day12_loop_practice.html</strong></div>
+        <div>相邻导航：Day 11 字符串处理 · Day 13 函数概念</div>
+      </div>
+    </div>
+  </footer>
+</body>
+</html>

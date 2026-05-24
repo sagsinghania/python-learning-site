@@ -1,0 +1,551 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>第 8 天：循环入门 | Python 学习页</title>
+  <style>
+    :root {
+      --bg: #07111f;
+      --panel: rgba(10, 24, 42, 0.82);
+      --line: rgba(123, 196, 255, 0.18);
+      --text: #e9f6ff;
+      --muted: #9cb7cb;
+      --accent: #8ef2e4;
+      --shadow: 0 24px 70px rgba(0, 10, 22, 0.3);
+      --radius-lg: 24px;
+      --max-width: 1180px;
+      --font-display: "Segoe UI Variable Display", "PingFang SC", "Microsoft YaHei UI", sans-serif;
+      --font-body: "Segoe UI Variable Text", "PingFang SC", "Microsoft YaHei", sans-serif;
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      color: var(--text);
+      font-family: var(--font-body);
+      line-height: 1.72;
+      background:
+        radial-gradient(circle at top left, rgba(54, 215, 196, 0.15), transparent 24%),
+        radial-gradient(circle at 85% 12%, rgba(59, 130, 246, 0.22), transparent 26%),
+        linear-gradient(180deg, #07111f 0%, #0a1830 45%, #0d2238 100%);
+    }
+    a { color: inherit; text-decoration: none; }
+    .container { width: min(var(--max-width), calc(100% - 28px)); margin: 0 auto; }
+    .section { padding: 26px 0; }
+    .glass {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(16px);
+    }
+    .site-header {
+      position: sticky;
+      top: 0;
+      z-index: 40;
+      padding: 14px 0;
+      background: linear-gradient(180deg, rgba(7, 17, 31, 0.86), rgba(7, 17, 31, 0.32));
+      backdrop-filter: blur(12px);
+    }
+    .nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      padding: 14px 18px;
+      border-radius: 999px;
+    }
+    .brand { display: flex; align-items: center; gap: 14px; }
+    .brand-mark {
+      width: 44px;
+      height: 44px;
+      display: grid;
+      place-items: center;
+      border-radius: 14px;
+      font-weight: 800;
+      letter-spacing: 0.08em;
+      color: var(--accent);
+      background: linear-gradient(135deg, rgba(54, 215, 196, 0.28), rgba(59, 130, 246, 0.28));
+      border: 1px solid rgba(142, 242, 228, 0.18);
+    }
+    .brand-copy strong {
+      display: block;
+      font-size: 1rem;
+      font-family: var(--font-display);
+    }
+    .brand-copy span { display: block; color: var(--muted); font-size: 0.88rem; }
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+    }
+    .nav-links a {
+      padding: 10px 14px;
+      border-radius: 999px;
+      color: var(--muted);
+      transition: 0.2s ease;
+    }
+    .nav-links a:hover,
+    .nav-links a.is-active {
+      color: #fff;
+      background: rgba(255, 255, 255, 0.07);
+    }
+    .hero-card, .section-card, .light-card, .cta-card, .toc { border-radius: var(--radius-lg); box-shadow: var(--shadow); }
+    .hero-card {
+      position: relative;
+      overflow: hidden;
+      padding: 36px;
+    }
+    .hero-card::before,
+    .hero-card::after {
+      content: "";
+      position: absolute;
+      border-radius: 999px;
+      filter: blur(10px);
+    }
+    .hero-card::before {
+      width: 260px;
+      height: 260px;
+      top: -110px;
+      right: -70px;
+      background: radial-gradient(circle, rgba(54, 215, 196, 0.28), transparent 68%);
+    }
+    .hero-card::after {
+      width: 300px;
+      height: 300px;
+      bottom: -150px;
+      left: -110px;
+      background: radial-gradient(circle, rgba(59, 130, 246, 0.24), transparent 68%);
+    }
+    .hero-grid {
+      position: relative;
+      display: grid;
+      grid-template-columns: minmax(0, 1.08fr) minmax(320px, 0.92fr);
+      gap: 28px;
+      align-items: center;
+    }
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 14px;
+      border-radius: 999px;
+      color: var(--accent);
+      font-size: 0.9rem;
+      background: rgba(142, 242, 228, 0.08);
+      border: 1px solid rgba(142, 242, 228, 0.14);
+    }
+    .hero h1 {
+      margin: 18px 0 14px;
+      font-size: clamp(2.45rem, 4.8vw, 4rem);
+      line-height: 1.04;
+      letter-spacing: -0.03em;
+      font-family: var(--font-display);
+    }
+    .hero p {
+      margin: 0;
+      max-width: 680px;
+      color: #c8ddef;
+      font-size: 1.05rem;
+    }
+    .hero-actions, .section-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 14px;
+      margin-top: 28px;
+    }
+    .button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 52px;
+      padding: 0 22px;
+      border-radius: 999px;
+      border: 1px solid transparent;
+      font-weight: 700;
+      cursor: pointer;
+      transition: transform 0.2s ease;
+    }
+    .button:hover { transform: translateY(-2px); }
+    .button-primary { color: #07131e; background: linear-gradient(135deg, var(--accent), #7ed9ff); }
+    .button-secondary { color: #fff; background: rgba(255,255,255,0.07); border-color: rgba(255,255,255,0.12); }
+    .button-inline { color: #12406c; background: linear-gradient(135deg, #d8fff6, #dceeff); }
+    .hero-stats, .surface-grid { display: grid; gap: 18px; }
+    .hero-stats { grid-template-columns: repeat(3, minmax(0, 1fr)); margin-top: 28px; }
+    .surface-grid.cols-2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .stat-card, .section-card, .toc {
+      background: linear-gradient(180deg, rgba(12, 27, 46, 0.95), rgba(8, 21, 36, 0.98));
+      border: 1px solid var(--line);
+    }
+    .stat-card { padding: 18px; border-radius: 18px; }
+    .stat-card strong {
+      display: block;
+      color: #fff;
+      font-size: 1.45rem;
+      font-family: var(--font-display);
+    }
+    .stat-card span { color: #bdd5e8; font-size: 0.92rem; }
+    .hero-panel {
+      padding: 24px;
+      border-radius: 28px;
+      background: linear-gradient(180deg, rgba(255,255,255,0.08), rgba(255,255,255,0.04));
+      border: 1px solid rgba(255,255,255,0.08);
+    }
+    .hero-panel h3 { margin: 0 0 10px; font-size: 1.12rem; }
+    .hero-panel p { margin: 0; color: #c6daeb; font-size: 0.96rem; }
+    .panel-box, .code {
+      margin-top: 16px;
+      padding: 18px;
+      border-radius: 18px;
+      background: #09111f;
+      border: 1px solid rgba(120, 194, 255, 0.12);
+      color: #e4f4ff;
+      font-family: "Cascadia Code", "Consolas", monospace;
+      line-height: 1.8;
+      white-space: pre-wrap;
+      overflow-x: auto;
+    }
+    .page-grid {
+      display: grid;
+      grid-template-columns: 280px 1fr;
+      gap: 24px;
+      align-items: start;
+    }
+    .toc {
+      position: sticky;
+      top: 92px;
+      padding: 20px;
+    }
+    .toc h2 {
+      margin: 0 0 10px;
+      font-size: 1.02rem;
+      font-family: var(--font-display);
+    }
+    .toc p {
+      margin: 0 0 14px;
+      color: var(--muted);
+      font-size: 0.92rem;
+    }
+    .toc a {
+      display: block;
+      padding: 10px 12px;
+      border-radius: 14px;
+      color: #cbe1f1;
+      transition: 0.2s ease;
+    }
+    .toc a:hover {
+      color: #fff;
+      background: rgba(255,255,255,0.07);
+    }
+    .content { display: grid; gap: 20px; }
+    .section-card { padding: 24px; }
+    .section-card h2 { margin-top: 0; font-family: var(--font-display); }
+    .light-card {
+      padding: 20px;
+      border-radius: 22px;
+      background: linear-gradient(180deg, rgba(255,255,255,0.07), rgba(255,255,255,0.03));
+      border: 1px solid rgba(255,255,255,0.08);
+    }
+    .light-card h3 { margin: 0 0 10px; font-size: 1.08rem; }
+    .card-kicker {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 44px;
+      height: 44px;
+      margin-bottom: 16px;
+      border-radius: 14px;
+      font-weight: 800;
+      color: #0d2238;
+      background: linear-gradient(135deg, #8ef2e4, #8ec5ff);
+    }
+    .info, .success, .warn {
+      margin-top: 18px;
+      padding: 16px 18px;
+      border-radius: 18px;
+      border-left: 5px solid #3b82f6;
+      background: rgba(222, 245, 255, 0.08);
+    }
+    .success { border-left-color: #0f9f7a; background: rgba(15, 159, 122, 0.1); }
+    .warn { border-left-color: #ea7c3c; background: rgba(234, 124, 60, 0.1); }
+    .info strong, .success strong, .warn strong { color: #fff; }
+    .flow-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 16px;
+    }
+    .flow-row span {
+      display: inline-flex;
+      align-items: center;
+      min-height: 34px;
+      padding: 0 12px;
+      border-radius: 999px;
+      background: linear-gradient(135deg, #d7fff7, #dbeeff);
+      color: #0d2238;
+      font-weight: 700;
+      font-size: 0.84rem;
+    }
+    .cta-card {
+      padding: 34px;
+      background:
+        radial-gradient(circle at 10% 20%, rgba(142, 242, 228, 0.18), transparent 32%),
+        radial-gradient(circle at 88% 24%, rgba(59, 130, 246, 0.24), transparent 30%),
+        linear-gradient(135deg, #071726, #102843 52%, #0e3341);
+      border: 1px solid rgba(142, 242, 228, 0.16);
+    }
+    .cta-card h2 {
+      margin: 0 0 14px;
+      font-family: var(--font-display);
+      font-size: clamp(2rem, 3vw, 3rem);
+      line-height: 1.05;
+    }
+    .cta-card p {
+      margin: 0;
+      max-width: 760px;
+      color: #cae1f2;
+      font-size: 1.04rem;
+    }
+    .footer {
+      padding: 16px 0 42px;
+      color: #9ab3c7;
+      font-size: 0.95rem;
+    }
+    .footer-row {
+      display: flex;
+      justify-content: space-between;
+      gap: 18px;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+    @media (max-width: 1080px) {
+      .hero-grid, .page-grid, .surface-grid.cols-2 { grid-template-columns: 1fr; }
+      .toc { position: static; }
+    }
+    @media (max-width: 860px) {
+      .hero-card, .section-card, .light-card, .cta-card { padding: 24px; }
+      .hero-stats { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 560px) {
+      .container { width: min(var(--max-width), calc(100% - 20px)); }
+      .button { width: 100%; }
+      .hero-actions, .section-actions { flex-direction: column; }
+    }
+  </style>
+</head>
+<body>
+  <header class="site-header">
+    <div class="container">
+      <nav class="nav glass">
+        <div class="brand">
+          <div class="brand-mark">D8</div>
+          <div class="brand-copy">
+            <strong>第 8 天：循环入门</strong>
+            <span>让程序开始处理重复任务</span>
+          </div>
+        </div>
+        <div class="nav-links">
+          <a href="index.html">首页</a>
+          <a href="python_study.html">新手核心内容</a>
+          <a href="day07_score_program.html">上一天</a>
+          <a href="day09_lists.html" class="is-active">下一天</a>
+        </div>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="section hero">
+      <div class="container">
+        <div class="hero-card glass">
+          <div class="hero-grid">
+            <div>
+              <div class="eyebrow">Day 08 / Loops</div>
+              <h1>当一件事要重复做很多次时，<br />循环比你手写十遍更像程序。</h1>
+              <p>今天你会第一次接触“重复执行”这个能力。它会让程序从只会做一次动作，变成能稳定地批量处理一串任务。</p>
+              <div class="hero-actions">
+                <a class="button button-primary" href="#for-loop">先看 `for` 循环</a>
+                <a class="button button-secondary" href="day07_score_program.html">回看第 7 天综合程序</a>
+              </div>
+              <div class="hero-stats">
+                <div class="stat-card">
+                  <strong>2 种思路</strong>
+                  <span>`for` 管次数，`while` 管条件</span>
+                </div>
+                <div class="stat-card">
+                  <strong>1 个重点</strong>
+                  <span>重复不是乱写，是按规则执行</span>
+                </div>
+                <div class="stat-card">
+                  <strong>1 个风险</strong>
+                  <span>写错条件会出现死循环</span>
+                </div>
+              </div>
+            </div>
+            <div class="hero-panel">
+              <h3>你今天会写出的最小循环</h3>
+              <p>先感受“同一段动作被自动重复执行”的效果。</p>
+              <div class="panel-box">for number in range(1, 6):
+    print(number)</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container page-grid">
+        <aside class="toc">
+          <h2>本页目录</h2>
+          <p>先理解为什么要循环，再区分 `for` 和 `while`。</p>
+          <a href="#goal">1. 今天目标</a>
+          <a href="#repeat">2. 为什么需要循环</a>
+          <a href="#for-loop">3. `for` 循环入门</a>
+          <a href="#while-loop">4. `while` 循环入门</a>
+          <a href="#compare">5. 两种循环怎么选</a>
+          <a href="#practice">6. 今日练习</a>
+          <a href="#summary">7. 今日总结</a>
+        </aside>
+
+        <div class="content">
+          <section class="section-card" id="goal">
+            <h2>1. 今天目标</h2>
+            <p>你今天的核心任务不是把所有循环语法背下来，而是理解一件事：程序非常擅长重复执行固定动作，所以我们要学会把“重复任务”交给循环来做。</p>
+          </section>
+
+          <section class="section-card" id="repeat">
+            <h2>2. 为什么需要循环</h2>
+            <p>如果你想让程序连续输出 5 次“继续练习”，当然可以写 5 行 `print()`。但这不是真正的程序思维。程序的优势恰好在于，它可以用一套规则重复很多次。</p>
+            <div class="surface-grid cols-2">
+              <article class="light-card">
+                <div class="card-kicker">A</div>
+                <h3>没有循环时</h3>
+                <div class="code">print("继续练习")
+print("继续练习")
+print("继续练习")
+print("继续练习")
+print("继续练习")</div>
+              </article>
+              <article class="light-card">
+                <div class="card-kicker">B</div>
+                <h3>有循环时</h3>
+                <div class="code">for _ in range(5):
+    print("继续练习")</div>
+              </article>
+            </div>
+            <div class="info">
+              <strong>你要抓住的重点：</strong> 循环不是为了省几行代码，而是为了让程序能稳定处理一批相同模式的动作。
+            </div>
+          </section>
+
+          <section class="section-card" id="for-loop">
+            <h2>3. `for` 循环入门</h2>
+            <p>`for` 适合“我知道要重复多少次”的场景。最常见的入门搭配就是 `range()`。</p>
+            <div class="code">for number in range(1, 6):
+    print("现在输出的是", number)</div>
+            <ul>
+              <li>`range(1, 6)` 表示从 1 到 5，不包含 6。</li>
+              <li>`number` 会在每一轮变成不同的值。</li>
+              <li>缩进里的代码会被重复执行。</li>
+            </ul>
+            <div class="flow-row">
+              <span>拿到 1</span>
+              <span>执行一次</span>
+              <span>拿到 2</span>
+              <span>继续执行</span>
+              <span>直到结束</span>
+            </div>
+          </section>
+
+          <section class="section-card" id="while-loop">
+            <h2>4. `while` 循环入门</h2>
+            <p>`while` 适合“只要条件还成立，就继续执行”的场景。它更灵活，但也更容易写错。</p>
+            <div class="code">count = 1
+
+while count &lt;= 3:
+    print("第", count, "次练习")
+    count = count + 1</div>
+            <div class="warn">
+              <strong>今天最容易踩的坑：</strong> 如果你忘了更新 `count`，条件会一直成立，程序就可能停不下来。这就叫死循环。
+            </div>
+          </section>
+
+          <section class="section-card" id="compare">
+            <h2>5. 两种循环怎么选</h2>
+            <div class="surface-grid cols-2">
+              <article class="light-card">
+                <div class="card-kicker">For</div>
+                <h3>适合次数明确</h3>
+                <p>比如输出 10 次、遍历一组名单、把 1 到 100 都处理一遍。</p>
+              </article>
+              <article class="light-card">
+                <div class="card-kicker">While</div>
+                <h3>适合条件明确</h3>
+                <p>比如“只要密码没输对就继续问”“只要库存大于 0 就继续卖”。</p>
+              </article>
+            </div>
+            <div class="success">
+              <strong>零基础阶段的建议：</strong> 先把 `for` 用熟，再逐步理解 `while`。大多数入门练习用 `for` 会更稳。
+            </div>
+          </section>
+
+          <section class="section-card" id="practice">
+            <h2>6. 今日练习</h2>
+            <div class="light-card">
+              <div class="card-kicker">P1</div>
+              <h3>输出 1 到 10</h3>
+              <p>用 `for` 循环把 1 到 10 全部输出出来，要求每个数字单独占一行。</p>
+            </div>
+            <div class="light-card">
+              <div class="card-kicker">P2</div>
+              <h3>连续说 3 次欢迎</h3>
+              <p>让程序输出 3 次“欢迎来到 Python 学习站”。先用 `for` 做，再尝试用 `while` 做。</p>
+            </div>
+            <div class="light-card">
+              <div class="card-kicker">P3</div>
+              <h3>倒计时</h3>
+              <p>从 5 倒数到 1。这个题更适合用 `while`，你可以顺便训练变量更新。</p>
+            </div>
+          </section>
+
+          <section class="section-card" id="summary">
+            <h2>7. 今日总结</h2>
+            <ul>
+              <li>循环解决的是重复任务，不是单纯减少代码行数。</li>
+              <li>`for` 更适合次数明确的重复。</li>
+              <li>`while` 更适合条件驱动的重复。</li>
+              <li>循环体里的缩进必须正确。</li>
+              <li>`while` 忘记更新条件，容易出现死循环。</li>
+            </ul>
+            <div class="success">
+              <strong>今天过关标准：</strong> 你能自己写出一个 `for` 循环和一个简单的 `while` 循环，并解释它们为什么会停下来，就算真正掌握今天的核心内容。
+            </div>
+          </section>
+
+          <section class="section">
+            <div class="cta-card">
+              <h2>循环学会之后，程序就不再只会处理“一次”的事情。</h2>
+              <p>下一天会进入列表。你会发现，循环和列表几乎总是一起出现，因为一个负责重复处理，一个负责保存一组数据。</p>
+              <div class="section-actions">
+                <a class="button button-primary" href="day09_lists.html">进入第 9 天：列表</a>
+                <a class="button button-secondary" href="python_study.html#week2">回到第 2 周入口</a>
+              </div>
+            </div>
+          </section>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-row">
+        <div>当前页面：<strong>day08_loops.html</strong></div>
+        <div>相邻导航：Day 07 综合程序 · Day 09 列表</div>
+      </div>
+    </div>
+  </footer>
+</body>
+</html>
