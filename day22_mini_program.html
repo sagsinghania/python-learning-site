@@ -3,320 +3,179 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>第 22 天：小型综合程序 | Python 学习页</title>
+  <title>第 22 天：迷你程序 | Python 学习页</title>
   <style>
-    :root {
-      --bg: #07111f;
-      --panel: rgba(10, 24, 42, 0.82);
-      --line: rgba(123, 196, 255, 0.18);
-      --text: #e9f6ff;
-      --muted: #9cb7cb;
-      --accent: #8ef2e4;
-      --shadow: 0 24px 70px rgba(0, 10, 22, 0.3);
-      --radius-lg: 24px;
-      --max-width: 1180px;
-      --font-display: "Segoe UI Variable Display", "PingFang SC", "Microsoft YaHei UI", sans-serif;
-      --font-body: "Segoe UI Variable Text", "PingFang SC", "Microsoft YaHei", sans-serif;
-    }
-    * { box-sizing: border-box; }
-    html { scroll-behavior: smooth; }
-    body {
-      margin: 0;
-      color: var(--text);
-      font-family: var(--font-body);
-      line-height: 1.72;
-      background:
-        radial-gradient(circle at top left, rgba(54, 215, 196, 0.15), transparent 24%),
-        radial-gradient(circle at 85% 12%, rgba(59, 130, 246, 0.22), transparent 26%),
-        linear-gradient(180deg, #07111f 0%, #0a1830 45%, #0d2238 100%);
-    }
-    a { color: inherit; text-decoration: none; }
-    .container { width: min(var(--max-width), calc(100% - 28px)); margin: 0 auto; }
-    .section { padding: 26px 0; }
-    .glass {
-      background: var(--panel);
-      border: 1px solid var(--line);
-      box-shadow: var(--shadow);
-      backdrop-filter: blur(16px);
-    }
-    .site-header {
-      position: sticky;
-      top: 0;
-      z-index: 40;
-      padding: 14px 0;
-      background: linear-gradient(180deg, rgba(7, 17, 31, 0.86), rgba(7, 17, 31, 0.32));
-      backdrop-filter: blur(12px);
-    }
-    .nav {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 16px;
-      padding: 14px 18px;
-      border-radius: 999px;
-    }
-    .brand { display: flex; align-items: center; gap: 14px; }
-    .brand-mark {
-      width: 44px;
-      height: 44px;
-      display: grid;
-      place-items: center;
-      border-radius: 14px;
-      font-weight: 800;
-      letter-spacing: 0.08em;
-      color: var(--accent);
-      background: linear-gradient(135deg, rgba(54, 215, 196, 0.28), rgba(59, 130, 246, 0.28));
-      border: 1px solid rgba(142, 242, 228, 0.18);
-    }
-    .brand-copy strong {
-      display: block;
-      font-size: 1rem;
-      font-family: var(--font-display);
-    }
-    .brand-copy span { display: block; color: var(--muted); font-size: 0.88rem; }
-    .nav-links {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      flex-wrap: wrap;
-      justify-content: flex-end;
-    }
-    .nav-links a {
-      padding: 10px 14px;
-      border-radius: 999px;
-      color: var(--muted);
-      transition: 0.2s ease;
-    }
-    .nav-links a:hover,
-    .nav-links a.is-active {
-      color: #fff;
-      background: rgba(255, 255, 255, 0.07);
-    }
-    .hero-card, .section-card, .light-card, .cta-card, .toc { border-radius: var(--radius-lg); box-shadow: var(--shadow); }
-    .hero-card {
-      position: relative;
-      overflow: hidden;
-      padding: 36px;
-    }
-    .hero-card::before,
-    .hero-card::after {
-      content: "";
-      position: absolute;
-      border-radius: 999px;
-      filter: blur(10px);
-    }
-    .hero-card::before {
-      width: 260px;
-      height: 260px;
-      top: -110px;
-      right: -70px;
-      background: radial-gradient(circle, rgba(54, 215, 196, 0.28), transparent 68%);
-    }
-    .hero-card::after {
-      width: 300px;
-      height: 300px;
-      bottom: -150px;
-      left: -110px;
-      background: radial-gradient(circle, rgba(59, 130, 246, 0.24), transparent 68%);
-    }
-    .hero-grid {
-      position: relative;
-      display: grid;
-      grid-template-columns: minmax(0, 1.08fr) minmax(320px, 0.92fr);
-      gap: 28px;
-      align-items: center;
-    }
-    .eyebrow {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      padding: 8px 14px;
-      border-radius: 999px;
-      color: var(--accent);
-      font-size: 0.9rem;
-      background: rgba(142, 242, 228, 0.08);
-      border: 1px solid rgba(142, 242, 228, 0.14);
-    }
-    .hero h1 {
-      margin: 18px 0 14px;
-      font-size: clamp(2.45rem, 4.8vw, 4rem);
-      line-height: 1.04;
-      letter-spacing: -0.03em;
-      font-family: var(--font-display);
-    }
-    .hero p {
-      margin: 0;
-      max-width: 680px;
-      color: #c8ddef;
-      font-size: 1.05rem;
-    }
-    .hero-actions, .section-actions {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 14px;
-      margin-top: 28px;
-    }
-    .button {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      min-height: 52px;
-      padding: 0 22px;
-      border-radius: 999px;
-      border: 1px solid transparent;
-      font-weight: 700;
-      cursor: pointer;
-      transition: transform 0.2s ease;
-    }
-    .button:hover { transform: translateY(-2px); }
-    .button-primary { color: #07131e; background: linear-gradient(135deg, var(--accent), #7ed9ff); }
-    .button-secondary { color: #fff; background: rgba(255,255,255,0.07); border-color: rgba(255,255,255,0.12); }
-    .button-inline { color: #12406c; background: linear-gradient(135deg, #d8fff6, #dceeff); }
-    .hero-stats, .surface-grid { display: grid; gap: 18px; }
-    .hero-stats { grid-template-columns: repeat(3, minmax(0, 1fr)); margin-top: 28px; }
-    .surface-grid.cols-2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-    .stat-card, .section-card, .toc {
-      background: linear-gradient(180deg, rgba(12, 27, 46, 0.95), rgba(8, 21, 36, 0.98));
-      border: 1px solid var(--line);
-    }
-    .stat-card { padding: 18px; border-radius: 18px; }
-    .stat-card strong {
-      display: block;
-      color: #fff;
-      font-size: 1.45rem;
-      font-family: var(--font-display);
-    }
-    .stat-card span { color: #bdd5e8; font-size: 0.92rem; }
-    .hero-panel {
-      padding: 24px;
-      border-radius: 28px;
-      background: linear-gradient(180deg, rgba(255,255,255,0.08), rgba(255,255,255,0.04));
-      border: 1px solid rgba(255,255,255,0.08);
-    }
-    .hero-panel h3 { margin: 0 0 10px; font-size: 1.12rem; }
-    .hero-panel p { margin: 0; color: #c6daeb; font-size: 0.96rem; }
-    .panel-box, .code {
-      margin-top: 16px;
-      padding: 18px;
-      border-radius: 18px;
-      background: #09111f;
-      border: 1px solid rgba(120, 194, 255, 0.12);
-      color: #e4f4ff;
-      font-family: "Cascadia Code", "Consolas", monospace;
-      line-height: 1.8;
-      white-space: pre-wrap;
-      overflow-x: auto;
-    }
-    .page-grid {
-      display: grid;
-      grid-template-columns: 280px 1fr;
-      gap: 24px;
-      align-items: start;
-    }
-    .toc {
-      position: sticky;
-      top: 92px;
-      padding: 20px;
-    }
-    .toc h2 {
-      margin: 0 0 10px;
-      font-size: 1.02rem;
-      font-family: var(--font-display);
-    }
-    .toc p {
-      margin: 0 0 14px;
-      color: var(--muted);
-      font-size: 0.92rem;
-    }
-    .toc a {
-      display: block;
-      padding: 10px 12px;
-      border-radius: 14px;
-      color: #cbe1f1;
-      transition: 0.2s ease;
-    }
-    .toc a:hover {
-      color: #fff;
-      background: rgba(255,255,255,0.07);
-    }
-    .content { display: grid; gap: 20px; }
-    .section-card { padding: 24px; }
-    .section-card h2 { margin-top: 0; font-family: var(--font-display); }
-    .light-card {
-      padding: 20px;
-      border-radius: 22px;
-      background: linear-gradient(180deg, rgba(255,255,255,0.07), rgba(255,255,255,0.03));
-      border: 1px solid rgba(255,255,255,0.08);
-    }
-    .light-card h3 { margin: 0 0 10px; font-size: 1.08rem; }
-    .card-kicker {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      width: 44px;
-      height: 44px;
-      margin-bottom: 16px;
-      border-radius: 14px;
-      font-weight: 800;
-      color: #0d2238;
-      background: linear-gradient(135deg, #8ef2e4, #8ec5ff);
-    }
-    .info, .success, .warn {
-      margin-top: 18px;
-      padding: 16px 18px;
-      border-radius: 18px;
-      border-left: 5px solid #3b82f6;
-      background: rgba(222, 245, 255, 0.08);
-    }
-    .success { border-left-color: #0f9f7a; background: rgba(15, 159, 122, 0.1); }
-    .warn { border-left-color: #ea7c3c; background: rgba(234, 124, 60, 0.1); }
-    .info strong, .success strong, .warn strong { color: #fff; }
-    .cta-card {
-      padding: 34px;
-      background:
-        radial-gradient(circle at 10% 20%, rgba(142, 242, 228, 0.18), transparent 32%),
-        radial-gradient(circle at 88% 24%, rgba(59, 130, 246, 0.24), transparent 30%),
-        linear-gradient(135deg, #071726, #102843 52%, #0e3341);
-      border: 1px solid rgba(142, 242, 228, 0.16);
-    }
-    .cta-card h2 {
-      margin: 0 0 14px;
-      font-family: var(--font-display);
-      font-size: clamp(2rem, 3vw, 3rem);
-      line-height: 1.05;
-    }
-    .cta-card p {
-      margin: 0;
-      max-width: 760px;
-      color: #cae1f2;
-      font-size: 1.04rem;
-    }
-    .footer {
-      padding: 16px 0 42px;
-      color: #9ab3c7;
-      font-size: 0.95rem;
-    }
-    .footer-row {
-      display: flex;
-      justify-content: space-between;
-      gap: 18px;
-      align-items: center;
-      flex-wrap: wrap;
-    }
-    @media (max-width: 1080px) {
-      .hero-grid, .page-grid, .surface-grid.cols-2 { grid-template-columns: 1fr; }
-      .toc { position: static; }
-    }
-    @media (max-width: 860px) {
-      .hero-card, .section-card, .light-card, .cta-card { padding: 24px; }
-      .hero-stats { grid-template-columns: 1fr; }
-    }
-    @media (max-width: 560px) {
-      .container { width: min(var(--max-width), calc(100% - 20px)); }
-      .button { width: 100%; }
-      .hero-actions, .section-actions { flex-direction: column; }
-    }
-  </style>
+  :root {
+    --bg: #07111f;
+    --panel: rgba(10, 24, 42, 0.82);
+    --line: rgba(123, 196, 255, 0.18);
+    --text: #e9f6ff;
+    --muted: #9cb7cb;
+    --accent: #8ef2e4;
+    --shadow: 0 24px 70px rgba(0, 10, 22, 0.3);
+    --radius-lg: 24px;
+    --max-width: 1180px;
+    --font-display: "Segoe UI Variable Display", "PingFang SC", "Microsoft YaHei UI", sans-serif;
+    --font-body: "Segoe UI Variable Text", "PingFang SC", "Microsoft YaHei", sans-serif;
+  }
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    margin: 0;
+    color: var(--text);
+    font-family: var(--font-body);
+    line-height: 1.72;
+    background:
+      radial-gradient(circle at top left, rgba(54, 215, 196, 0.15), transparent 24%),
+      radial-gradient(circle at 85% 12%, rgba(59, 130, 246, 0.22), transparent 26%),
+      linear-gradient(180deg, #07111f 0%, #0a1830 45%, #0d2238 100%);
+  }
+  a { color: inherit; text-decoration: none; }
+  .container { width: min(var(--max-width), calc(100% - 28px)); margin: 0 auto; }
+  .section { padding: 26px 0; }
+  .glass {
+    background: var(--panel);
+    border: 1px solid var(--line);
+    box-shadow: var(--shadow);
+    backdrop-filter: blur(16px);
+  }
+  .site-header {
+    position: sticky;
+    top: 0;
+    z-index: 40;
+    padding: 14px 0;
+    background: linear-gradient(180deg, rgba(7, 17, 31, 0.86), rgba(7, 17, 31, 0.32));
+    backdrop-filter: blur(12px);
+  }
+  .nav { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 14px 18px; border-radius: 999px; }
+  .brand { display: flex; align-items: center; gap: 14px; }
+  .brand-mark {
+    width: 44px;
+    height: 44px;
+    display: grid;
+    place-items: center;
+    border-radius: 14px;
+    font-weight: 800;
+    letter-spacing: 0.08em;
+    color: var(--accent);
+    background: linear-gradient(135deg, rgba(54, 215, 196, 0.28), rgba(59, 130, 246, 0.28));
+    border: 1px solid rgba(142, 242, 228, 0.18);
+  }
+  .brand-copy strong { display: block; font-size: 1rem; font-family: var(--font-display); }
+  .brand-copy span { display: block; color: var(--muted); font-size: 0.88rem; }
+  .nav-links { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; justify-content: flex-end; }
+  .nav-links a { padding: 10px 14px; border-radius: 999px; color: var(--muted); transition: 0.2s ease; }
+  .nav-links a:hover, .nav-links a.is-active { color: #fff; background: rgba(255,255,255,0.07); }
+  .hero-card, .section-card, .light-card, .cta-card, .toc { border-radius: var(--radius-lg); box-shadow: var(--shadow); }
+  .hero-card { position: relative; overflow: hidden; padding: 36px; }
+  .hero-card::before, .hero-card::after { content: ""; position: absolute; border-radius: 999px; filter: blur(10px); }
+  .hero-card::before { width: 260px; height: 260px; top: -110px; right: -70px; background: radial-gradient(circle, rgba(54, 215, 196, 0.28), transparent 68%); }
+  .hero-card::after { width: 300px; height: 300px; bottom: -150px; left: -110px; background: radial-gradient(circle, rgba(59, 130, 246, 0.24), transparent 68%); }
+  .hero-grid { position: relative; display: grid; grid-template-columns: minmax(0, 1.08fr) minmax(320px, 0.92fr); gap: 28px; align-items: center; }
+  .eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 14px;
+    border-radius: 999px;
+    color: var(--accent);
+    font-size: 0.9rem;
+    background: rgba(142, 242, 228, 0.08);
+    border: 1px solid rgba(142, 242, 228, 0.14);
+  }
+  .hero h1 { margin: 18px 0 14px; font-size: clamp(2.4rem, 4.8vw, 4rem); line-height: 1.06; letter-spacing: -0.03em; font-family: var(--font-display); }
+  .hero p { margin: 0; max-width: 700px; color: #c8ddef; font-size: 1.05rem; }
+  .hero-actions, .section-actions { display: flex; flex-wrap: wrap; gap: 14px; margin-top: 28px; }
+  .button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 52px;
+    padding: 0 22px;
+    border-radius: 999px;
+    border: 1px solid transparent;
+    font-weight: 700;
+    cursor: pointer;
+    transition: transform 0.2s ease;
+  }
+  .button:hover { transform: translateY(-2px); }
+  .button-primary { color: #07131e; background: linear-gradient(135deg, var(--accent), #7ed9ff); }
+  .button-secondary { color: #fff; background: rgba(255,255,255,0.07); border-color: rgba(255,255,255,0.12); }
+  .button-inline { color: #12406c; background: linear-gradient(135deg, #d8fff6, #dceeff); }
+  .hero-stats, .surface-grid { display: grid; gap: 18px; }
+  .hero-stats { grid-template-columns: repeat(3, minmax(0, 1fr)); margin-top: 28px; }
+  .surface-grid.cols-2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .stat-card, .section-card, .toc { background: linear-gradient(180deg, rgba(12, 27, 46, 0.95), rgba(8, 21, 36, 0.98)); border: 1px solid var(--line); }
+  .stat-card { padding: 18px; border-radius: 18px; }
+  .stat-card strong { display: block; color: #fff; font-size: 1.45rem; font-family: var(--font-display); }
+  .stat-card span { color: #bdd5e8; font-size: 0.92rem; }
+  .hero-panel { padding: 24px; border-radius: 28px; background: linear-gradient(180deg, rgba(255,255,255,0.08), rgba(255,255,255,0.04)); border: 1px solid rgba(255,255,255,0.08); }
+  .hero-panel h3 { margin: 0 0 10px; font-size: 1.12rem; }
+  .hero-panel p { margin: 0; color: #c6daeb; font-size: 0.96rem; }
+  .panel-box, .code {
+    margin-top: 16px;
+    padding: 18px;
+    border-radius: 18px;
+    background: #09111f;
+    border: 1px solid rgba(120, 194, 255, 0.12);
+    color: #e4f4ff;
+    font-family: "Cascadia Code", "Consolas", monospace;
+    line-height: 1.8;
+    white-space: pre-wrap;
+    overflow-x: auto;
+  }
+  .page-grid { display: grid; grid-template-columns: 280px 1fr; gap: 24px; align-items: start; }
+  .toc { position: sticky; top: 92px; padding: 20px; }
+  .toc h2 { margin: 0 0 10px; font-size: 1.02rem; font-family: var(--font-display); }
+  .toc p { margin: 0 0 14px; color: var(--muted); font-size: 0.92rem; }
+  .toc a { display: block; padding: 10px 12px; border-radius: 14px; color: #cbe1f1; transition: 0.2s ease; }
+  .toc a:hover { color: #fff; background: rgba(255,255,255,0.07); }
+  .content { display: grid; gap: 20px; }
+  .section-card { padding: 24px; }
+  .section-card h2 { margin-top: 0; font-family: var(--font-display); }
+  .light-card {
+    padding: 20px;
+    border-radius: 22px;
+    background: linear-gradient(180deg, rgba(255,255,255,0.07), rgba(255,255,255,0.03));
+    border: 1px solid rgba(255,255,255,0.08);
+  }
+  .light-card h3 { margin: 0 0 10px; font-size: 1.08rem; }
+  .card-kicker {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 44px;
+    height: 44px;
+    margin-bottom: 16px;
+    border-radius: 14px;
+    font-weight: 800;
+    color: #0d2238;
+    background: linear-gradient(135deg, #8ef2e4, #8ec5ff);
+  }
+  .info, .success {
+    margin-top: 18px;
+    padding: 16px 18px;
+    border-radius: 18px;
+    border-left: 5px solid #3b82f6;
+    background: rgba(222, 245, 255, 0.08);
+  }
+  .success { border-left-color: #0f9f7a; background: rgba(15, 159, 122, 0.1); }
+  .info strong, .success strong { color: #fff; }
+  .cta-card {
+    padding: 34px;
+    background: radial-gradient(circle at 10% 20%, rgba(142, 242, 228, 0.18), transparent 32%), radial-gradient(circle at 88% 24%, rgba(59, 130, 246, 0.24), transparent 30%), linear-gradient(135deg, #071726, #102843 52%, #0e3341);
+    border: 1px solid rgba(142, 242, 228, 0.16);
+  }
+  .cta-card h2 { margin: 0 0 14px; font-family: var(--font-display); font-size: clamp(2rem, 3vw, 3rem); line-height: 1.08; }
+  .cta-card p { margin: 0; max-width: 760px; color: #cae1f2; font-size: 1.04rem; }
+  .footer { padding: 16px 0 42px; color: #9ab3c7; font-size: 0.95rem; }
+  .footer-row { display: flex; justify-content: space-between; gap: 18px; align-items: center; flex-wrap: wrap; }
+  ul { padding-left: 20px; }
+  li + li { margin-top: 10px; }
+  @media (max-width: 1080px) { .hero-grid, .page-grid, .surface-grid.cols-2 { grid-template-columns: 1fr; } .toc { position: static; } }
+  @media (max-width: 860px) { .hero-card, .section-card, .light-card, .cta-card { padding: 24px; } .hero-stats { grid-template-columns: 1fr; } }
+  @media (max-width: 560px) { .container { width: min(var(--max-width), calc(100% - 20px)); } .button { width: 100%; } .hero-actions, .section-actions { flex-direction: column; } }
+</style>
 </head>
 <body>
   <header class="site-header">
@@ -325,15 +184,14 @@
         <div class="brand">
           <div class="brand-mark">D22</div>
           <div class="brand-copy">
-            <strong>第 22 天：小型综合程序</strong>
-            <span>把第三阶段知识拼成一个完整练习</span>
+            <strong>第 22 天：迷你程序</strong>
+            <span>小型综合程序</span>
           </div>
         </div>
         <div class="nav-links">
           <a href="index.html">首页</a>
           <a href="python_study.html">新手核心内容</a>
-          <a href="day21_debugging.html">上一站</a>
-          <a href="day23_week3_review.html" class="is-active">下一站</a>
+          <a href="study_checkin.html">打卡总入口</a>
         </div>
       </nav>
     </div>
@@ -344,38 +202,33 @@
       <div class="container">
         <div class="hero-card glass">
           <div class="hero-grid">
-            <div>
+            <div class="hero">
               <div class="eyebrow">Day 22 / Mini Program</div>
-              <h1>当多个基础能力被接到一起时，程序才会开始真正像一个能用的小工具。</h1>
-              <p>今天你会围绕一个小型综合案例，把函数、循环、列表字典、异常和文件思路连接起来。重点是链路完整，而不是功能复杂。</p>
+              <h1>今天的重点是“把多个基础知识连成一段完整体验”。</h1>
+              <p>迷你程序不在于做得大，而在于让你看到：变量、判断、循环、函数其实是在一起工作的。</p>
               <div class="hero-actions">
                 <a class="button button-primary" href="#example">先看示例代码</a>
-                <a class="button button-secondary" href="day21_debugging.html">回看调试能力</a>
+                <a class="button button-secondary" href="python_study.html#week3">返回阶段入口</a>
               </div>
               <div class="hero-stats">
-                <div class="stat-card">
-                  <strong>1 个目标</strong>
-                  <span>链路完整</span>
-                </div>
-                <div class="stat-card">
-                  <strong>多种能力</strong>
-                  <span>结构化组合</span>
-                </div>
-                <div class="stat-card">
-                  <strong>1 个结果</strong>
-                  <span>开始做真正的小成品</span>
-                </div>
+                <div class="stat-card"><strong>Day 22</strong><span>当天正式学习</span></div>
+                <div class="stat-card"><strong>小型综合程序</strong><span>今天核心主题</span></div>
+                <div class="stat-card"><strong>1 个重点</strong><span>先把最小能力做出来</span></div>
               </div>
             </div>
             <div class="hero-panel">
-              <h3>综合程序的基本骨架</h3>
-              <p>先看主流程的组织方式。</p>
-              <div class="panel-box">def add_task(tasks, task):
-    tasks.append({&quot;task&quot;: task, &quot;done&quot;: False})
+              <h3>今天最小可运行示例</h3>
+              <p>先看懂最小例子，再自己改写一遍，学习效率会更高。</p>
+              <div class="panel-box">def show_menu():
+    print(&quot;1. 开始学习&quot;)
+    print(&quot;2. 退出&quot;)
 
-def show_tasks(tasks):
-    for item in tasks:
-        print(item[&quot;task&quot;], item[&quot;done&quot;])</div>
+show_menu()
+choice = input(&quot;请选择：&quot;)
+if choice == &quot;1&quot;:
+    print(&quot;进入学习模式&quot;)
+else:
+    print(&quot;程序结束&quot;)</div>
             </div>
           </div>
         </div>
@@ -386,108 +239,80 @@ def show_tasks(tasks):
       <div class="container page-grid">
         <aside class="toc">
           <h2>本页目录</h2>
-          <p>今天重点是“把知识点串起来”。</p>
-          <a href="#goal">1. 今天目标</a>
-          <a href="#concept">2. 核心概念</a>
+          <p>先抓住目标，再看例子，最后做练习和总结。</p>
+          <a href="#goal">1. 今日目标</a>
+          <a href="#concept">2. 核心理解</a>
           <a href="#example">3. 示例代码</a>
-          <a href="#tips">4. 关键提醒</a>
+          <a href="#tips">4. 常见提醒</a>
           <a href="#practice">5. 今日练习</a>
           <a href="#summary">6. 今日总结</a>
         </aside>
 
         <div class="content">
           <section class="section-card" id="goal">
-            <h2>1. 今天目标</h2>
-            <p>今天的目标是完成一个小型综合程序，让你开始具备“组织一个完整练习”的能力，而不是只会写散碎片段。</p>
+            <h2>1. 今日目标</h2>
+            <p>今天的重点是“把多个基础知识连成一段完整体验”。</p>
+            <ul><li>综合程序通常由“展示 → 输入 → 判断 → 输出”组成。</li><li>函数让菜单这类重复结构更清楚。</li></ul>
           </section>
 
           <section class="section-card" id="concept">
-            <h2>2. 核心概念</h2>
-            <p>综合程序不一定要很大，但至少应该有数据结构、函数组织、输入输出和基本判断。这样才算真正接近小工具。</p>
+            <h2>2. 核心理解</h2>
+            <p>这一页先围绕“小型综合程序”建立直觉。不要急着追求复杂，先把最小理解做稳。</p>
             <div class="surface-grid cols-2">
               <article class="light-card">
-                <div class="card-kicker">Data</div>
-                <h3>先想清楚数据怎么放</h3>
-                <p>例如待办事项适合列表 + 字典，分数记录也可以用类似结构。</p>
+                <div class="card-kicker">C1</div>
+                <h3>先理解用途</h3>
+                <p>综合程序通常由“展示 → 输入 → 判断 → 输出”组成。</p>
               </article>
               <article class="light-card">
-                <div class="card-kicker">Flow</div>
-                <h3>再安排主流程</h3>
-                <p>例如添加数据、显示数据、处理状态、必要时保存结果。</p>
+                <div class="card-kicker">C2</div>
+                <h3>再理解边界</h3>
+                <p>函数让菜单这类重复结构更清楚。</p>
               </article>
             </div>
           </section>
 
           <section class="section-card" id="example">
             <h2>3. 示例代码</h2>
-            <p>下面这个极简待办例子，已经体现了“数据结构 + 函数组合”的雏形。</p>
-            <div class="code">tasks = []
+            <p>下面这段代码是今天最值得看懂的最小例子。</p>
+            <div class="code">def show_menu():
+    print(&quot;1. 开始学习&quot;)
+    print(&quot;2. 退出&quot;)
 
-def add_task(tasks, task):
-    tasks.append({&quot;task&quot;: task, &quot;done&quot;: False})
-
-def show_tasks(tasks):
-    for item in tasks:
-        print(item[&quot;task&quot;], item[&quot;done&quot;])
-
-add_task(tasks, &quot;完成 Python 学习&quot;)
-show_tasks(tasks)</div>
-            <div class="success">
-              <strong>示例在说明什么：</strong> 虽然程序还很小，但已经有了数据设计、功能拆分和主流程调用，这就是综合程序思路。
-            </div>
+show_menu()
+choice = input(&quot;请选择：&quot;)
+if choice == &quot;1&quot;:
+    print(&quot;进入学习模式&quot;)
+else:
+    print(&quot;程序结束&quot;)</div>
+            <div class="success"><strong>这段代码在说明什么：</strong> 这段代码已经像一个最小菜单程序：先展示选项，再根据用户选择走不同分支。</div>
           </section>
 
           <section class="section-card" id="tips">
-            <h2>4. 关键提醒</h2>
-            <ul>
-              <li>综合程序先求结构清晰，不求功能繁多。</li>
-              <li>先把主流程跑通，再考虑加细节。</li>
-              <li>数据结构选对，后面很多逻辑会自然顺很多。</li>
-              <li>函数名、变量名和输出信息都要尽量清楚。</li>
-            </ul>
-            <div class="info">
-              <strong>今天最该抓住的点：</strong> 做综合练习时，最常见的问题不是语法不会，而是没有先设计数据和流程。
-            </div>
+            <h2>4. 常见提醒</h2>
+            <ul><li>先画出流程，再写代码。</li><li>小程序也要先做最小版本。</li><li>用户输入往往决定后续分支。</li><li>能跑通一遍比一口气加功能更重要。</li></ul>
+            <div class="info"><strong>今天最该抓住的点：</strong> 先把“最小正确写法”做出来，再谈更多变化。只要你能看懂、能改一版、能自己写一个同类小例子，今天就过关了一大半。</div>
           </section>
 
           <section class="section-card" id="practice">
             <h2>5. 今日练习</h2>
-            <div class="light-card">
-              <div class="card-kicker">P1</div>
-              <h3>最小待办工具</h3>
-              <p>创建一个任务列表，至少支持添加任务和显示任务。</p>
-            </div>
-            <div class="light-card">
-              <div class="card-kicker">P2</div>
-              <h3>最小成绩记录</h3>
-              <p>创建一个列表保存多个分数，再写函数显示所有分数和及格人数。</p>
-            </div>
-            <div class="light-card">
-              <div class="card-kicker">P3</div>
-              <h3>加入异常保护</h3>
-              <p>给输入环节加一层 try / except，让程序更稳。</p>
-            </div>
+            <div class="light-card"><div class="card-kicker">P1</div><h3>练习 1</h3><p>写一个两项菜单的小程序。</p></div>
+<div class="light-card"><div class="card-kicker">P2</div><h3>练习 2</h3><p>根据用户输入输出不同结果。</p></div>
+<div class="light-card"><div class="card-kicker">P3</div><h3>练习 3</h3><p>说明这个程序里哪些部分分别对应输入、判断和输出。</p></div>
           </section>
 
           <section class="section-card" id="summary">
             <h2>6. 今日总结</h2>
-            <ul>
-              <li>综合程序强调的是结构组合能力。</li>
-              <li>先设计数据，再设计流程。</li>
-              <li>函数、列表、字典和判断会在综合练习里频繁一起出现。</li>
-              <li>这一步是进入更完整项目前的重要过渡。</li>
-            </ul>
-            <div class="success">
-              <strong>今天过关标准：</strong> 你能做出一个至少包含“数据结构 + 函数 + 循环/判断”的小练习，并确保它能从头跑通，就说明今天真正掌握住了第三阶段的主线。
-            </div>
+            <ul><li>今天的主题是：小型综合程序。</li><li>核心关注点：今天的重点是“把多个基础知识连成一段完整体验”。</li><li>先做到“能看懂 + 能改一版 + 能自己写最小例子”。</li><li>只要能围绕“迷你程序”做出一个小练习，今天就不是白学。</li></ul>
+            <div class="success"><strong>今天过关标准：</strong> 能做出一个最简单的菜单式小程序，并把流程讲清楚。</div>
           </section>
 
           <section class="section">
             <div class="cta-card">
-              <h2>第三阶段内容到这里已经基本成形，下一步应该先回头做一次复盘。</h2>
-              <p>第 23 天会进入第三周复盘，把模块、文件、异常、函数协作和小型综合程序再连成一张更清楚的地图。</p>
+              <h2>完成第 22 天后，继续保持连续推进。</h2>
+              <p>下一站会继续把今天的基础往前推进，重点不是换一堆新名词，而是把理解再压实一层。</p>
               <div class="section-actions">
-                <a class="button button-primary" href="day23_week3_review.html">进入第 23 天：第三周复盘</a>
+                <a class="button button-primary" href="day23_week3_review.html">进入第 23 天：第 3 周复习</a>
                 <a class="button button-secondary" href="study_checkin.html">回到学习打卡总入口</a>
               </div>
             </div>
@@ -501,9 +326,10 @@ show_tasks(tasks)</div>
     <div class="container">
       <div class="footer-row">
         <div>当前页面：<strong>day22_mini_program.html</strong></div>
-        <div>相邻导航：Day 21 调试能力 · Day 23 第三周复盘</div>
+        <div>相邻导航：回看第 21 天 · 进入第 23 天：第 3 周复习</div>
       </div>
     </div>
   </footer>
+  <script type="module" src="ai-practice.mjs"></script>
 </body>
 </html>

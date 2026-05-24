@@ -5,318 +5,177 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>第 16 天：模块导入 | Python 学习页</title>
   <style>
-    :root {
-      --bg: #07111f;
-      --panel: rgba(10, 24, 42, 0.82);
-      --line: rgba(123, 196, 255, 0.18);
-      --text: #e9f6ff;
-      --muted: #9cb7cb;
-      --accent: #8ef2e4;
-      --shadow: 0 24px 70px rgba(0, 10, 22, 0.3);
-      --radius-lg: 24px;
-      --max-width: 1180px;
-      --font-display: "Segoe UI Variable Display", "PingFang SC", "Microsoft YaHei UI", sans-serif;
-      --font-body: "Segoe UI Variable Text", "PingFang SC", "Microsoft YaHei", sans-serif;
-    }
-    * { box-sizing: border-box; }
-    html { scroll-behavior: smooth; }
-    body {
-      margin: 0;
-      color: var(--text);
-      font-family: var(--font-body);
-      line-height: 1.72;
-      background:
-        radial-gradient(circle at top left, rgba(54, 215, 196, 0.15), transparent 24%),
-        radial-gradient(circle at 85% 12%, rgba(59, 130, 246, 0.22), transparent 26%),
-        linear-gradient(180deg, #07111f 0%, #0a1830 45%, #0d2238 100%);
-    }
-    a { color: inherit; text-decoration: none; }
-    .container { width: min(var(--max-width), calc(100% - 28px)); margin: 0 auto; }
-    .section { padding: 26px 0; }
-    .glass {
-      background: var(--panel);
-      border: 1px solid var(--line);
-      box-shadow: var(--shadow);
-      backdrop-filter: blur(16px);
-    }
-    .site-header {
-      position: sticky;
-      top: 0;
-      z-index: 40;
-      padding: 14px 0;
-      background: linear-gradient(180deg, rgba(7, 17, 31, 0.86), rgba(7, 17, 31, 0.32));
-      backdrop-filter: blur(12px);
-    }
-    .nav {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 16px;
-      padding: 14px 18px;
-      border-radius: 999px;
-    }
-    .brand { display: flex; align-items: center; gap: 14px; }
-    .brand-mark {
-      width: 44px;
-      height: 44px;
-      display: grid;
-      place-items: center;
-      border-radius: 14px;
-      font-weight: 800;
-      letter-spacing: 0.08em;
-      color: var(--accent);
-      background: linear-gradient(135deg, rgba(54, 215, 196, 0.28), rgba(59, 130, 246, 0.28));
-      border: 1px solid rgba(142, 242, 228, 0.18);
-    }
-    .brand-copy strong {
-      display: block;
-      font-size: 1rem;
-      font-family: var(--font-display);
-    }
-    .brand-copy span { display: block; color: var(--muted); font-size: 0.88rem; }
-    .nav-links {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      flex-wrap: wrap;
-      justify-content: flex-end;
-    }
-    .nav-links a {
-      padding: 10px 14px;
-      border-radius: 999px;
-      color: var(--muted);
-      transition: 0.2s ease;
-    }
-    .nav-links a:hover,
-    .nav-links a.is-active {
-      color: #fff;
-      background: rgba(255, 255, 255, 0.07);
-    }
-    .hero-card, .section-card, .light-card, .cta-card, .toc { border-radius: var(--radius-lg); box-shadow: var(--shadow); }
-    .hero-card {
-      position: relative;
-      overflow: hidden;
-      padding: 36px;
-    }
-    .hero-card::before,
-    .hero-card::after {
-      content: "";
-      position: absolute;
-      border-radius: 999px;
-      filter: blur(10px);
-    }
-    .hero-card::before {
-      width: 260px;
-      height: 260px;
-      top: -110px;
-      right: -70px;
-      background: radial-gradient(circle, rgba(54, 215, 196, 0.28), transparent 68%);
-    }
-    .hero-card::after {
-      width: 300px;
-      height: 300px;
-      bottom: -150px;
-      left: -110px;
-      background: radial-gradient(circle, rgba(59, 130, 246, 0.24), transparent 68%);
-    }
-    .hero-grid {
-      position: relative;
-      display: grid;
-      grid-template-columns: minmax(0, 1.08fr) minmax(320px, 0.92fr);
-      gap: 28px;
-      align-items: center;
-    }
-    .eyebrow {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      padding: 8px 14px;
-      border-radius: 999px;
-      color: var(--accent);
-      font-size: 0.9rem;
-      background: rgba(142, 242, 228, 0.08);
-      border: 1px solid rgba(142, 242, 228, 0.14);
-    }
-    .hero h1 {
-      margin: 18px 0 14px;
-      font-size: clamp(2.45rem, 4.8vw, 4rem);
-      line-height: 1.04;
-      letter-spacing: -0.03em;
-      font-family: var(--font-display);
-    }
-    .hero p {
-      margin: 0;
-      max-width: 680px;
-      color: #c8ddef;
-      font-size: 1.05rem;
-    }
-    .hero-actions, .section-actions {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 14px;
-      margin-top: 28px;
-    }
-    .button {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      min-height: 52px;
-      padding: 0 22px;
-      border-radius: 999px;
-      border: 1px solid transparent;
-      font-weight: 700;
-      cursor: pointer;
-      transition: transform 0.2s ease;
-    }
-    .button:hover { transform: translateY(-2px); }
-    .button-primary { color: #07131e; background: linear-gradient(135deg, var(--accent), #7ed9ff); }
-    .button-secondary { color: #fff; background: rgba(255,255,255,0.07); border-color: rgba(255,255,255,0.12); }
-    .button-inline { color: #12406c; background: linear-gradient(135deg, #d8fff6, #dceeff); }
-    .hero-stats, .surface-grid { display: grid; gap: 18px; }
-    .hero-stats { grid-template-columns: repeat(3, minmax(0, 1fr)); margin-top: 28px; }
-    .surface-grid.cols-2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-    .stat-card, .section-card, .toc {
-      background: linear-gradient(180deg, rgba(12, 27, 46, 0.95), rgba(8, 21, 36, 0.98));
-      border: 1px solid var(--line);
-    }
-    .stat-card { padding: 18px; border-radius: 18px; }
-    .stat-card strong {
-      display: block;
-      color: #fff;
-      font-size: 1.45rem;
-      font-family: var(--font-display);
-    }
-    .stat-card span { color: #bdd5e8; font-size: 0.92rem; }
-    .hero-panel {
-      padding: 24px;
-      border-radius: 28px;
-      background: linear-gradient(180deg, rgba(255,255,255,0.08), rgba(255,255,255,0.04));
-      border: 1px solid rgba(255,255,255,0.08);
-    }
-    .hero-panel h3 { margin: 0 0 10px; font-size: 1.12rem; }
-    .hero-panel p { margin: 0; color: #c6daeb; font-size: 0.96rem; }
-    .panel-box, .code {
-      margin-top: 16px;
-      padding: 18px;
-      border-radius: 18px;
-      background: #09111f;
-      border: 1px solid rgba(120, 194, 255, 0.12);
-      color: #e4f4ff;
-      font-family: "Cascadia Code", "Consolas", monospace;
-      line-height: 1.8;
-      white-space: pre-wrap;
-      overflow-x: auto;
-    }
-    .page-grid {
-      display: grid;
-      grid-template-columns: 280px 1fr;
-      gap: 24px;
-      align-items: start;
-    }
-    .toc {
-      position: sticky;
-      top: 92px;
-      padding: 20px;
-    }
-    .toc h2 {
-      margin: 0 0 10px;
-      font-size: 1.02rem;
-      font-family: var(--font-display);
-    }
-    .toc p {
-      margin: 0 0 14px;
-      color: var(--muted);
-      font-size: 0.92rem;
-    }
-    .toc a {
-      display: block;
-      padding: 10px 12px;
-      border-radius: 14px;
-      color: #cbe1f1;
-      transition: 0.2s ease;
-    }
-    .toc a:hover {
-      color: #fff;
-      background: rgba(255,255,255,0.07);
-    }
-    .content { display: grid; gap: 20px; }
-    .section-card { padding: 24px; }
-    .section-card h2 { margin-top: 0; font-family: var(--font-display); }
-    .light-card {
-      padding: 20px;
-      border-radius: 22px;
-      background: linear-gradient(180deg, rgba(255,255,255,0.07), rgba(255,255,255,0.03));
-      border: 1px solid rgba(255,255,255,0.08);
-    }
-    .light-card h3 { margin: 0 0 10px; font-size: 1.08rem; }
-    .card-kicker {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      width: 44px;
-      height: 44px;
-      margin-bottom: 16px;
-      border-radius: 14px;
-      font-weight: 800;
-      color: #0d2238;
-      background: linear-gradient(135deg, #8ef2e4, #8ec5ff);
-    }
-    .info, .success, .warn {
-      margin-top: 18px;
-      padding: 16px 18px;
-      border-radius: 18px;
-      border-left: 5px solid #3b82f6;
-      background: rgba(222, 245, 255, 0.08);
-    }
-    .success { border-left-color: #0f9f7a; background: rgba(15, 159, 122, 0.1); }
-    .warn { border-left-color: #ea7c3c; background: rgba(234, 124, 60, 0.1); }
-    .info strong, .success strong, .warn strong { color: #fff; }
-    .cta-card {
-      padding: 34px;
-      background:
-        radial-gradient(circle at 10% 20%, rgba(142, 242, 228, 0.18), transparent 32%),
-        radial-gradient(circle at 88% 24%, rgba(59, 130, 246, 0.24), transparent 30%),
-        linear-gradient(135deg, #071726, #102843 52%, #0e3341);
-      border: 1px solid rgba(142, 242, 228, 0.16);
-    }
-    .cta-card h2 {
-      margin: 0 0 14px;
-      font-family: var(--font-display);
-      font-size: clamp(2rem, 3vw, 3rem);
-      line-height: 1.05;
-    }
-    .cta-card p {
-      margin: 0;
-      max-width: 760px;
-      color: #cae1f2;
-      font-size: 1.04rem;
-    }
-    .footer {
-      padding: 16px 0 42px;
-      color: #9ab3c7;
-      font-size: 0.95rem;
-    }
-    .footer-row {
-      display: flex;
-      justify-content: space-between;
-      gap: 18px;
-      align-items: center;
-      flex-wrap: wrap;
-    }
-    @media (max-width: 1080px) {
-      .hero-grid, .page-grid, .surface-grid.cols-2 { grid-template-columns: 1fr; }
-      .toc { position: static; }
-    }
-    @media (max-width: 860px) {
-      .hero-card, .section-card, .light-card, .cta-card { padding: 24px; }
-      .hero-stats { grid-template-columns: 1fr; }
-    }
-    @media (max-width: 560px) {
-      .container { width: min(var(--max-width), calc(100% - 20px)); }
-      .button { width: 100%; }
-      .hero-actions, .section-actions { flex-direction: column; }
-    }
-  </style>
+  :root {
+    --bg: #07111f;
+    --panel: rgba(10, 24, 42, 0.82);
+    --line: rgba(123, 196, 255, 0.18);
+    --text: #e9f6ff;
+    --muted: #9cb7cb;
+    --accent: #8ef2e4;
+    --shadow: 0 24px 70px rgba(0, 10, 22, 0.3);
+    --radius-lg: 24px;
+    --max-width: 1180px;
+    --font-display: "Segoe UI Variable Display", "PingFang SC", "Microsoft YaHei UI", sans-serif;
+    --font-body: "Segoe UI Variable Text", "PingFang SC", "Microsoft YaHei", sans-serif;
+  }
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    margin: 0;
+    color: var(--text);
+    font-family: var(--font-body);
+    line-height: 1.72;
+    background:
+      radial-gradient(circle at top left, rgba(54, 215, 196, 0.15), transparent 24%),
+      radial-gradient(circle at 85% 12%, rgba(59, 130, 246, 0.22), transparent 26%),
+      linear-gradient(180deg, #07111f 0%, #0a1830 45%, #0d2238 100%);
+  }
+  a { color: inherit; text-decoration: none; }
+  .container { width: min(var(--max-width), calc(100% - 28px)); margin: 0 auto; }
+  .section { padding: 26px 0; }
+  .glass {
+    background: var(--panel);
+    border: 1px solid var(--line);
+    box-shadow: var(--shadow);
+    backdrop-filter: blur(16px);
+  }
+  .site-header {
+    position: sticky;
+    top: 0;
+    z-index: 40;
+    padding: 14px 0;
+    background: linear-gradient(180deg, rgba(7, 17, 31, 0.86), rgba(7, 17, 31, 0.32));
+    backdrop-filter: blur(12px);
+  }
+  .nav { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 14px 18px; border-radius: 999px; }
+  .brand { display: flex; align-items: center; gap: 14px; }
+  .brand-mark {
+    width: 44px;
+    height: 44px;
+    display: grid;
+    place-items: center;
+    border-radius: 14px;
+    font-weight: 800;
+    letter-spacing: 0.08em;
+    color: var(--accent);
+    background: linear-gradient(135deg, rgba(54, 215, 196, 0.28), rgba(59, 130, 246, 0.28));
+    border: 1px solid rgba(142, 242, 228, 0.18);
+  }
+  .brand-copy strong { display: block; font-size: 1rem; font-family: var(--font-display); }
+  .brand-copy span { display: block; color: var(--muted); font-size: 0.88rem; }
+  .nav-links { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; justify-content: flex-end; }
+  .nav-links a { padding: 10px 14px; border-radius: 999px; color: var(--muted); transition: 0.2s ease; }
+  .nav-links a:hover, .nav-links a.is-active { color: #fff; background: rgba(255,255,255,0.07); }
+  .hero-card, .section-card, .light-card, .cta-card, .toc { border-radius: var(--radius-lg); box-shadow: var(--shadow); }
+  .hero-card { position: relative; overflow: hidden; padding: 36px; }
+  .hero-card::before, .hero-card::after { content: ""; position: absolute; border-radius: 999px; filter: blur(10px); }
+  .hero-card::before { width: 260px; height: 260px; top: -110px; right: -70px; background: radial-gradient(circle, rgba(54, 215, 196, 0.28), transparent 68%); }
+  .hero-card::after { width: 300px; height: 300px; bottom: -150px; left: -110px; background: radial-gradient(circle, rgba(59, 130, 246, 0.24), transparent 68%); }
+  .hero-grid { position: relative; display: grid; grid-template-columns: minmax(0, 1.08fr) minmax(320px, 0.92fr); gap: 28px; align-items: center; }
+  .eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 14px;
+    border-radius: 999px;
+    color: var(--accent);
+    font-size: 0.9rem;
+    background: rgba(142, 242, 228, 0.08);
+    border: 1px solid rgba(142, 242, 228, 0.14);
+  }
+  .hero h1 { margin: 18px 0 14px; font-size: clamp(2.4rem, 4.8vw, 4rem); line-height: 1.06; letter-spacing: -0.03em; font-family: var(--font-display); }
+  .hero p { margin: 0; max-width: 700px; color: #c8ddef; font-size: 1.05rem; }
+  .hero-actions, .section-actions { display: flex; flex-wrap: wrap; gap: 14px; margin-top: 28px; }
+  .button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 52px;
+    padding: 0 22px;
+    border-radius: 999px;
+    border: 1px solid transparent;
+    font-weight: 700;
+    cursor: pointer;
+    transition: transform 0.2s ease;
+  }
+  .button:hover { transform: translateY(-2px); }
+  .button-primary { color: #07131e; background: linear-gradient(135deg, var(--accent), #7ed9ff); }
+  .button-secondary { color: #fff; background: rgba(255,255,255,0.07); border-color: rgba(255,255,255,0.12); }
+  .button-inline { color: #12406c; background: linear-gradient(135deg, #d8fff6, #dceeff); }
+  .hero-stats, .surface-grid { display: grid; gap: 18px; }
+  .hero-stats { grid-template-columns: repeat(3, minmax(0, 1fr)); margin-top: 28px; }
+  .surface-grid.cols-2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .stat-card, .section-card, .toc { background: linear-gradient(180deg, rgba(12, 27, 46, 0.95), rgba(8, 21, 36, 0.98)); border: 1px solid var(--line); }
+  .stat-card { padding: 18px; border-radius: 18px; }
+  .stat-card strong { display: block; color: #fff; font-size: 1.45rem; font-family: var(--font-display); }
+  .stat-card span { color: #bdd5e8; font-size: 0.92rem; }
+  .hero-panel { padding: 24px; border-radius: 28px; background: linear-gradient(180deg, rgba(255,255,255,0.08), rgba(255,255,255,0.04)); border: 1px solid rgba(255,255,255,0.08); }
+  .hero-panel h3 { margin: 0 0 10px; font-size: 1.12rem; }
+  .hero-panel p { margin: 0; color: #c6daeb; font-size: 0.96rem; }
+  .panel-box, .code {
+    margin-top: 16px;
+    padding: 18px;
+    border-radius: 18px;
+    background: #09111f;
+    border: 1px solid rgba(120, 194, 255, 0.12);
+    color: #e4f4ff;
+    font-family: "Cascadia Code", "Consolas", monospace;
+    line-height: 1.8;
+    white-space: pre-wrap;
+    overflow-x: auto;
+  }
+  .page-grid { display: grid; grid-template-columns: 280px 1fr; gap: 24px; align-items: start; }
+  .toc { position: sticky; top: 92px; padding: 20px; }
+  .toc h2 { margin: 0 0 10px; font-size: 1.02rem; font-family: var(--font-display); }
+  .toc p { margin: 0 0 14px; color: var(--muted); font-size: 0.92rem; }
+  .toc a { display: block; padding: 10px 12px; border-radius: 14px; color: #cbe1f1; transition: 0.2s ease; }
+  .toc a:hover { color: #fff; background: rgba(255,255,255,0.07); }
+  .content { display: grid; gap: 20px; }
+  .section-card { padding: 24px; }
+  .section-card h2 { margin-top: 0; font-family: var(--font-display); }
+  .light-card {
+    padding: 20px;
+    border-radius: 22px;
+    background: linear-gradient(180deg, rgba(255,255,255,0.07), rgba(255,255,255,0.03));
+    border: 1px solid rgba(255,255,255,0.08);
+  }
+  .light-card h3 { margin: 0 0 10px; font-size: 1.08rem; }
+  .card-kicker {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 44px;
+    height: 44px;
+    margin-bottom: 16px;
+    border-radius: 14px;
+    font-weight: 800;
+    color: #0d2238;
+    background: linear-gradient(135deg, #8ef2e4, #8ec5ff);
+  }
+  .info, .success {
+    margin-top: 18px;
+    padding: 16px 18px;
+    border-radius: 18px;
+    border-left: 5px solid #3b82f6;
+    background: rgba(222, 245, 255, 0.08);
+  }
+  .success { border-left-color: #0f9f7a; background: rgba(15, 159, 122, 0.1); }
+  .info strong, .success strong { color: #fff; }
+  .cta-card {
+    padding: 34px;
+    background: radial-gradient(circle at 10% 20%, rgba(142, 242, 228, 0.18), transparent 32%), radial-gradient(circle at 88% 24%, rgba(59, 130, 246, 0.24), transparent 30%), linear-gradient(135deg, #071726, #102843 52%, #0e3341);
+    border: 1px solid rgba(142, 242, 228, 0.16);
+  }
+  .cta-card h2 { margin: 0 0 14px; font-family: var(--font-display); font-size: clamp(2rem, 3vw, 3rem); line-height: 1.08; }
+  .cta-card p { margin: 0; max-width: 760px; color: #cae1f2; font-size: 1.04rem; }
+  .footer { padding: 16px 0 42px; color: #9ab3c7; font-size: 0.95rem; }
+  .footer-row { display: flex; justify-content: space-between; gap: 18px; align-items: center; flex-wrap: wrap; }
+  ul { padding-left: 20px; }
+  li + li { margin-top: 10px; }
+  @media (max-width: 1080px) { .hero-grid, .page-grid, .surface-grid.cols-2 { grid-template-columns: 1fr; } .toc { position: static; } }
+  @media (max-width: 860px) { .hero-card, .section-card, .light-card, .cta-card { padding: 24px; } .hero-stats { grid-template-columns: 1fr; } }
+  @media (max-width: 560px) { .container { width: min(var(--max-width), calc(100% - 20px)); } .button { width: 100%; } .hero-actions, .section-actions { flex-direction: column; } }
+</style>
 </head>
 <body>
   <header class="site-header">
@@ -326,14 +185,13 @@
           <div class="brand-mark">D16</div>
           <div class="brand-copy">
             <strong>第 16 天：模块导入</strong>
-            <span>学会 import，让代码开始借用外部能力</span>
+            <span>import 基础</span>
           </div>
         </div>
         <div class="nav-links">
           <a href="index.html">首页</a>
           <a href="python_study.html">新手核心内容</a>
-          <a href="day15_stage_review.html">上一站</a>
-          <a href="day17_file_read_write.html" class="is-active">下一站</a>
+          <a href="study_checkin.html">打卡总入口</a>
         </div>
       </nav>
     </div>
@@ -344,34 +202,25 @@
       <div class="container">
         <div class="hero-card glass">
           <div class="hero-grid">
-            <div>
-              <div class="eyebrow">Day 16 / Import</div>
-              <h1>程序写到一定程度后，不该把所有东西都堆在一个文件里，模块和 import 就是第一步整理方式。</h1>
-              <p>今天你会理解模块是什么、为什么需要 import，以及怎样把别的文件或标准库中的能力拿过来用。</p>
+            <div class="hero">
+              <div class="eyebrow">Day 16 / Modules Import</div>
+              <h1>模块的意义在于复用已有能力，而不是把所有代码都挤在一个文件里。</h1>
+              <p>程序写大一点后，你会发现很多功能已经有人写好了。import 就是把这些已有模块拿来用。</p>
               <div class="hero-actions">
                 <a class="button button-primary" href="#example">先看示例代码</a>
-                <a class="button button-secondary" href="day15_stage_review.html">回看第二阶段复习</a>
+                <a class="button button-secondary" href="python_study.html#week3">返回阶段入口</a>
               </div>
               <div class="hero-stats">
-                <div class="stat-card">
-                  <strong>1 个动作</strong>
-                  <span>import 导入能力</span>
-                </div>
-                <div class="stat-card">
-                  <strong>2 类来源</strong>
-                  <span>标准库和自定义文件</span>
-                </div>
-                <div class="stat-card">
-                  <strong>1 个目标</strong>
-                  <span>让代码开始有组织</span>
-                </div>
+                <div class="stat-card"><strong>Day 16</strong><span>当天正式学习</span></div>
+                <div class="stat-card"><strong>import 基础</strong><span>今天核心主题</span></div>
+                <div class="stat-card"><strong>1 个重点</strong><span>先把最小能力做出来</span></div>
               </div>
             </div>
             <div class="hero-panel">
-              <h3>今天最小导入示例</h3>
-              <p>先从标准库的 math 开始。</p>
-              <div class="panel-box">import math
-print(math.sqrt(16))</div>
+              <h3>今天最小可运行示例</h3>
+              <p>先看懂最小例子，再自己改写一遍，学习效率会更高。</p>
+              <div class="panel-box">import random
+print(random.randint(1, 10))</div>
             </div>
           </div>
         </div>
@@ -382,99 +231,70 @@ print(math.sqrt(16))</div>
       <div class="container page-grid">
         <aside class="toc">
           <h2>本页目录</h2>
-          <p>先理解模块，再理解 import 的意义。</p>
-          <a href="#goal">1. 今天目标</a>
-          <a href="#concept">2. 核心概念</a>
+          <p>先抓住目标，再看例子，最后做练习和总结。</p>
+          <a href="#goal">1. 今日目标</a>
+          <a href="#concept">2. 核心理解</a>
           <a href="#example">3. 示例代码</a>
-          <a href="#tips">4. 关键提醒</a>
+          <a href="#tips">4. 常见提醒</a>
           <a href="#practice">5. 今日练习</a>
           <a href="#summary">6. 今日总结</a>
         </aside>
 
         <div class="content">
           <section class="section-card" id="goal">
-            <h2>1. 今天目标</h2>
-            <p>今天的目标是知道“模块 = 可复用的一块代码”，并学会用 import 把现成能力接到自己的程序里。</p>
+            <h2>1. 今日目标</h2>
+            <p>模块的意义在于复用已有能力，而不是把所有代码都挤在一个文件里。</p>
+            <ul><li>模块可以理解成“装着功能的代码包”。</li><li>import 让你不用从零重写所有工具。</li></ul>
           </section>
 
           <section class="section-card" id="concept">
-            <h2>2. 核心概念</h2>
-            <p>前面你写的大多还是单文件练习。今天开始，程序会更接近真实开发方式：把功能拆开，按需导入。</p>
+            <h2>2. 核心理解</h2>
+            <p>这一页先围绕“import 基础”建立直觉。不要急着追求复杂，先把最小理解做稳。</p>
             <div class="surface-grid cols-2">
               <article class="light-card">
-                <div class="card-kicker">Lib</div>
-                <h3>模块就是一块可复用代码</h3>
-                <p>它可以是 Python 自带的标准库，也可以是你自己写的另一个文件。</p>
+                <div class="card-kicker">C1</div>
+                <h3>先理解用途</h3>
+                <p>模块可以理解成“装着功能的代码包”。</p>
               </article>
               <article class="light-card">
-                <div class="card-kicker">Use</div>
-                <h3>import 就是把能力引进来</h3>
-                <p>你不需要重写平方根、随机数之类功能，可以直接导入已有模块。</p>
+                <div class="card-kicker">C2</div>
+                <h3>再理解边界</h3>
+                <p>import 让你不用从零重写所有工具。</p>
               </article>
             </div>
           </section>
 
           <section class="section-card" id="example">
             <h2>3. 示例代码</h2>
-            <p>下面这个例子说明：导入后，要通过模块名去访问其中的功能。</p>
+            <p>下面这段代码是今天最值得看懂的最小例子。</p>
             <div class="code">import random
-
-number = random.randint(1, 10)
-print(number)</div>
-            <div class="success">
-              <strong>示例在说明什么：</strong> 导入 random 后，就能调用它里面的 randint() 来生成随机整数。
-            </div>
+print(random.randint(1, 10))</div>
+            <div class="success"><strong>这段代码在说明什么：</strong> 导入模块后，就可以通过“模块名.功能名”的方式使用里面的能力。</div>
           </section>
 
           <section class="section-card" id="tips">
-            <h2>4. 关键提醒</h2>
-            <ul>
-              <li>import 后通常要通过“模块名.功能名”访问。</li>
-              <li>标准库是 Python 自带的一组常用模块。</li>
-              <li>模块名写错或文件不存在时，程序会报导入错误。</li>
-              <li>今天先把“会导入并使用”练稳，不急着学复杂包结构。</li>
-            </ul>
-            <div class="info">
-              <strong>今天最该抓住的点：</strong> 模块和 import 的核心价值，是减少重复造轮子，并为后面多文件组织打基础。
-            </div>
+            <h2>4. 常见提醒</h2>
+            <ul><li>先知道“导入后怎么调用”。</li><li>random.randint() 这种写法很常见。</li><li>模块名和函数名之间用点连接。</li><li>别把 import 想得太神秘。</li></ul>
+            <div class="info"><strong>今天最该抓住的点：</strong> 先把“最小正确写法”做出来，再谈更多变化。只要你能看懂、能改一版、能自己写一个同类小例子，今天就过关了一大半。</div>
           </section>
 
           <section class="section-card" id="practice">
             <h2>5. 今日练习</h2>
-            <div class="light-card">
-              <div class="card-kicker">P1</div>
-              <h3>导入 math</h3>
-              <p>用 math 模块计算 25 的平方根，并输出结果。</p>
-            </div>
-            <div class="light-card">
-              <div class="card-kicker">P2</div>
-              <h3>导入 random</h3>
-              <p>随机输出一个 1 到 100 的整数，感受“借用外部能力”的效果。</p>
-            </div>
-            <div class="light-card">
-              <div class="card-kicker">P3</div>
-              <h3>想象自定义模块</h3>
-              <p>写下你觉得以后适合拆成单独文件的功能，比如欢迎语、成绩判断或工具函数。</p>
-            </div>
+            <div class="light-card"><div class="card-kicker">P1</div><h3>练习 1</h3><p>导入 random，输出一个随机整数。</p></div>
+<div class="light-card"><div class="card-kicker">P2</div><h3>练习 2</h3><p>解释为什么程序员喜欢把功能拆进模块。</p></div>
+<div class="light-card"><div class="card-kicker">P3</div><h3>练习 3</h3><p>口头说明“模块名.函数名”这类写法的含义。</p></div>
           </section>
 
           <section class="section-card" id="summary">
             <h2>6. 今日总结</h2>
-            <ul>
-              <li>模块是一块可复用代码。</li>
-              <li>import 可以把标准库或自定义模块的能力拿来用。</li>
-              <li>导入后通常通过“模块名.功能名”访问。</li>
-              <li>这是程序开始组织结构的重要一步。</li>
-            </ul>
-            <div class="success">
-              <strong>今天过关标准：</strong> 你能自己导入至少 2 个标准库模块，并解释为什么导入比自己重写更合理，就说明今天的目标达成了。
-            </div>
+            <ul><li>今天的主题是：import 基础。</li><li>核心关注点：模块的意义在于复用已有能力，而不是把所有代码都挤在一个文件里。</li><li>先做到“能看懂 + 能改一版 + 能自己写最小例子”。</li><li>只要能围绕“模块导入”做出一个小练习，今天就不是白学。</li></ul>
+            <div class="success"><strong>今天过关标准：</strong> 能读懂并写出最基本的 import，用已有模块完成一个小功能。</div>
           </section>
 
           <section class="section">
             <div class="cta-card">
-              <h2>代码开始分块后，下一步就是让程序真正和外部文件打交道。</h2>
-              <p>第 17 天会进入文件读写。你会让程序把内容写进文本文件，再从文件里读回来，第一次接触“程序外的数据”。</p>
+              <h2>完成第 16 天后，继续保持连续推进。</h2>
+              <p>下一站会继续把今天的基础往前推进，重点不是换一堆新名词，而是把理解再压实一层。</p>
               <div class="section-actions">
                 <a class="button button-primary" href="day17_file_read_write.html">进入第 17 天：文件读写</a>
                 <a class="button button-secondary" href="study_checkin.html">回到学习打卡总入口</a>
@@ -490,9 +310,10 @@ print(number)</div>
     <div class="container">
       <div class="footer-row">
         <div>当前页面：<strong>day16_modules_import.html</strong></div>
-        <div>相邻导航：Day 15 阶段复习 · Day 17 文件读写</div>
+        <div>相邻导航：回看第 15 天 · 进入第 17 天：文件读写</div>
       </div>
     </div>
   </footer>
+  <script type="module" src="ai-practice.mjs"></script>
 </body>
 </html>

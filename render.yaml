@@ -1,0 +1,11 @@
+services:
+  - type: web
+    name: python-learning-site-ai
+    runtime: node
+    buildCommand: ""
+    startCommand: npm start
+    envVars:
+      - key: NODE_VERSION
+        value: 20
+      - key: SERVE_STATIC
+        value: "false"

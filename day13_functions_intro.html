@@ -5,335 +5,177 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>第 13 天：函数概念 | Python 学习页</title>
   <style>
-    :root {
-      --bg: #07111f;
-      --panel: rgba(10, 24, 42, 0.82);
-      --line: rgba(123, 196, 255, 0.18);
-      --text: #e9f6ff;
-      --muted: #9cb7cb;
-      --accent: #8ef2e4;
-      --shadow: 0 24px 70px rgba(0, 10, 22, 0.3);
-      --radius-lg: 24px;
-      --max-width: 1180px;
-      --font-display: "Segoe UI Variable Display", "PingFang SC", "Microsoft YaHei UI", sans-serif;
-      --font-body: "Segoe UI Variable Text", "PingFang SC", "Microsoft YaHei", sans-serif;
-    }
-    * { box-sizing: border-box; }
-    html { scroll-behavior: smooth; }
-    body {
-      margin: 0;
-      color: var(--text);
-      font-family: var(--font-body);
-      line-height: 1.72;
-      background:
-        radial-gradient(circle at top left, rgba(54, 215, 196, 0.15), transparent 24%),
-        radial-gradient(circle at 85% 12%, rgba(59, 130, 246, 0.22), transparent 26%),
-        linear-gradient(180deg, #07111f 0%, #0a1830 45%, #0d2238 100%);
-    }
-    a { color: inherit; text-decoration: none; }
-    .container { width: min(var(--max-width), calc(100% - 28px)); margin: 0 auto; }
-    .section { padding: 26px 0; }
-    .glass {
-      background: var(--panel);
-      border: 1px solid var(--line);
-      box-shadow: var(--shadow);
-      backdrop-filter: blur(16px);
-    }
-    .site-header {
-      position: sticky;
-      top: 0;
-      z-index: 40;
-      padding: 14px 0;
-      background: linear-gradient(180deg, rgba(7, 17, 31, 0.86), rgba(7, 17, 31, 0.32));
-      backdrop-filter: blur(12px);
-    }
-    .nav {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 16px;
-      padding: 14px 18px;
-      border-radius: 999px;
-    }
-    .brand { display: flex; align-items: center; gap: 14px; }
-    .brand-mark {
-      width: 44px;
-      height: 44px;
-      display: grid;
-      place-items: center;
-      border-radius: 14px;
-      font-weight: 800;
-      letter-spacing: 0.08em;
-      color: var(--accent);
-      background: linear-gradient(135deg, rgba(54, 215, 196, 0.28), rgba(59, 130, 246, 0.28));
-      border: 1px solid rgba(142, 242, 228, 0.18);
-    }
-    .brand-copy strong {
-      display: block;
-      font-size: 1rem;
-      font-family: var(--font-display);
-    }
-    .brand-copy span { display: block; color: var(--muted); font-size: 0.88rem; }
-    .nav-links {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      flex-wrap: wrap;
-      justify-content: flex-end;
-    }
-    .nav-links a {
-      padding: 10px 14px;
-      border-radius: 999px;
-      color: var(--muted);
-      transition: 0.2s ease;
-    }
-    .nav-links a:hover,
-    .nav-links a.is-active {
-      color: #fff;
-      background: rgba(255, 255, 255, 0.07);
-    }
-    .hero-card, .section-card, .light-card, .cta-card, .toc { border-radius: var(--radius-lg); box-shadow: var(--shadow); }
-    .hero-card {
-      position: relative;
-      overflow: hidden;
-      padding: 36px;
-    }
-    .hero-card::before,
-    .hero-card::after {
-      content: "";
-      position: absolute;
-      border-radius: 999px;
-      filter: blur(10px);
-    }
-    .hero-card::before {
-      width: 260px;
-      height: 260px;
-      top: -110px;
-      right: -70px;
-      background: radial-gradient(circle, rgba(54, 215, 196, 0.28), transparent 68%);
-    }
-    .hero-card::after {
-      width: 300px;
-      height: 300px;
-      bottom: -150px;
-      left: -110px;
-      background: radial-gradient(circle, rgba(59, 130, 246, 0.24), transparent 68%);
-    }
-    .hero-grid {
-      position: relative;
-      display: grid;
-      grid-template-columns: minmax(0, 1.08fr) minmax(320px, 0.92fr);
-      gap: 28px;
-      align-items: center;
-    }
-    .eyebrow {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      padding: 8px 14px;
-      border-radius: 999px;
-      color: var(--accent);
-      font-size: 0.9rem;
-      background: rgba(142, 242, 228, 0.08);
-      border: 1px solid rgba(142, 242, 228, 0.14);
-    }
-    .hero h1 {
-      margin: 18px 0 14px;
-      font-size: clamp(2.45rem, 4.8vw, 4rem);
-      line-height: 1.04;
-      letter-spacing: -0.03em;
-      font-family: var(--font-display);
-    }
-    .hero p {
-      margin: 0;
-      max-width: 680px;
-      color: #c8ddef;
-      font-size: 1.05rem;
-    }
-    .hero-actions, .section-actions {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 14px;
-      margin-top: 28px;
-    }
-    .button {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      min-height: 52px;
-      padding: 0 22px;
-      border-radius: 999px;
-      border: 1px solid transparent;
-      font-weight: 700;
-      cursor: pointer;
-      transition: transform 0.2s ease;
-    }
-    .button:hover { transform: translateY(-2px); }
-    .button-primary { color: #07131e; background: linear-gradient(135deg, var(--accent), #7ed9ff); }
-    .button-secondary { color: #fff; background: rgba(255,255,255,0.07); border-color: rgba(255,255,255,0.12); }
-    .button-inline { color: #12406c; background: linear-gradient(135deg, #d8fff6, #dceeff); }
-    .hero-stats, .surface-grid { display: grid; gap: 18px; }
-    .hero-stats { grid-template-columns: repeat(3, minmax(0, 1fr)); margin-top: 28px; }
-    .surface-grid.cols-2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-    .stat-card, .section-card, .toc {
-      background: linear-gradient(180deg, rgba(12, 27, 46, 0.95), rgba(8, 21, 36, 0.98));
-      border: 1px solid var(--line);
-    }
-    .stat-card { padding: 18px; border-radius: 18px; }
-    .stat-card strong {
-      display: block;
-      color: #fff;
-      font-size: 1.45rem;
-      font-family: var(--font-display);
-    }
-    .stat-card span { color: #bdd5e8; font-size: 0.92rem; }
-    .hero-panel {
-      padding: 24px;
-      border-radius: 28px;
-      background: linear-gradient(180deg, rgba(255,255,255,0.08), rgba(255,255,255,0.04));
-      border: 1px solid rgba(255,255,255,0.08);
-    }
-    .hero-panel h3 { margin: 0 0 10px; font-size: 1.12rem; }
-    .hero-panel p { margin: 0; color: #c6daeb; font-size: 0.96rem; }
-    .panel-box, .code {
-      margin-top: 16px;
-      padding: 18px;
-      border-radius: 18px;
-      background: #09111f;
-      border: 1px solid rgba(120, 194, 255, 0.12);
-      color: #e4f4ff;
-      font-family: "Cascadia Code", "Consolas", monospace;
-      line-height: 1.8;
-      white-space: pre-wrap;
-      overflow-x: auto;
-    }
-    .page-grid {
-      display: grid;
-      grid-template-columns: 280px 1fr;
-      gap: 24px;
-      align-items: start;
-    }
-    .toc {
-      position: sticky;
-      top: 92px;
-      padding: 20px;
-    }
-    .toc h2 {
-      margin: 0 0 10px;
-      font-size: 1.02rem;
-      font-family: var(--font-display);
-    }
-    .toc p {
-      margin: 0 0 14px;
-      color: var(--muted);
-      font-size: 0.92rem;
-    }
-    .toc a {
-      display: block;
-      padding: 10px 12px;
-      border-radius: 14px;
-      color: #cbe1f1;
-      transition: 0.2s ease;
-    }
-    .toc a:hover {
-      color: #fff;
-      background: rgba(255,255,255,0.07);
-    }
-    .content { display: grid; gap: 20px; }
-    .section-card { padding: 24px; }
-    .section-card h2 { margin-top: 0; font-family: var(--font-display); }
-    .light-card {
-      padding: 20px;
-      border-radius: 22px;
-      background: linear-gradient(180deg, rgba(255,255,255,0.07), rgba(255,255,255,0.03));
-      border: 1px solid rgba(255,255,255,0.08);
-    }
-    .light-card h3 { margin: 0 0 10px; font-size: 1.08rem; }
-    .card-kicker {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      width: 44px;
-      height: 44px;
-      margin-bottom: 16px;
-      border-radius: 14px;
-      font-weight: 800;
-      color: #0d2238;
-      background: linear-gradient(135deg, #8ef2e4, #8ec5ff);
-    }
-    .info, .success, .warn {
-      margin-top: 18px;
-      padding: 16px 18px;
-      border-radius: 18px;
-      border-left: 5px solid #3b82f6;
-      background: rgba(222, 245, 255, 0.08);
-    }
-    .success { border-left-color: #0f9f7a; background: rgba(15, 159, 122, 0.1); }
-    .warn { border-left-color: #ea7c3c; background: rgba(234, 124, 60, 0.1); }
-    .info strong, .success strong, .warn strong { color: #fff; }
-    .flow-row {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 10px;
-      margin-top: 16px;
-    }
-    .flow-row span {
-      display: inline-flex;
-      align-items: center;
-      min-height: 34px;
-      padding: 0 12px;
-      border-radius: 999px;
-      background: linear-gradient(135deg, #d7fff7, #dbeeff);
-      color: #0d2238;
-      font-weight: 700;
-      font-size: 0.84rem;
-    }
-    .cta-card {
-      padding: 34px;
-      background:
-        radial-gradient(circle at 10% 20%, rgba(142, 242, 228, 0.18), transparent 32%),
-        radial-gradient(circle at 88% 24%, rgba(59, 130, 246, 0.24), transparent 30%),
-        linear-gradient(135deg, #071726, #102843 52%, #0e3341);
-      border: 1px solid rgba(142, 242, 228, 0.16);
-    }
-    .cta-card h2 {
-      margin: 0 0 14px;
-      font-family: var(--font-display);
-      font-size: clamp(2rem, 3vw, 3rem);
-      line-height: 1.05;
-    }
-    .cta-card p {
-      margin: 0;
-      max-width: 760px;
-      color: #cae1f2;
-      font-size: 1.04rem;
-    }
-    .footer {
-      padding: 16px 0 42px;
-      color: #9ab3c7;
-      font-size: 0.95rem;
-    }
-    .footer-row {
-      display: flex;
-      justify-content: space-between;
-      gap: 18px;
-      align-items: center;
-      flex-wrap: wrap;
-    }
-    @media (max-width: 1080px) {
-      .hero-grid, .page-grid, .surface-grid.cols-2 { grid-template-columns: 1fr; }
-      .toc { position: static; }
-    }
-    @media (max-width: 860px) {
-      .hero-card, .section-card, .light-card, .cta-card { padding: 24px; }
-      .hero-stats { grid-template-columns: 1fr; }
-    }
-    @media (max-width: 560px) {
-      .container { width: min(var(--max-width), calc(100% - 20px)); }
-      .button { width: 100%; }
-      .hero-actions, .section-actions { flex-direction: column; }
-    }
-  </style>
+  :root {
+    --bg: #07111f;
+    --panel: rgba(10, 24, 42, 0.82);
+    --line: rgba(123, 196, 255, 0.18);
+    --text: #e9f6ff;
+    --muted: #9cb7cb;
+    --accent: #8ef2e4;
+    --shadow: 0 24px 70px rgba(0, 10, 22, 0.3);
+    --radius-lg: 24px;
+    --max-width: 1180px;
+    --font-display: "Segoe UI Variable Display", "PingFang SC", "Microsoft YaHei UI", sans-serif;
+    --font-body: "Segoe UI Variable Text", "PingFang SC", "Microsoft YaHei", sans-serif;
+  }
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    margin: 0;
+    color: var(--text);
+    font-family: var(--font-body);
+    line-height: 1.72;
+    background:
+      radial-gradient(circle at top left, rgba(54, 215, 196, 0.15), transparent 24%),
+      radial-gradient(circle at 85% 12%, rgba(59, 130, 246, 0.22), transparent 26%),
+      linear-gradient(180deg, #07111f 0%, #0a1830 45%, #0d2238 100%);
+  }
+  a { color: inherit; text-decoration: none; }
+  .container { width: min(var(--max-width), calc(100% - 28px)); margin: 0 auto; }
+  .section { padding: 26px 0; }
+  .glass {
+    background: var(--panel);
+    border: 1px solid var(--line);
+    box-shadow: var(--shadow);
+    backdrop-filter: blur(16px);
+  }
+  .site-header {
+    position: sticky;
+    top: 0;
+    z-index: 40;
+    padding: 14px 0;
+    background: linear-gradient(180deg, rgba(7, 17, 31, 0.86), rgba(7, 17, 31, 0.32));
+    backdrop-filter: blur(12px);
+  }
+  .nav { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 14px 18px; border-radius: 999px; }
+  .brand { display: flex; align-items: center; gap: 14px; }
+  .brand-mark {
+    width: 44px;
+    height: 44px;
+    display: grid;
+    place-items: center;
+    border-radius: 14px;
+    font-weight: 800;
+    letter-spacing: 0.08em;
+    color: var(--accent);
+    background: linear-gradient(135deg, rgba(54, 215, 196, 0.28), rgba(59, 130, 246, 0.28));
+    border: 1px solid rgba(142, 242, 228, 0.18);
+  }
+  .brand-copy strong { display: block; font-size: 1rem; font-family: var(--font-display); }
+  .brand-copy span { display: block; color: var(--muted); font-size: 0.88rem; }
+  .nav-links { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; justify-content: flex-end; }
+  .nav-links a { padding: 10px 14px; border-radius: 999px; color: var(--muted); transition: 0.2s ease; }
+  .nav-links a:hover, .nav-links a.is-active { color: #fff; background: rgba(255,255,255,0.07); }
+  .hero-card, .section-card, .light-card, .cta-card, .toc { border-radius: var(--radius-lg); box-shadow: var(--shadow); }
+  .hero-card { position: relative; overflow: hidden; padding: 36px; }
+  .hero-card::before, .hero-card::after { content: ""; position: absolute; border-radius: 999px; filter: blur(10px); }
+  .hero-card::before { width: 260px; height: 260px; top: -110px; right: -70px; background: radial-gradient(circle, rgba(54, 215, 196, 0.28), transparent 68%); }
+  .hero-card::after { width: 300px; height: 300px; bottom: -150px; left: -110px; background: radial-gradient(circle, rgba(59, 130, 246, 0.24), transparent 68%); }
+  .hero-grid { position: relative; display: grid; grid-template-columns: minmax(0, 1.08fr) minmax(320px, 0.92fr); gap: 28px; align-items: center; }
+  .eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 14px;
+    border-radius: 999px;
+    color: var(--accent);
+    font-size: 0.9rem;
+    background: rgba(142, 242, 228, 0.08);
+    border: 1px solid rgba(142, 242, 228, 0.14);
+  }
+  .hero h1 { margin: 18px 0 14px; font-size: clamp(2.4rem, 4.8vw, 4rem); line-height: 1.06; letter-spacing: -0.03em; font-family: var(--font-display); }
+  .hero p { margin: 0; max-width: 700px; color: #c8ddef; font-size: 1.05rem; }
+  .hero-actions, .section-actions { display: flex; flex-wrap: wrap; gap: 14px; margin-top: 28px; }
+  .button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 52px;
+    padding: 0 22px;
+    border-radius: 999px;
+    border: 1px solid transparent;
+    font-weight: 700;
+    cursor: pointer;
+    transition: transform 0.2s ease;
+  }
+  .button:hover { transform: translateY(-2px); }
+  .button-primary { color: #07131e; background: linear-gradient(135deg, var(--accent), #7ed9ff); }
+  .button-secondary { color: #fff; background: rgba(255,255,255,0.07); border-color: rgba(255,255,255,0.12); }
+  .button-inline { color: #12406c; background: linear-gradient(135deg, #d8fff6, #dceeff); }
+  .hero-stats, .surface-grid { display: grid; gap: 18px; }
+  .hero-stats { grid-template-columns: repeat(3, minmax(0, 1fr)); margin-top: 28px; }
+  .surface-grid.cols-2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .stat-card, .section-card, .toc { background: linear-gradient(180deg, rgba(12, 27, 46, 0.95), rgba(8, 21, 36, 0.98)); border: 1px solid var(--line); }
+  .stat-card { padding: 18px; border-radius: 18px; }
+  .stat-card strong { display: block; color: #fff; font-size: 1.45rem; font-family: var(--font-display); }
+  .stat-card span { color: #bdd5e8; font-size: 0.92rem; }
+  .hero-panel { padding: 24px; border-radius: 28px; background: linear-gradient(180deg, rgba(255,255,255,0.08), rgba(255,255,255,0.04)); border: 1px solid rgba(255,255,255,0.08); }
+  .hero-panel h3 { margin: 0 0 10px; font-size: 1.12rem; }
+  .hero-panel p { margin: 0; color: #c6daeb; font-size: 0.96rem; }
+  .panel-box, .code {
+    margin-top: 16px;
+    padding: 18px;
+    border-radius: 18px;
+    background: #09111f;
+    border: 1px solid rgba(120, 194, 255, 0.12);
+    color: #e4f4ff;
+    font-family: "Cascadia Code", "Consolas", monospace;
+    line-height: 1.8;
+    white-space: pre-wrap;
+    overflow-x: auto;
+  }
+  .page-grid { display: grid; grid-template-columns: 280px 1fr; gap: 24px; align-items: start; }
+  .toc { position: sticky; top: 92px; padding: 20px; }
+  .toc h2 { margin: 0 0 10px; font-size: 1.02rem; font-family: var(--font-display); }
+  .toc p { margin: 0 0 14px; color: var(--muted); font-size: 0.92rem; }
+  .toc a { display: block; padding: 10px 12px; border-radius: 14px; color: #cbe1f1; transition: 0.2s ease; }
+  .toc a:hover { color: #fff; background: rgba(255,255,255,0.07); }
+  .content { display: grid; gap: 20px; }
+  .section-card { padding: 24px; }
+  .section-card h2 { margin-top: 0; font-family: var(--font-display); }
+  .light-card {
+    padding: 20px;
+    border-radius: 22px;
+    background: linear-gradient(180deg, rgba(255,255,255,0.07), rgba(255,255,255,0.03));
+    border: 1px solid rgba(255,255,255,0.08);
+  }
+  .light-card h3 { margin: 0 0 10px; font-size: 1.08rem; }
+  .card-kicker {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 44px;
+    height: 44px;
+    margin-bottom: 16px;
+    border-radius: 14px;
+    font-weight: 800;
+    color: #0d2238;
+    background: linear-gradient(135deg, #8ef2e4, #8ec5ff);
+  }
+  .info, .success {
+    margin-top: 18px;
+    padding: 16px 18px;
+    border-radius: 18px;
+    border-left: 5px solid #3b82f6;
+    background: rgba(222, 245, 255, 0.08);
+  }
+  .success { border-left-color: #0f9f7a; background: rgba(15, 159, 122, 0.1); }
+  .info strong, .success strong { color: #fff; }
+  .cta-card {
+    padding: 34px;
+    background: radial-gradient(circle at 10% 20%, rgba(142, 242, 228, 0.18), transparent 32%), radial-gradient(circle at 88% 24%, rgba(59, 130, 246, 0.24), transparent 30%), linear-gradient(135deg, #071726, #102843 52%, #0e3341);
+    border: 1px solid rgba(142, 242, 228, 0.16);
+  }
+  .cta-card h2 { margin: 0 0 14px; font-family: var(--font-display); font-size: clamp(2rem, 3vw, 3rem); line-height: 1.08; }
+  .cta-card p { margin: 0; max-width: 760px; color: #cae1f2; font-size: 1.04rem; }
+  .footer { padding: 16px 0 42px; color: #9ab3c7; font-size: 0.95rem; }
+  .footer-row { display: flex; justify-content: space-between; gap: 18px; align-items: center; flex-wrap: wrap; }
+  ul { padding-left: 20px; }
+  li + li { margin-top: 10px; }
+  @media (max-width: 1080px) { .hero-grid, .page-grid, .surface-grid.cols-2 { grid-template-columns: 1fr; } .toc { position: static; } }
+  @media (max-width: 860px) { .hero-card, .section-card, .light-card, .cta-card { padding: 24px; } .hero-stats { grid-template-columns: 1fr; } }
+  @media (max-width: 560px) { .container { width: min(var(--max-width), calc(100% - 20px)); } .button { width: 100%; } .hero-actions, .section-actions { flex-direction: column; } }
+</style>
 </head>
 <body>
   <header class="site-header">
@@ -343,14 +185,13 @@
           <div class="brand-mark">D13</div>
           <div class="brand-copy">
             <strong>第 13 天：函数概念</strong>
-            <span>把重复逻辑封装成可复用的小工具</span>
+            <span>def 与函数作用</span>
           </div>
         </div>
         <div class="nav-links">
           <a href="index.html">首页</a>
           <a href="python_study.html">新手核心内容</a>
-          <a href="day12_loop_practice.html">上一天</a>
-          <a href="day14_function_params.html" class="is-active">下一天</a>
+          <a href="study_checkin.html">打卡总入口</a>
         </div>
       </nav>
     </div>
@@ -361,37 +202,28 @@
       <div class="container">
         <div class="hero-card glass">
           <div class="hero-grid">
-            <div>
+            <div class="hero">
               <div class="eyebrow">Day 13 / Functions</div>
-              <h1>当一段逻辑要反复用时，<br />复制粘贴不是办法，函数才是更像程序员的做法。</h1>
-              <p>今天你会第一次理解“封装”的意义。函数的核心价值，不是多记一个语法，而是让程序开始有明确的功能块。</p>
+              <h1>函数最核心的价值是把重复任务打包，让主流程更清楚。</h1>
+              <p>代码一多，如果每次都重复写同样的几行，会越来越乱。函数就是把一段可重复的动作封装起来。</p>
               <div class="hero-actions">
-                <a class="button button-primary" href="#structure">先看函数基本结构</a>
-                <a class="button button-secondary" href="day12_loop_practice.html">回看循环练习</a>
+                <a class="button button-primary" href="#example">先看示例代码</a>
+                <a class="button button-secondary" href="python_study.html#week2">返回阶段入口</a>
               </div>
               <div class="hero-stats">
-                <div class="stat-card">
-                  <strong>2 个动作</strong>
-                  <span>先定义，再调用</span>
-                </div>
-                <div class="stat-card">
-                  <strong>1 个价值</strong>
-                  <span>减少重复代码</span>
-                </div>
-                <div class="stat-card">
-                  <strong>1 个思维变化</strong>
-                  <span>程序开始按功能拆块</span>
-                </div>
+                <div class="stat-card"><strong>Day 13</strong><span>当天正式学习</span></div>
+                <div class="stat-card"><strong>def 与函数作用</strong><span>今天核心主题</span></div>
+                <div class="stat-card"><strong>1 个重点</strong><span>先把最小能力做出来</span></div>
               </div>
             </div>
             <div class="hero-panel">
-              <h3>你今天会写出的最小函数</h3>
-              <p>先建立“定义一个功能，再随时调用”的感觉。</p>
-              <div class="panel-box">def say_hello():
-    print("你好，欢迎学习 Python")
+              <h3>今天最小可运行示例</h3>
+              <p>先看懂最小例子，再自己改写一遍，学习效率会更高。</p>
+              <div class="panel-box">def say_hi():
+    print(&quot;你好&quot;)
 
-say_hello()
-say_hello()</div>
+say_hi()
+say_hi()</div>
             </div>
           </div>
         </div>
@@ -402,130 +234,76 @@ say_hello()</div>
       <div class="container page-grid">
         <aside class="toc">
           <h2>本页目录</h2>
-          <p>先理解为什么要函数，再学最基础的定义和调用。</p>
-          <a href="#goal">1. 今天目标</a>
-          <a href="#why">2. 为什么要函数</a>
-          <a href="#structure">3. 基本结构</a>
-          <a href="#call">4. 定义和调用的区别</a>
-          <a href="#scene">5. 适合封装什么逻辑</a>
-          <a href="#practice">6. 今日练习</a>
-          <a href="#summary">7. 今日总结</a>
+          <p>先抓住目标，再看例子，最后做练习和总结。</p>
+          <a href="#goal">1. 今日目标</a>
+          <a href="#concept">2. 核心理解</a>
+          <a href="#example">3. 示例代码</a>
+          <a href="#tips">4. 常见提醒</a>
+          <a href="#practice">5. 今日练习</a>
+          <a href="#summary">6. 今日总结</a>
         </aside>
 
         <div class="content">
           <section class="section-card" id="goal">
-            <h2>1. 今天目标</h2>
-            <p>你今天要掌握的不是复杂函数，而是先理解函数的存在意义：把会重复出现的一段逻辑打包起来，给它起个名字，后面随时调用。</p>
+            <h2>1. 今日目标</h2>
+            <p>函数最核心的价值是把重复任务打包，让主流程更清楚。</p>
+            <ul><li>函数像“功能块”，让主流程更整洁。</li><li>定义函数和调用函数是两回事。</li></ul>
           </section>
 
-          <section class="section-card" id="why">
-            <h2>2. 为什么要函数</h2>
-            <p>如果一段欢迎语、一个格式化输出、一个统计流程要用很多次，难道每次都复制粘贴一遍吗？这样不但麻烦，后面要改也会很累。函数就是为了解决这个问题。</p>
+          <section class="section-card" id="concept">
+            <h2>2. 核心理解</h2>
+            <p>这一页先围绕“def 与函数作用”建立直觉。不要急着追求复杂，先把最小理解做稳。</p>
             <div class="surface-grid cols-2">
               <article class="light-card">
-                <div class="card-kicker">旧</div>
-                <h3>没有函数时</h3>
-                <p>重复逻辑散落在代码各处，修改起来容易漏掉。</p>
+                <div class="card-kicker">C1</div>
+                <h3>先理解用途</h3>
+                <p>函数像“功能块”，让主流程更整洁。</p>
               </article>
               <article class="light-card">
-                <div class="card-kicker">新</div>
-                <h3>有函数时</h3>
-                <p>同一份逻辑只写一次，后面需要时直接调用。</p>
+                <div class="card-kicker">C2</div>
+                <h3>再理解边界</h3>
+                <p>定义函数和调用函数是两回事。</p>
               </article>
-            </div>
-            <div class="info">
-              <strong>一句话理解：</strong> 函数就是给一段可复用代码起名字，让程序更好组织。
             </div>
           </section>
 
-          <section class="section-card" id="structure">
-            <h2>3. 基本结构</h2>
-            <div class="code">def 函数名():
-    要执行的代码
+          <section class="section-card" id="example">
+            <h2>3. 示例代码</h2>
+            <p>下面这段代码是今天最值得看懂的最小例子。</p>
+            <div class="code">def say_hi():
+    print(&quot;你好&quot;)
 
-函数名()</div>
-            <ul>
-              <li>`def` 表示“定义函数”。</li>
-              <li>括号和冒号不能少。</li>
-              <li>缩进里的代码属于这个函数。</li>
-              <li>定义完之后，要调用它，里面的代码才会执行。</li>
-            </ul>
+say_hi()
+say_hi()</div>
+            <div class="success"><strong>这段代码在说明什么：</strong> 先定义函数，再调用函数。定义是“准备好”，调用才是真正执行。</div>
           </section>
 
-          <section class="section-card" id="call">
-            <h2>4. 定义和调用的区别</h2>
-            <p>很多初学者会混淆这两个动作。定义只是把功能准备好，调用才是真正运行它。</p>
-            <div class="code">def show_line():
-    print("==========")
-
-show_line()
-show_line()</div>
-            <div class="flow-row">
-              <span>先定义功能</span>
-              <span>函数暂时不执行</span>
-              <span>调用一次执行一次</span>
-            </div>
-            <div class="success">
-              <strong>这就是“可复用”的感觉：</strong> 同一段逻辑定义一次，后面想用几次就调用几次。
-            </div>
-          </section>
-
-          <section class="section-card" id="scene">
-            <h2>5. 适合封装什么逻辑</h2>
-            <div class="surface-grid cols-2">
-              <article class="light-card">
-                <div class="card-kicker">场景 1</div>
-                <h3>重复输出格式</h3>
-                <p>比如统一打印标题、分隔线、欢迎语，这类内容非常适合函数化。</p>
-              </article>
-              <article class="light-card">
-                <div class="card-kicker">场景 2</div>
-                <h3>重复处理步骤</h3>
-                <p>比如每次都要检查分数、每次都要整理一段文本，这类流程后面也适合用函数收起来。</p>
-              </article>
-            </div>
+          <section class="section-card" id="tips">
+            <h2>4. 常见提醒</h2>
+            <ul><li>def 后面跟函数名和括号。</li><li>函数体要缩进。</li><li>定义之后还要调用，程序才会执行里面的代码。</li><li>先从没有参数的函数入门。</li></ul>
+            <div class="info"><strong>今天最该抓住的点：</strong> 先把“最小正确写法”做出来，再谈更多变化。只要你能看懂、能改一版、能自己写一个同类小例子，今天就过关了一大半。</div>
           </section>
 
           <section class="section-card" id="practice">
-            <h2>6. 今日练习</h2>
-            <div class="light-card">
-              <div class="card-kicker">P1</div>
-              <h3>写一个欢迎函数</h3>
-              <p>定义一个函数，作用是输出一句欢迎语。调用 3 次，观察结果。</p>
-            </div>
-            <div class="light-card">
-              <div class="card-kicker">P2</div>
-              <h3>写一个分隔线函数</h3>
-              <p>定义一个函数，输出一行 `==========`。在程序里调用多次。</p>
-            </div>
-            <div class="light-card">
-              <div class="card-kicker">P3</div>
-              <h3>组合两个函数</h3>
-              <p>一个函数打印标题，一个函数打印正文，按顺序调用它们，感受程序结构变清楚的效果。</p>
-            </div>
+            <h2>5. 今日练习</h2>
+            <div class="light-card"><div class="card-kicker">P1</div><h3>练习 1</h3><p>定义一个函数，输出一句学习鼓励语。</p></div>
+<div class="light-card"><div class="card-kicker">P2</div><h3>练习 2</h3><p>调用同一个函数两次，观察输出。</p></div>
+<div class="light-card"><div class="card-kicker">P3</div><h3>练习 3</h3><p>解释为什么函数能减少重复代码。</p></div>
           </section>
 
           <section class="section-card" id="summary">
-            <h2>7. 今日总结</h2>
-            <ul>
-              <li>函数用来封装重复逻辑。</li>
-              <li>基本套路是先 `def` 定义，再调用执行。</li>
-              <li>缩进依然非常重要。</li>
-              <li>函数能让程序结构更清楚、更方便修改。</li>
-              <li>今天先掌握“无参数函数”就够了。</li>
-            </ul>
-            <div class="success">
-              <strong>今天过关标准：</strong> 你能自己定义 2 个小函数，并在程序里调用它们多次，就说明函数的基本概念已经真正建立起来了。
-            </div>
+            <h2>6. 今日总结</h2>
+            <ul><li>今天的主题是：def 与函数作用。</li><li>核心关注点：函数最核心的价值是把重复任务打包，让主流程更清楚。</li><li>先做到“能看懂 + 能改一版 + 能自己写最小例子”。</li><li>只要能围绕“函数概念”做出一个小练习，今天就不是白学。</li></ul>
+            <div class="success"><strong>今天过关标准：</strong> 能定义并调用一个最简单的函数，知道函数是在打包可重复动作。</div>
           </section>
 
           <section class="section">
             <div class="cta-card">
-              <h2>函数会用之后，下一步就是让它别那么死板，而是能接收不同输入。</h2>
-              <p>第 14 天会进入函数参数。你会理解为什么函数不应该只能做同一个固定动作，而是要根据传进去的数据产生不同结果。</p>
+              <h2>完成第 13 天后，继续保持连续推进。</h2>
+              <p>下一站会继续把今天的基础往前推进，重点不是换一堆新名词，而是把理解再压实一层。</p>
               <div class="section-actions">
                 <a class="button button-primary" href="day14_function_params.html">进入第 14 天：函数参数</a>
-                <a class="button button-secondary" href="python_study.html#week2">回到第 2 周入口</a>
+                <a class="button button-secondary" href="study_checkin.html">回到学习打卡总入口</a>
               </div>
             </div>
           </section>
@@ -538,9 +316,10 @@ show_line()</div>
     <div class="container">
       <div class="footer-row">
         <div>当前页面：<strong>day13_functions_intro.html</strong></div>
-        <div>相邻导航：Day 12 循环练习 · Day 14 函数参数</div>
+        <div>相邻导航：回看第 12 天 · 进入第 14 天：函数参数</div>
       </div>
     </div>
   </footer>
+  <script type="module" src="ai-practice.mjs"></script>
 </body>
 </html>

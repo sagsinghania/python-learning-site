@@ -3,320 +3,179 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>第 19 天：函数综合 | Python 学习页</title>
+  <title>第 19 天：函数工作流 | Python 学习页</title>
   <style>
-    :root {
-      --bg: #07111f;
-      --panel: rgba(10, 24, 42, 0.82);
-      --line: rgba(123, 196, 255, 0.18);
-      --text: #e9f6ff;
-      --muted: #9cb7cb;
-      --accent: #8ef2e4;
-      --shadow: 0 24px 70px rgba(0, 10, 22, 0.3);
-      --radius-lg: 24px;
-      --max-width: 1180px;
-      --font-display: "Segoe UI Variable Display", "PingFang SC", "Microsoft YaHei UI", sans-serif;
-      --font-body: "Segoe UI Variable Text", "PingFang SC", "Microsoft YaHei", sans-serif;
-    }
-    * { box-sizing: border-box; }
-    html { scroll-behavior: smooth; }
-    body {
-      margin: 0;
-      color: var(--text);
-      font-family: var(--font-body);
-      line-height: 1.72;
-      background:
-        radial-gradient(circle at top left, rgba(54, 215, 196, 0.15), transparent 24%),
-        radial-gradient(circle at 85% 12%, rgba(59, 130, 246, 0.22), transparent 26%),
-        linear-gradient(180deg, #07111f 0%, #0a1830 45%, #0d2238 100%);
-    }
-    a { color: inherit; text-decoration: none; }
-    .container { width: min(var(--max-width), calc(100% - 28px)); margin: 0 auto; }
-    .section { padding: 26px 0; }
-    .glass {
-      background: var(--panel);
-      border: 1px solid var(--line);
-      box-shadow: var(--shadow);
-      backdrop-filter: blur(16px);
-    }
-    .site-header {
-      position: sticky;
-      top: 0;
-      z-index: 40;
-      padding: 14px 0;
-      background: linear-gradient(180deg, rgba(7, 17, 31, 0.86), rgba(7, 17, 31, 0.32));
-      backdrop-filter: blur(12px);
-    }
-    .nav {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 16px;
-      padding: 14px 18px;
-      border-radius: 999px;
-    }
-    .brand { display: flex; align-items: center; gap: 14px; }
-    .brand-mark {
-      width: 44px;
-      height: 44px;
-      display: grid;
-      place-items: center;
-      border-radius: 14px;
-      font-weight: 800;
-      letter-spacing: 0.08em;
-      color: var(--accent);
-      background: linear-gradient(135deg, rgba(54, 215, 196, 0.28), rgba(59, 130, 246, 0.28));
-      border: 1px solid rgba(142, 242, 228, 0.18);
-    }
-    .brand-copy strong {
-      display: block;
-      font-size: 1rem;
-      font-family: var(--font-display);
-    }
-    .brand-copy span { display: block; color: var(--muted); font-size: 0.88rem; }
-    .nav-links {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      flex-wrap: wrap;
-      justify-content: flex-end;
-    }
-    .nav-links a {
-      padding: 10px 14px;
-      border-radius: 999px;
-      color: var(--muted);
-      transition: 0.2s ease;
-    }
-    .nav-links a:hover,
-    .nav-links a.is-active {
-      color: #fff;
-      background: rgba(255, 255, 255, 0.07);
-    }
-    .hero-card, .section-card, .light-card, .cta-card, .toc { border-radius: var(--radius-lg); box-shadow: var(--shadow); }
-    .hero-card {
-      position: relative;
-      overflow: hidden;
-      padding: 36px;
-    }
-    .hero-card::before,
-    .hero-card::after {
-      content: "";
-      position: absolute;
-      border-radius: 999px;
-      filter: blur(10px);
-    }
-    .hero-card::before {
-      width: 260px;
-      height: 260px;
-      top: -110px;
-      right: -70px;
-      background: radial-gradient(circle, rgba(54, 215, 196, 0.28), transparent 68%);
-    }
-    .hero-card::after {
-      width: 300px;
-      height: 300px;
-      bottom: -150px;
-      left: -110px;
-      background: radial-gradient(circle, rgba(59, 130, 246, 0.24), transparent 68%);
-    }
-    .hero-grid {
-      position: relative;
-      display: grid;
-      grid-template-columns: minmax(0, 1.08fr) minmax(320px, 0.92fr);
-      gap: 28px;
-      align-items: center;
-    }
-    .eyebrow {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      padding: 8px 14px;
-      border-radius: 999px;
-      color: var(--accent);
-      font-size: 0.9rem;
-      background: rgba(142, 242, 228, 0.08);
-      border: 1px solid rgba(142, 242, 228, 0.14);
-    }
-    .hero h1 {
-      margin: 18px 0 14px;
-      font-size: clamp(2.45rem, 4.8vw, 4rem);
-      line-height: 1.04;
-      letter-spacing: -0.03em;
-      font-family: var(--font-display);
-    }
-    .hero p {
-      margin: 0;
-      max-width: 680px;
-      color: #c8ddef;
-      font-size: 1.05rem;
-    }
-    .hero-actions, .section-actions {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 14px;
-      margin-top: 28px;
-    }
-    .button {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      min-height: 52px;
-      padding: 0 22px;
-      border-radius: 999px;
-      border: 1px solid transparent;
-      font-weight: 700;
-      cursor: pointer;
-      transition: transform 0.2s ease;
-    }
-    .button:hover { transform: translateY(-2px); }
-    .button-primary { color: #07131e; background: linear-gradient(135deg, var(--accent), #7ed9ff); }
-    .button-secondary { color: #fff; background: rgba(255,255,255,0.07); border-color: rgba(255,255,255,0.12); }
-    .button-inline { color: #12406c; background: linear-gradient(135deg, #d8fff6, #dceeff); }
-    .hero-stats, .surface-grid { display: grid; gap: 18px; }
-    .hero-stats { grid-template-columns: repeat(3, minmax(0, 1fr)); margin-top: 28px; }
-    .surface-grid.cols-2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-    .stat-card, .section-card, .toc {
-      background: linear-gradient(180deg, rgba(12, 27, 46, 0.95), rgba(8, 21, 36, 0.98));
-      border: 1px solid var(--line);
-    }
-    .stat-card { padding: 18px; border-radius: 18px; }
-    .stat-card strong {
-      display: block;
-      color: #fff;
-      font-size: 1.45rem;
-      font-family: var(--font-display);
-    }
-    .stat-card span { color: #bdd5e8; font-size: 0.92rem; }
-    .hero-panel {
-      padding: 24px;
-      border-radius: 28px;
-      background: linear-gradient(180deg, rgba(255,255,255,0.08), rgba(255,255,255,0.04));
-      border: 1px solid rgba(255,255,255,0.08);
-    }
-    .hero-panel h3 { margin: 0 0 10px; font-size: 1.12rem; }
-    .hero-panel p { margin: 0; color: #c6daeb; font-size: 0.96rem; }
-    .panel-box, .code {
-      margin-top: 16px;
-      padding: 18px;
-      border-radius: 18px;
-      background: #09111f;
-      border: 1px solid rgba(120, 194, 255, 0.12);
-      color: #e4f4ff;
-      font-family: "Cascadia Code", "Consolas", monospace;
-      line-height: 1.8;
-      white-space: pre-wrap;
-      overflow-x: auto;
-    }
-    .page-grid {
-      display: grid;
-      grid-template-columns: 280px 1fr;
-      gap: 24px;
-      align-items: start;
-    }
-    .toc {
-      position: sticky;
-      top: 92px;
-      padding: 20px;
-    }
-    .toc h2 {
-      margin: 0 0 10px;
-      font-size: 1.02rem;
-      font-family: var(--font-display);
-    }
-    .toc p {
-      margin: 0 0 14px;
-      color: var(--muted);
-      font-size: 0.92rem;
-    }
-    .toc a {
-      display: block;
-      padding: 10px 12px;
-      border-radius: 14px;
-      color: #cbe1f1;
-      transition: 0.2s ease;
-    }
-    .toc a:hover {
-      color: #fff;
-      background: rgba(255,255,255,0.07);
-    }
-    .content { display: grid; gap: 20px; }
-    .section-card { padding: 24px; }
-    .section-card h2 { margin-top: 0; font-family: var(--font-display); }
-    .light-card {
-      padding: 20px;
-      border-radius: 22px;
-      background: linear-gradient(180deg, rgba(255,255,255,0.07), rgba(255,255,255,0.03));
-      border: 1px solid rgba(255,255,255,0.08);
-    }
-    .light-card h3 { margin: 0 0 10px; font-size: 1.08rem; }
-    .card-kicker {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      width: 44px;
-      height: 44px;
-      margin-bottom: 16px;
-      border-radius: 14px;
-      font-weight: 800;
-      color: #0d2238;
-      background: linear-gradient(135deg, #8ef2e4, #8ec5ff);
-    }
-    .info, .success, .warn {
-      margin-top: 18px;
-      padding: 16px 18px;
-      border-radius: 18px;
-      border-left: 5px solid #3b82f6;
-      background: rgba(222, 245, 255, 0.08);
-    }
-    .success { border-left-color: #0f9f7a; background: rgba(15, 159, 122, 0.1); }
-    .warn { border-left-color: #ea7c3c; background: rgba(234, 124, 60, 0.1); }
-    .info strong, .success strong, .warn strong { color: #fff; }
-    .cta-card {
-      padding: 34px;
-      background:
-        radial-gradient(circle at 10% 20%, rgba(142, 242, 228, 0.18), transparent 32%),
-        radial-gradient(circle at 88% 24%, rgba(59, 130, 246, 0.24), transparent 30%),
-        linear-gradient(135deg, #071726, #102843 52%, #0e3341);
-      border: 1px solid rgba(142, 242, 228, 0.16);
-    }
-    .cta-card h2 {
-      margin: 0 0 14px;
-      font-family: var(--font-display);
-      font-size: clamp(2rem, 3vw, 3rem);
-      line-height: 1.05;
-    }
-    .cta-card p {
-      margin: 0;
-      max-width: 760px;
-      color: #cae1f2;
-      font-size: 1.04rem;
-    }
-    .footer {
-      padding: 16px 0 42px;
-      color: #9ab3c7;
-      font-size: 0.95rem;
-    }
-    .footer-row {
-      display: flex;
-      justify-content: space-between;
-      gap: 18px;
-      align-items: center;
-      flex-wrap: wrap;
-    }
-    @media (max-width: 1080px) {
-      .hero-grid, .page-grid, .surface-grid.cols-2 { grid-template-columns: 1fr; }
-      .toc { position: static; }
-    }
-    @media (max-width: 860px) {
-      .hero-card, .section-card, .light-card, .cta-card { padding: 24px; }
-      .hero-stats { grid-template-columns: 1fr; }
-    }
-    @media (max-width: 560px) {
-      .container { width: min(var(--max-width), calc(100% - 20px)); }
-      .button { width: 100%; }
-      .hero-actions, .section-actions { flex-direction: column; }
-    }
-  </style>
+  :root {
+    --bg: #07111f;
+    --panel: rgba(10, 24, 42, 0.82);
+    --line: rgba(123, 196, 255, 0.18);
+    --text: #e9f6ff;
+    --muted: #9cb7cb;
+    --accent: #8ef2e4;
+    --shadow: 0 24px 70px rgba(0, 10, 22, 0.3);
+    --radius-lg: 24px;
+    --max-width: 1180px;
+    --font-display: "Segoe UI Variable Display", "PingFang SC", "Microsoft YaHei UI", sans-serif;
+    --font-body: "Segoe UI Variable Text", "PingFang SC", "Microsoft YaHei", sans-serif;
+  }
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    margin: 0;
+    color: var(--text);
+    font-family: var(--font-body);
+    line-height: 1.72;
+    background:
+      radial-gradient(circle at top left, rgba(54, 215, 196, 0.15), transparent 24%),
+      radial-gradient(circle at 85% 12%, rgba(59, 130, 246, 0.22), transparent 26%),
+      linear-gradient(180deg, #07111f 0%, #0a1830 45%, #0d2238 100%);
+  }
+  a { color: inherit; text-decoration: none; }
+  .container { width: min(var(--max-width), calc(100% - 28px)); margin: 0 auto; }
+  .section { padding: 26px 0; }
+  .glass {
+    background: var(--panel);
+    border: 1px solid var(--line);
+    box-shadow: var(--shadow);
+    backdrop-filter: blur(16px);
+  }
+  .site-header {
+    position: sticky;
+    top: 0;
+    z-index: 40;
+    padding: 14px 0;
+    background: linear-gradient(180deg, rgba(7, 17, 31, 0.86), rgba(7, 17, 31, 0.32));
+    backdrop-filter: blur(12px);
+  }
+  .nav { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 14px 18px; border-radius: 999px; }
+  .brand { display: flex; align-items: center; gap: 14px; }
+  .brand-mark {
+    width: 44px;
+    height: 44px;
+    display: grid;
+    place-items: center;
+    border-radius: 14px;
+    font-weight: 800;
+    letter-spacing: 0.08em;
+    color: var(--accent);
+    background: linear-gradient(135deg, rgba(54, 215, 196, 0.28), rgba(59, 130, 246, 0.28));
+    border: 1px solid rgba(142, 242, 228, 0.18);
+  }
+  .brand-copy strong { display: block; font-size: 1rem; font-family: var(--font-display); }
+  .brand-copy span { display: block; color: var(--muted); font-size: 0.88rem; }
+  .nav-links { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; justify-content: flex-end; }
+  .nav-links a { padding: 10px 14px; border-radius: 999px; color: var(--muted); transition: 0.2s ease; }
+  .nav-links a:hover, .nav-links a.is-active { color: #fff; background: rgba(255,255,255,0.07); }
+  .hero-card, .section-card, .light-card, .cta-card, .toc { border-radius: var(--radius-lg); box-shadow: var(--shadow); }
+  .hero-card { position: relative; overflow: hidden; padding: 36px; }
+  .hero-card::before, .hero-card::after { content: ""; position: absolute; border-radius: 999px; filter: blur(10px); }
+  .hero-card::before { width: 260px; height: 260px; top: -110px; right: -70px; background: radial-gradient(circle, rgba(54, 215, 196, 0.28), transparent 68%); }
+  .hero-card::after { width: 300px; height: 300px; bottom: -150px; left: -110px; background: radial-gradient(circle, rgba(59, 130, 246, 0.24), transparent 68%); }
+  .hero-grid { position: relative; display: grid; grid-template-columns: minmax(0, 1.08fr) minmax(320px, 0.92fr); gap: 28px; align-items: center; }
+  .eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 14px;
+    border-radius: 999px;
+    color: var(--accent);
+    font-size: 0.9rem;
+    background: rgba(142, 242, 228, 0.08);
+    border: 1px solid rgba(142, 242, 228, 0.14);
+  }
+  .hero h1 { margin: 18px 0 14px; font-size: clamp(2.4rem, 4.8vw, 4rem); line-height: 1.06; letter-spacing: -0.03em; font-family: var(--font-display); }
+  .hero p { margin: 0; max-width: 700px; color: #c8ddef; font-size: 1.05rem; }
+  .hero-actions, .section-actions { display: flex; flex-wrap: wrap; gap: 14px; margin-top: 28px; }
+  .button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 52px;
+    padding: 0 22px;
+    border-radius: 999px;
+    border: 1px solid transparent;
+    font-weight: 700;
+    cursor: pointer;
+    transition: transform 0.2s ease;
+  }
+  .button:hover { transform: translateY(-2px); }
+  .button-primary { color: #07131e; background: linear-gradient(135deg, var(--accent), #7ed9ff); }
+  .button-secondary { color: #fff; background: rgba(255,255,255,0.07); border-color: rgba(255,255,255,0.12); }
+  .button-inline { color: #12406c; background: linear-gradient(135deg, #d8fff6, #dceeff); }
+  .hero-stats, .surface-grid { display: grid; gap: 18px; }
+  .hero-stats { grid-template-columns: repeat(3, minmax(0, 1fr)); margin-top: 28px; }
+  .surface-grid.cols-2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .stat-card, .section-card, .toc { background: linear-gradient(180deg, rgba(12, 27, 46, 0.95), rgba(8, 21, 36, 0.98)); border: 1px solid var(--line); }
+  .stat-card { padding: 18px; border-radius: 18px; }
+  .stat-card strong { display: block; color: #fff; font-size: 1.45rem; font-family: var(--font-display); }
+  .stat-card span { color: #bdd5e8; font-size: 0.92rem; }
+  .hero-panel { padding: 24px; border-radius: 28px; background: linear-gradient(180deg, rgba(255,255,255,0.08), rgba(255,255,255,0.04)); border: 1px solid rgba(255,255,255,0.08); }
+  .hero-panel h3 { margin: 0 0 10px; font-size: 1.12rem; }
+  .hero-panel p { margin: 0; color: #c6daeb; font-size: 0.96rem; }
+  .panel-box, .code {
+    margin-top: 16px;
+    padding: 18px;
+    border-radius: 18px;
+    background: #09111f;
+    border: 1px solid rgba(120, 194, 255, 0.12);
+    color: #e4f4ff;
+    font-family: "Cascadia Code", "Consolas", monospace;
+    line-height: 1.8;
+    white-space: pre-wrap;
+    overflow-x: auto;
+  }
+  .page-grid { display: grid; grid-template-columns: 280px 1fr; gap: 24px; align-items: start; }
+  .toc { position: sticky; top: 92px; padding: 20px; }
+  .toc h2 { margin: 0 0 10px; font-size: 1.02rem; font-family: var(--font-display); }
+  .toc p { margin: 0 0 14px; color: var(--muted); font-size: 0.92rem; }
+  .toc a { display: block; padding: 10px 12px; border-radius: 14px; color: #cbe1f1; transition: 0.2s ease; }
+  .toc a:hover { color: #fff; background: rgba(255,255,255,0.07); }
+  .content { display: grid; gap: 20px; }
+  .section-card { padding: 24px; }
+  .section-card h2 { margin-top: 0; font-family: var(--font-display); }
+  .light-card {
+    padding: 20px;
+    border-radius: 22px;
+    background: linear-gradient(180deg, rgba(255,255,255,0.07), rgba(255,255,255,0.03));
+    border: 1px solid rgba(255,255,255,0.08);
+  }
+  .light-card h3 { margin: 0 0 10px; font-size: 1.08rem; }
+  .card-kicker {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 44px;
+    height: 44px;
+    margin-bottom: 16px;
+    border-radius: 14px;
+    font-weight: 800;
+    color: #0d2238;
+    background: linear-gradient(135deg, #8ef2e4, #8ec5ff);
+  }
+  .info, .success {
+    margin-top: 18px;
+    padding: 16px 18px;
+    border-radius: 18px;
+    border-left: 5px solid #3b82f6;
+    background: rgba(222, 245, 255, 0.08);
+  }
+  .success { border-left-color: #0f9f7a; background: rgba(15, 159, 122, 0.1); }
+  .info strong, .success strong { color: #fff; }
+  .cta-card {
+    padding: 34px;
+    background: radial-gradient(circle at 10% 20%, rgba(142, 242, 228, 0.18), transparent 32%), radial-gradient(circle at 88% 24%, rgba(59, 130, 246, 0.24), transparent 30%), linear-gradient(135deg, #071726, #102843 52%, #0e3341);
+    border: 1px solid rgba(142, 242, 228, 0.16);
+  }
+  .cta-card h2 { margin: 0 0 14px; font-family: var(--font-display); font-size: clamp(2rem, 3vw, 3rem); line-height: 1.08; }
+  .cta-card p { margin: 0; max-width: 760px; color: #cae1f2; font-size: 1.04rem; }
+  .footer { padding: 16px 0 42px; color: #9ab3c7; font-size: 0.95rem; }
+  .footer-row { display: flex; justify-content: space-between; gap: 18px; align-items: center; flex-wrap: wrap; }
+  ul { padding-left: 20px; }
+  li + li { margin-top: 10px; }
+  @media (max-width: 1080px) { .hero-grid, .page-grid, .surface-grid.cols-2 { grid-template-columns: 1fr; } .toc { position: static; } }
+  @media (max-width: 860px) { .hero-card, .section-card, .light-card, .cta-card { padding: 24px; } .hero-stats { grid-template-columns: 1fr; } }
+  @media (max-width: 560px) { .container { width: min(var(--max-width), calc(100% - 20px)); } .button { width: 100%; } .hero-actions, .section-actions { flex-direction: column; } }
+</style>
 </head>
 <body>
   <header class="site-header">
@@ -325,15 +184,14 @@
         <div class="brand">
           <div class="brand-mark">D19</div>
           <div class="brand-copy">
-            <strong>第 19 天：函数综合</strong>
-            <span>让多个函数各管一段流程</span>
+            <strong>第 19 天：函数工作流</strong>
+            <span>函数拆分流程</span>
           </div>
         </div>
         <div class="nav-links">
           <a href="index.html">首页</a>
           <a href="python_study.html">新手核心内容</a>
-          <a href="day18_try_except.html">上一站</a>
-          <a href="day20_file_project.html" class="is-active">下一站</a>
+          <a href="study_checkin.html">打卡总入口</a>
         </div>
       </nav>
     </div>
@@ -344,40 +202,31 @@
       <div class="container">
         <div class="hero-card glass">
           <div class="hero-grid">
-            <div>
-              <div class="eyebrow">Day 19 / Function Workflow</div>
-              <h1>函数真正开始有价值的时刻，是多个函数不再各自孤立，而是共同组成一个清晰流程。</h1>
-              <p>今天你会把输入、判断、输出拆成不同函数，让程序从“堆在一起的一大段代码”逐渐变成有结构的流程。</p>
+            <div class="hero">
+              <div class="eyebrow">Day 19 / Functions Workflow</div>
+              <h1>函数真正强大的地方，不只是少写重复代码，而是让流程更清楚。</h1>
+              <p>当程序变长时，最容易乱的是“所有事情都写在一起”。把流程拆成几个函数，程序就开始有结构了。</p>
               <div class="hero-actions">
                 <a class="button button-primary" href="#example">先看示例代码</a>
-                <a class="button button-secondary" href="day18_try_except.html">回看异常处理</a>
+                <a class="button button-secondary" href="python_study.html#week3">返回阶段入口</a>
               </div>
               <div class="hero-stats">
-                <div class="stat-card">
-                  <strong>3 个角色</strong>
-                  <span>输入 / 处理 / 输出</span>
-                </div>
-                <div class="stat-card">
-                  <strong>1 个重点</strong>
-                  <span>每个函数只管一件事</span>
-                </div>
-                <div class="stat-card">
-                  <strong>1 个目标</strong>
-                  <span>程序开始可读可改</span>
-                </div>
+                <div class="stat-card"><strong>Day 19</strong><span>当天正式学习</span></div>
+                <div class="stat-card"><strong>函数拆分流程</strong><span>今天核心主题</span></div>
+                <div class="stat-card"><strong>1 个重点</strong><span>先把最小能力做出来</span></div>
               </div>
             </div>
             <div class="hero-panel">
-              <h3>函数配合的基础结构</h3>
-              <p>每个函数只承担一段职责。</p>
-              <div class="panel-box">def get_score():
-    return int(input(&quot;请输入分数：&quot;))
+              <h3>今天最小可运行示例</h3>
+              <p>先看懂最小例子，再自己改写一遍，学习效率会更高。</p>
+              <div class="panel-box">def get_name():
+    return input(&quot;请输入姓名：&quot;)
 
-def judge_score(score):
-    return &quot;及格&quot; if score &gt;= 60 else &quot;不及格&quot;
+def show_message(name):
+    print(&quot;欢迎你，&quot;, name)
 
-def show_result(result):
-    print(result)</div>
+user_name = get_name()
+show_message(user_name)</div>
             </div>
           </div>
         </div>
@@ -388,111 +237,78 @@ def show_result(result):
       <div class="container page-grid">
         <aside class="toc">
           <h2>本页目录</h2>
-          <p>重点不是新语法，而是程序组织方式。</p>
-          <a href="#goal">1. 今天目标</a>
-          <a href="#concept">2. 核心概念</a>
+          <p>先抓住目标，再看例子，最后做练习和总结。</p>
+          <a href="#goal">1. 今日目标</a>
+          <a href="#concept">2. 核心理解</a>
           <a href="#example">3. 示例代码</a>
-          <a href="#tips">4. 关键提醒</a>
+          <a href="#tips">4. 常见提醒</a>
           <a href="#practice">5. 今日练习</a>
           <a href="#summary">6. 今日总结</a>
         </aside>
 
         <div class="content">
           <section class="section-card" id="goal">
-            <h2>1. 今天目标</h2>
-            <p>今天的目标是学会把一个小程序拆成多个职责清晰的函数，明白“结构化”比单纯能跑更重要。</p>
+            <h2>1. 今日目标</h2>
+            <p>函数真正强大的地方，不只是少写重复代码，而是让流程更清楚。</p>
+            <ul><li>函数拆分是在拆责任。</li><li>主流程最好像“目录”一样清晰。</li></ul>
           </section>
 
           <section class="section-card" id="concept">
-            <h2>2. 核心概念</h2>
-            <p>如果输入、判断、输出全部写在一起，代码短时还能忍，稍微一长就会难改。函数综合训练的核心，就是拆责任。</p>
+            <h2>2. 核心理解</h2>
+            <p>这一页先围绕“函数拆分流程”建立直觉。不要急着追求复杂，先把最小理解做稳。</p>
             <div class="surface-grid cols-2">
               <article class="light-card">
-                <div class="card-kicker">Input</div>
-                <h3>输入函数负责拿数据</h3>
-                <p>例如从用户那里获取分数、姓名或命令，不顺手做太多别的事。</p>
+                <div class="card-kicker">C1</div>
+                <h3>先理解用途</h3>
+                <p>函数拆分是在拆责任。</p>
               </article>
               <article class="light-card">
-                <div class="card-kicker">Logic</div>
-                <h3>处理函数负责判断和计算</h3>
-                <p>例如判断成绩是否及格、统计数量、整理字符串。</p>
+                <div class="card-kicker">C2</div>
+                <h3>再理解边界</h3>
+                <p>主流程最好像“目录”一样清晰。</p>
               </article>
             </div>
           </section>
 
           <section class="section-card" id="example">
             <h2>3. 示例代码</h2>
-            <p>下面这个例子把一个成绩判断流程拆成 3 段。</p>
-            <div class="code">def get_score():
-    return int(input(&quot;请输入分数：&quot;))
+            <p>下面这段代码是今天最值得看懂的最小例子。</p>
+            <div class="code">def get_name():
+    return input(&quot;请输入姓名：&quot;)
 
-def judge_score(score):
-    if score &gt;= 60:
-        return &quot;及格&quot;
-    return &quot;不及格&quot;
+def show_message(name):
+    print(&quot;欢迎你，&quot;, name)
 
-def show_result(result):
-    print(&quot;结果：&quot;, result)
-
-score = get_score()
-result = judge_score(score)
-show_result(result)</div>
-            <div class="success">
-              <strong>示例在说明什么：</strong> 程序仍然只是做一次成绩判断，但结构已经比“全写在一坨里”清楚很多。
-            </div>
+user_name = get_name()
+show_message(user_name)</div>
+            <div class="success"><strong>这段代码在说明什么：</strong> 一个函数负责获取输入，一个函数负责输出结果，主流程就更容易读。</div>
           </section>
 
           <section class="section-card" id="tips">
-            <h2>4. 关键提醒</h2>
-            <ul>
-              <li>一个函数尽量只做一件事。</li>
-              <li>函数名最好能直接说明用途。</li>
-              <li>主流程里只保留“先做什么，再做什么”的骨架。</li>
-              <li>这会让后面改逻辑时更容易定位。</li>
-            </ul>
-            <div class="info">
-              <strong>今天最该抓住的点：</strong> 当你觉得一段程序越来越长时，就应该开始问自己：哪些部分可以拆成单独函数？
-            </div>
+            <h2>4. 常见提醒</h2>
+            <ul><li>先想步骤，再决定切成几个函数。</li><li>函数名最好能说明用途。</li><li>每个函数先只负责一件事。</li><li>拆分后主流程会更好读。</li></ul>
+            <div class="info"><strong>今天最该抓住的点：</strong> 先把“最小正确写法”做出来，再谈更多变化。只要你能看懂、能改一版、能自己写一个同类小例子，今天就过关了一大半。</div>
           </section>
 
           <section class="section-card" id="practice">
             <h2>5. 今日练习</h2>
-            <div class="light-card">
-              <div class="card-kicker">P1</div>
-              <h3>拆分成绩程序</h3>
-              <p>把前面的成绩判断逻辑拆成输入、判断、输出 3 个函数。</p>
-            </div>
-            <div class="light-card">
-              <div class="card-kicker">P2</div>
-              <h3>拆分欢迎程序</h3>
-              <p>把“读取名字”“拼接欢迎语”“输出结果”拆成不同函数。</p>
-            </div>
-            <div class="light-card">
-              <div class="card-kicker">P3</div>
-              <h3>给函数改好名字</h3>
-              <p>把你以前写过的一个练习拿出来，检查函数名是否真的一眼能看懂。</p>
-            </div>
+            <div class="light-card"><div class="card-kicker">P1</div><h3>练习 1</h3><p>把“输入姓名并输出问候”拆成两个函数。</p></div>
+<div class="light-card"><div class="card-kicker">P2</div><h3>练习 2</h3><p>给你的函数取一个更清楚的名字。</p></div>
+<div class="light-card"><div class="card-kicker">P3</div><h3>练习 3</h3><p>说明为什么一个函数最好不要包太多任务。</p></div>
           </section>
 
           <section class="section-card" id="summary">
             <h2>6. 今日总结</h2>
-            <ul>
-              <li>多个函数配合是程序结构化的开始。</li>
-              <li>输入、处理、输出尽量分开。</li>
-              <li>函数越职责清晰，程序越容易维护。</li>
-              <li>结构化思维会直接影响后面的项目质量。</li>
-            </ul>
-            <div class="success">
-              <strong>今天过关标准：</strong> 你能把一个 8 到 15 行的小程序拆成 2 到 4 个清晰函数，并解释每个函数负责什么，就说明今天学到了真正有价值的部分。
-            </div>
+            <ul><li>今天的主题是：函数拆分流程。</li><li>核心关注点：函数真正强大的地方，不只是少写重复代码，而是让流程更清楚。</li><li>先做到“能看懂 + 能改一版 + 能自己写最小例子”。</li><li>只要能围绕“函数工作流”做出一个小练习，今天就不是白学。</li></ul>
+            <div class="success"><strong>今天过关标准：</strong> 能把一个小流程拆成两到三个函数，并让主流程更清楚。</div>
           </section>
 
           <section class="section">
             <div class="cta-card">
-              <h2>函数开始配合后，就可以把文件能力也真正接到一个小工具上。</h2>
-              <p>第 20 天会进入文件项目练习，用读写文件的方式做一个真正有“保存结果”能力的小程序。</p>
+              <h2>完成第 19 天后，继续保持连续推进。</h2>
+              <p>下一站会继续把今天的基础往前推进，重点不是换一堆新名词，而是把理解再压实一层。</p>
               <div class="section-actions">
-                <a class="button button-primary" href="day20_file_project.html">进入第 20 天：文件项目练习</a>
+                <a class="button button-primary" href="day20_file_project.html">进入第 20 天：文件项目</a>
                 <a class="button button-secondary" href="study_checkin.html">回到学习打卡总入口</a>
               </div>
             </div>
@@ -506,9 +322,10 @@ show_result(result)</div>
     <div class="container">
       <div class="footer-row">
         <div>当前页面：<strong>day19_functions_workflow.html</strong></div>
-        <div>相邻导航：Day 18 异常处理 · Day 20 文件项目练习</div>
+        <div>相邻导航：回看第 18 天 · 进入第 20 天：文件项目</div>
       </div>
     </div>
   </footer>
+  <script type="module" src="ai-practice.mjs"></script>
 </body>
 </html>

@@ -5,318 +5,177 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>第 30 天：总结与下一步 | Python 学习页</title>
   <style>
-    :root {
-      --bg: #07111f;
-      --panel: rgba(10, 24, 42, 0.82);
-      --line: rgba(123, 196, 255, 0.18);
-      --text: #e9f6ff;
-      --muted: #9cb7cb;
-      --accent: #8ef2e4;
-      --shadow: 0 24px 70px rgba(0, 10, 22, 0.3);
-      --radius-lg: 24px;
-      --max-width: 1180px;
-      --font-display: "Segoe UI Variable Display", "PingFang SC", "Microsoft YaHei UI", sans-serif;
-      --font-body: "Segoe UI Variable Text", "PingFang SC", "Microsoft YaHei", sans-serif;
-    }
-    * { box-sizing: border-box; }
-    html { scroll-behavior: smooth; }
-    body {
-      margin: 0;
-      color: var(--text);
-      font-family: var(--font-body);
-      line-height: 1.72;
-      background:
-        radial-gradient(circle at top left, rgba(54, 215, 196, 0.15), transparent 24%),
-        radial-gradient(circle at 85% 12%, rgba(59, 130, 246, 0.22), transparent 26%),
-        linear-gradient(180deg, #07111f 0%, #0a1830 45%, #0d2238 100%);
-    }
-    a { color: inherit; text-decoration: none; }
-    .container { width: min(var(--max-width), calc(100% - 28px)); margin: 0 auto; }
-    .section { padding: 26px 0; }
-    .glass {
-      background: var(--panel);
-      border: 1px solid var(--line);
-      box-shadow: var(--shadow);
-      backdrop-filter: blur(16px);
-    }
-    .site-header {
-      position: sticky;
-      top: 0;
-      z-index: 40;
-      padding: 14px 0;
-      background: linear-gradient(180deg, rgba(7, 17, 31, 0.86), rgba(7, 17, 31, 0.32));
-      backdrop-filter: blur(12px);
-    }
-    .nav {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 16px;
-      padding: 14px 18px;
-      border-radius: 999px;
-    }
-    .brand { display: flex; align-items: center; gap: 14px; }
-    .brand-mark {
-      width: 44px;
-      height: 44px;
-      display: grid;
-      place-items: center;
-      border-radius: 14px;
-      font-weight: 800;
-      letter-spacing: 0.08em;
-      color: var(--accent);
-      background: linear-gradient(135deg, rgba(54, 215, 196, 0.28), rgba(59, 130, 246, 0.28));
-      border: 1px solid rgba(142, 242, 228, 0.18);
-    }
-    .brand-copy strong {
-      display: block;
-      font-size: 1rem;
-      font-family: var(--font-display);
-    }
-    .brand-copy span { display: block; color: var(--muted); font-size: 0.88rem; }
-    .nav-links {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      flex-wrap: wrap;
-      justify-content: flex-end;
-    }
-    .nav-links a {
-      padding: 10px 14px;
-      border-radius: 999px;
-      color: var(--muted);
-      transition: 0.2s ease;
-    }
-    .nav-links a:hover,
-    .nav-links a.is-active {
-      color: #fff;
-      background: rgba(255, 255, 255, 0.07);
-    }
-    .hero-card, .section-card, .light-card, .cta-card, .toc { border-radius: var(--radius-lg); box-shadow: var(--shadow); }
-    .hero-card {
-      position: relative;
-      overflow: hidden;
-      padding: 36px;
-    }
-    .hero-card::before,
-    .hero-card::after {
-      content: "";
-      position: absolute;
-      border-radius: 999px;
-      filter: blur(10px);
-    }
-    .hero-card::before {
-      width: 260px;
-      height: 260px;
-      top: -110px;
-      right: -70px;
-      background: radial-gradient(circle, rgba(54, 215, 196, 0.28), transparent 68%);
-    }
-    .hero-card::after {
-      width: 300px;
-      height: 300px;
-      bottom: -150px;
-      left: -110px;
-      background: radial-gradient(circle, rgba(59, 130, 246, 0.24), transparent 68%);
-    }
-    .hero-grid {
-      position: relative;
-      display: grid;
-      grid-template-columns: minmax(0, 1.08fr) minmax(320px, 0.92fr);
-      gap: 28px;
-      align-items: center;
-    }
-    .eyebrow {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      padding: 8px 14px;
-      border-radius: 999px;
-      color: var(--accent);
-      font-size: 0.9rem;
-      background: rgba(142, 242, 228, 0.08);
-      border: 1px solid rgba(142, 242, 228, 0.14);
-    }
-    .hero h1 {
-      margin: 18px 0 14px;
-      font-size: clamp(2.45rem, 4.8vw, 4rem);
-      line-height: 1.04;
-      letter-spacing: -0.03em;
-      font-family: var(--font-display);
-    }
-    .hero p {
-      margin: 0;
-      max-width: 680px;
-      color: #c8ddef;
-      font-size: 1.05rem;
-    }
-    .hero-actions, .section-actions {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 14px;
-      margin-top: 28px;
-    }
-    .button {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      min-height: 52px;
-      padding: 0 22px;
-      border-radius: 999px;
-      border: 1px solid transparent;
-      font-weight: 700;
-      cursor: pointer;
-      transition: transform 0.2s ease;
-    }
-    .button:hover { transform: translateY(-2px); }
-    .button-primary { color: #07131e; background: linear-gradient(135deg, var(--accent), #7ed9ff); }
-    .button-secondary { color: #fff; background: rgba(255,255,255,0.07); border-color: rgba(255,255,255,0.12); }
-    .button-inline { color: #12406c; background: linear-gradient(135deg, #d8fff6, #dceeff); }
-    .hero-stats, .surface-grid { display: grid; gap: 18px; }
-    .hero-stats { grid-template-columns: repeat(3, minmax(0, 1fr)); margin-top: 28px; }
-    .surface-grid.cols-2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-    .stat-card, .section-card, .toc {
-      background: linear-gradient(180deg, rgba(12, 27, 46, 0.95), rgba(8, 21, 36, 0.98));
-      border: 1px solid var(--line);
-    }
-    .stat-card { padding: 18px; border-radius: 18px; }
-    .stat-card strong {
-      display: block;
-      color: #fff;
-      font-size: 1.45rem;
-      font-family: var(--font-display);
-    }
-    .stat-card span { color: #bdd5e8; font-size: 0.92rem; }
-    .hero-panel {
-      padding: 24px;
-      border-radius: 28px;
-      background: linear-gradient(180deg, rgba(255,255,255,0.08), rgba(255,255,255,0.04));
-      border: 1px solid rgba(255,255,255,0.08);
-    }
-    .hero-panel h3 { margin: 0 0 10px; font-size: 1.12rem; }
-    .hero-panel p { margin: 0; color: #c6daeb; font-size: 0.96rem; }
-    .panel-box, .code {
-      margin-top: 16px;
-      padding: 18px;
-      border-radius: 18px;
-      background: #09111f;
-      border: 1px solid rgba(120, 194, 255, 0.12);
-      color: #e4f4ff;
-      font-family: "Cascadia Code", "Consolas", monospace;
-      line-height: 1.8;
-      white-space: pre-wrap;
-      overflow-x: auto;
-    }
-    .page-grid {
-      display: grid;
-      grid-template-columns: 280px 1fr;
-      gap: 24px;
-      align-items: start;
-    }
-    .toc {
-      position: sticky;
-      top: 92px;
-      padding: 20px;
-    }
-    .toc h2 {
-      margin: 0 0 10px;
-      font-size: 1.02rem;
-      font-family: var(--font-display);
-    }
-    .toc p {
-      margin: 0 0 14px;
-      color: var(--muted);
-      font-size: 0.92rem;
-    }
-    .toc a {
-      display: block;
-      padding: 10px 12px;
-      border-radius: 14px;
-      color: #cbe1f1;
-      transition: 0.2s ease;
-    }
-    .toc a:hover {
-      color: #fff;
-      background: rgba(255,255,255,0.07);
-    }
-    .content { display: grid; gap: 20px; }
-    .section-card { padding: 24px; }
-    .section-card h2 { margin-top: 0; font-family: var(--font-display); }
-    .light-card {
-      padding: 20px;
-      border-radius: 22px;
-      background: linear-gradient(180deg, rgba(255,255,255,0.07), rgba(255,255,255,0.03));
-      border: 1px solid rgba(255,255,255,0.08);
-    }
-    .light-card h3 { margin: 0 0 10px; font-size: 1.08rem; }
-    .card-kicker {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      width: 44px;
-      height: 44px;
-      margin-bottom: 16px;
-      border-radius: 14px;
-      font-weight: 800;
-      color: #0d2238;
-      background: linear-gradient(135deg, #8ef2e4, #8ec5ff);
-    }
-    .info, .success, .warn {
-      margin-top: 18px;
-      padding: 16px 18px;
-      border-radius: 18px;
-      border-left: 5px solid #3b82f6;
-      background: rgba(222, 245, 255, 0.08);
-    }
-    .success { border-left-color: #0f9f7a; background: rgba(15, 159, 122, 0.1); }
-    .warn { border-left-color: #ea7c3c; background: rgba(234, 124, 60, 0.1); }
-    .info strong, .success strong, .warn strong { color: #fff; }
-    .cta-card {
-      padding: 34px;
-      background:
-        radial-gradient(circle at 10% 20%, rgba(142, 242, 228, 0.18), transparent 32%),
-        radial-gradient(circle at 88% 24%, rgba(59, 130, 246, 0.24), transparent 30%),
-        linear-gradient(135deg, #071726, #102843 52%, #0e3341);
-      border: 1px solid rgba(142, 242, 228, 0.16);
-    }
-    .cta-card h2 {
-      margin: 0 0 14px;
-      font-family: var(--font-display);
-      font-size: clamp(2rem, 3vw, 3rem);
-      line-height: 1.05;
-    }
-    .cta-card p {
-      margin: 0;
-      max-width: 760px;
-      color: #cae1f2;
-      font-size: 1.04rem;
-    }
-    .footer {
-      padding: 16px 0 42px;
-      color: #9ab3c7;
-      font-size: 0.95rem;
-    }
-    .footer-row {
-      display: flex;
-      justify-content: space-between;
-      gap: 18px;
-      align-items: center;
-      flex-wrap: wrap;
-    }
-    @media (max-width: 1080px) {
-      .hero-grid, .page-grid, .surface-grid.cols-2 { grid-template-columns: 1fr; }
-      .toc { position: static; }
-    }
-    @media (max-width: 860px) {
-      .hero-card, .section-card, .light-card, .cta-card { padding: 24px; }
-      .hero-stats { grid-template-columns: 1fr; }
-    }
-    @media (max-width: 560px) {
-      .container { width: min(var(--max-width), calc(100% - 20px)); }
-      .button { width: 100%; }
-      .hero-actions, .section-actions { flex-direction: column; }
-    }
-  </style>
+  :root {
+    --bg: #07111f;
+    --panel: rgba(10, 24, 42, 0.82);
+    --line: rgba(123, 196, 255, 0.18);
+    --text: #e9f6ff;
+    --muted: #9cb7cb;
+    --accent: #8ef2e4;
+    --shadow: 0 24px 70px rgba(0, 10, 22, 0.3);
+    --radius-lg: 24px;
+    --max-width: 1180px;
+    --font-display: "Segoe UI Variable Display", "PingFang SC", "Microsoft YaHei UI", sans-serif;
+    --font-body: "Segoe UI Variable Text", "PingFang SC", "Microsoft YaHei", sans-serif;
+  }
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    margin: 0;
+    color: var(--text);
+    font-family: var(--font-body);
+    line-height: 1.72;
+    background:
+      radial-gradient(circle at top left, rgba(54, 215, 196, 0.15), transparent 24%),
+      radial-gradient(circle at 85% 12%, rgba(59, 130, 246, 0.22), transparent 26%),
+      linear-gradient(180deg, #07111f 0%, #0a1830 45%, #0d2238 100%);
+  }
+  a { color: inherit; text-decoration: none; }
+  .container { width: min(var(--max-width), calc(100% - 28px)); margin: 0 auto; }
+  .section { padding: 26px 0; }
+  .glass {
+    background: var(--panel);
+    border: 1px solid var(--line);
+    box-shadow: var(--shadow);
+    backdrop-filter: blur(16px);
+  }
+  .site-header {
+    position: sticky;
+    top: 0;
+    z-index: 40;
+    padding: 14px 0;
+    background: linear-gradient(180deg, rgba(7, 17, 31, 0.86), rgba(7, 17, 31, 0.32));
+    backdrop-filter: blur(12px);
+  }
+  .nav { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 14px 18px; border-radius: 999px; }
+  .brand { display: flex; align-items: center; gap: 14px; }
+  .brand-mark {
+    width: 44px;
+    height: 44px;
+    display: grid;
+    place-items: center;
+    border-radius: 14px;
+    font-weight: 800;
+    letter-spacing: 0.08em;
+    color: var(--accent);
+    background: linear-gradient(135deg, rgba(54, 215, 196, 0.28), rgba(59, 130, 246, 0.28));
+    border: 1px solid rgba(142, 242, 228, 0.18);
+  }
+  .brand-copy strong { display: block; font-size: 1rem; font-family: var(--font-display); }
+  .brand-copy span { display: block; color: var(--muted); font-size: 0.88rem; }
+  .nav-links { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; justify-content: flex-end; }
+  .nav-links a { padding: 10px 14px; border-radius: 999px; color: var(--muted); transition: 0.2s ease; }
+  .nav-links a:hover, .nav-links a.is-active { color: #fff; background: rgba(255,255,255,0.07); }
+  .hero-card, .section-card, .light-card, .cta-card, .toc { border-radius: var(--radius-lg); box-shadow: var(--shadow); }
+  .hero-card { position: relative; overflow: hidden; padding: 36px; }
+  .hero-card::before, .hero-card::after { content: ""; position: absolute; border-radius: 999px; filter: blur(10px); }
+  .hero-card::before { width: 260px; height: 260px; top: -110px; right: -70px; background: radial-gradient(circle, rgba(54, 215, 196, 0.28), transparent 68%); }
+  .hero-card::after { width: 300px; height: 300px; bottom: -150px; left: -110px; background: radial-gradient(circle, rgba(59, 130, 246, 0.24), transparent 68%); }
+  .hero-grid { position: relative; display: grid; grid-template-columns: minmax(0, 1.08fr) minmax(320px, 0.92fr); gap: 28px; align-items: center; }
+  .eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 14px;
+    border-radius: 999px;
+    color: var(--accent);
+    font-size: 0.9rem;
+    background: rgba(142, 242, 228, 0.08);
+    border: 1px solid rgba(142, 242, 228, 0.14);
+  }
+  .hero h1 { margin: 18px 0 14px; font-size: clamp(2.4rem, 4.8vw, 4rem); line-height: 1.06; letter-spacing: -0.03em; font-family: var(--font-display); }
+  .hero p { margin: 0; max-width: 700px; color: #c8ddef; font-size: 1.05rem; }
+  .hero-actions, .section-actions { display: flex; flex-wrap: wrap; gap: 14px; margin-top: 28px; }
+  .button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 52px;
+    padding: 0 22px;
+    border-radius: 999px;
+    border: 1px solid transparent;
+    font-weight: 700;
+    cursor: pointer;
+    transition: transform 0.2s ease;
+  }
+  .button:hover { transform: translateY(-2px); }
+  .button-primary { color: #07131e; background: linear-gradient(135deg, var(--accent), #7ed9ff); }
+  .button-secondary { color: #fff; background: rgba(255,255,255,0.07); border-color: rgba(255,255,255,0.12); }
+  .button-inline { color: #12406c; background: linear-gradient(135deg, #d8fff6, #dceeff); }
+  .hero-stats, .surface-grid { display: grid; gap: 18px; }
+  .hero-stats { grid-template-columns: repeat(3, minmax(0, 1fr)); margin-top: 28px; }
+  .surface-grid.cols-2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .stat-card, .section-card, .toc { background: linear-gradient(180deg, rgba(12, 27, 46, 0.95), rgba(8, 21, 36, 0.98)); border: 1px solid var(--line); }
+  .stat-card { padding: 18px; border-radius: 18px; }
+  .stat-card strong { display: block; color: #fff; font-size: 1.45rem; font-family: var(--font-display); }
+  .stat-card span { color: #bdd5e8; font-size: 0.92rem; }
+  .hero-panel { padding: 24px; border-radius: 28px; background: linear-gradient(180deg, rgba(255,255,255,0.08), rgba(255,255,255,0.04)); border: 1px solid rgba(255,255,255,0.08); }
+  .hero-panel h3 { margin: 0 0 10px; font-size: 1.12rem; }
+  .hero-panel p { margin: 0; color: #c6daeb; font-size: 0.96rem; }
+  .panel-box, .code {
+    margin-top: 16px;
+    padding: 18px;
+    border-radius: 18px;
+    background: #09111f;
+    border: 1px solid rgba(120, 194, 255, 0.12);
+    color: #e4f4ff;
+    font-family: "Cascadia Code", "Consolas", monospace;
+    line-height: 1.8;
+    white-space: pre-wrap;
+    overflow-x: auto;
+  }
+  .page-grid { display: grid; grid-template-columns: 280px 1fr; gap: 24px; align-items: start; }
+  .toc { position: sticky; top: 92px; padding: 20px; }
+  .toc h2 { margin: 0 0 10px; font-size: 1.02rem; font-family: var(--font-display); }
+  .toc p { margin: 0 0 14px; color: var(--muted); font-size: 0.92rem; }
+  .toc a { display: block; padding: 10px 12px; border-radius: 14px; color: #cbe1f1; transition: 0.2s ease; }
+  .toc a:hover { color: #fff; background: rgba(255,255,255,0.07); }
+  .content { display: grid; gap: 20px; }
+  .section-card { padding: 24px; }
+  .section-card h2 { margin-top: 0; font-family: var(--font-display); }
+  .light-card {
+    padding: 20px;
+    border-radius: 22px;
+    background: linear-gradient(180deg, rgba(255,255,255,0.07), rgba(255,255,255,0.03));
+    border: 1px solid rgba(255,255,255,0.08);
+  }
+  .light-card h3 { margin: 0 0 10px; font-size: 1.08rem; }
+  .card-kicker {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 44px;
+    height: 44px;
+    margin-bottom: 16px;
+    border-radius: 14px;
+    font-weight: 800;
+    color: #0d2238;
+    background: linear-gradient(135deg, #8ef2e4, #8ec5ff);
+  }
+  .info, .success {
+    margin-top: 18px;
+    padding: 16px 18px;
+    border-radius: 18px;
+    border-left: 5px solid #3b82f6;
+    background: rgba(222, 245, 255, 0.08);
+  }
+  .success { border-left-color: #0f9f7a; background: rgba(15, 159, 122, 0.1); }
+  .info strong, .success strong { color: #fff; }
+  .cta-card {
+    padding: 34px;
+    background: radial-gradient(circle at 10% 20%, rgba(142, 242, 228, 0.18), transparent 32%), radial-gradient(circle at 88% 24%, rgba(59, 130, 246, 0.24), transparent 30%), linear-gradient(135deg, #071726, #102843 52%, #0e3341);
+    border: 1px solid rgba(142, 242, 228, 0.16);
+  }
+  .cta-card h2 { margin: 0 0 14px; font-family: var(--font-display); font-size: clamp(2rem, 3vw, 3rem); line-height: 1.08; }
+  .cta-card p { margin: 0; max-width: 760px; color: #cae1f2; font-size: 1.04rem; }
+  .footer { padding: 16px 0 42px; color: #9ab3c7; font-size: 0.95rem; }
+  .footer-row { display: flex; justify-content: space-between; gap: 18px; align-items: center; flex-wrap: wrap; }
+  ul { padding-left: 20px; }
+  li + li { margin-top: 10px; }
+  @media (max-width: 1080px) { .hero-grid, .page-grid, .surface-grid.cols-2 { grid-template-columns: 1fr; } .toc { position: static; } }
+  @media (max-width: 860px) { .hero-card, .section-card, .light-card, .cta-card { padding: 24px; } .hero-stats { grid-template-columns: 1fr; } }
+  @media (max-width: 560px) { .container { width: min(var(--max-width), calc(100% - 20px)); } .button { width: 100%; } .hero-actions, .section-actions { flex-direction: column; } }
+</style>
 </head>
 <body>
   <header class="site-header">
@@ -326,14 +185,13 @@
           <div class="brand-mark">D30</div>
           <div class="brand-copy">
             <strong>第 30 天：总结与下一步</strong>
-            <span>用一张路线图决定 30 天之后该往哪里继续</span>
+            <span>路线总结与下一阶段计划</span>
           </div>
         </div>
         <div class="nav-links">
           <a href="index.html">首页</a>
           <a href="python_study.html">新手核心内容</a>
-          <a href="day29_refactor_review.html">上一站</a>
-          <a href="study_checkin.html" class="is-active">下一站</a>
+          <a href="study_checkin.html">打卡总入口</a>
         </div>
       </nav>
     </div>
@@ -344,36 +202,26 @@
       <div class="container">
         <div class="hero-card glass">
           <div class="hero-grid">
-            <div>
+            <div class="hero">
               <div class="eyebrow">Day 30 / Next Steps</div>
-              <h1>30 天真正重要的结果，不只是你学过了哪些词，而是你已经能看懂程序、写出基础工具，并且知道下一步该往哪走。</h1>
-              <p>今天是整个 30 天路线的收束。你会回顾自己已经拥有的能力，再根据兴趣和目标选择更适合的下一阶段方向。</p>
+              <h1>学完 30 天之后，最重要的不是“我是不是全记住了”，而是“我知道下一步该怎么继续”。</h1>
+              <p>30 天真正帮你建立的，是最基础的编程感觉、阅读能力和入门结构感。接下来要做的是继续练、继续写、继续做小项目。</p>
               <div class="hero-actions">
                 <a class="button button-primary" href="#example">先看示例代码</a>
-                <a class="button button-secondary" href="day29_refactor_review.html">回看调优和复盘</a>
+                <a class="button button-secondary" href="python_study.html#week4">返回阶段入口</a>
               </div>
               <div class="hero-stats">
-                <div class="stat-card">
-                  <strong>30 天结果</strong>
-                  <span>已建立基础编程骨架</span>
-                </div>
-                <div class="stat-card">
-                  <strong>4 条方向</strong>
-                  <span>自动化 / 数据 / Web / AI</span>
-                </div>
-                <div class="stat-card">
-                  <strong>1 个目标</strong>
-                  <span>明确下一步</span>
-                </div>
+                <div class="stat-card"><strong>Day 30</strong><span>当天正式学习</span></div>
+                <div class="stat-card"><strong>路线总结与下一阶段计划</strong><span>今天核心主题</span></div>
+                <div class="stat-card"><strong>1 个重点</strong><span>先把最小能力做出来</span></div>
               </div>
             </div>
             <div class="hero-panel">
-              <h3>你现在至少应该具备的能力</h3>
-              <p>这不是全部，但已经是一层完整基础。</p>
-              <div class="panel-box">变量 / 类型 / 输入输出
-循环 / 列表 / 字典 / 字符串
-函数 / 模块 / 文件 / 异常
-项目结构 / 代码规范 / 小项目练习</div>
+              <h3>今天最小可运行示例</h3>
+              <p>先看懂最小例子，再自己改写一遍，学习效率会更高。</p>
+              <div class="panel-box">next_goals = [&quot;继续练基础&quot;, &quot;做 1 个小项目&quot;, &quot;复习薄弱点&quot;]
+for goal in next_goals:
+    print(goal)</div>
             </div>
           </div>
         </div>
@@ -384,102 +232,74 @@
       <div class="container page-grid">
         <aside class="toc">
           <h2>本页目录</h2>
-          <p>最后一天的任务是总结能力和选方向。</p>
-          <a href="#goal">1. 今天目标</a>
-          <a href="#concept">2. 核心概念</a>
+          <p>先抓住目标，再看例子，最后做练习和总结。</p>
+          <a href="#goal">1. 今日目标</a>
+          <a href="#concept">2. 核心理解</a>
           <a href="#example">3. 示例代码</a>
-          <a href="#tips">4. 关键提醒</a>
+          <a href="#tips">4. 常见提醒</a>
           <a href="#practice">5. 今日练习</a>
           <a href="#summary">6. 今日总结</a>
         </aside>
 
         <div class="content">
           <section class="section-card" id="goal">
-            <h2>1. 今天目标</h2>
-            <p>今天的目标是对这 30 天做一次清晰收束：你已经掌握了什么、哪些还不稳、接下来应该选哪条路线继续深挖。</p>
+            <h2>1. 今日目标</h2>
+            <p>学完 30 天之后，最重要的不是“我是不是全记住了”，而是“我知道下一步该怎么继续”。</p>
+            <ul><li>复盘能帮你看见自己已经跨过了哪些门槛。</li><li>下一步计划越具体，越容易继续前进。</li></ul>
           </section>
 
           <section class="section-card" id="concept">
-            <h2>2. 核心概念</h2>
-            <p>零基础阶段最怕的是学了很多却没有地图。第 30 天的作用，就是把“我已经会了什么”和“我接下来该学什么”放回同一张图里。</p>
+            <h2>2. 核心理解</h2>
+            <p>这一页先围绕“路线总结与下一阶段计划”建立直觉。不要急着追求复杂，先把最小理解做稳。</p>
             <div class="surface-grid cols-2">
               <article class="light-card">
-                <div class="card-kicker">Now</div>
-                <h3>你已经有基础编程骨架</h3>
-                <p>你已经接触了数据、流程、函数、文件、异常和项目练习，这不是零散知识，而是一层完整底座。</p>
+                <div class="card-kicker">C1</div>
+                <h3>先理解用途</h3>
+                <p>复盘能帮你看见自己已经跨过了哪些门槛。</p>
               </article>
               <article class="light-card">
-                <div class="card-kicker">Next</div>
-                <h3>下一步要开始选择方向</h3>
-                <p>继续所有方向都碰会很乱，更合理的方式是先挑一个最符合目标的方向深入。</p>
+                <div class="card-kicker">C2</div>
+                <h3>再理解边界</h3>
+                <p>下一步计划越具体，越容易继续前进。</p>
               </article>
             </div>
           </section>
 
           <section class="section-card" id="example">
             <h2>3. 示例代码</h2>
-            <p>下面这 4 条方向，基本覆盖了大多数零基础学完 30 天后的自然延伸。</p>
-            <div class="code">1. 自动化脚本
-2. 数据处理与分析
-3. Web 开发
-4. AI 工具与工作流</div>
-            <div class="success">
-              <strong>示例在说明什么：</strong> 方向不是互斥的，但一开始最好只重点推进一条，这样更容易形成真实能力。
-            </div>
+            <p>下面这段代码是今天最值得看懂的最小例子。</p>
+            <div class="code">next_goals = [&quot;继续练基础&quot;, &quot;做 1 个小项目&quot;, &quot;复习薄弱点&quot;]
+for goal in next_goals:
+    print(goal)</div>
+            <div class="success"><strong>这段代码在说明什么：</strong> 总结页不是知识点终点，而是下一阶段路线的起点。你现在最需要的是稳定练习节奏。</div>
           </section>
 
           <section class="section-card" id="tips">
-            <h2>4. 关键提醒</h2>
-            <ul>
-              <li>如果你喜欢“提升效率”，可以先走自动化。</li>
-              <li>如果你喜欢表格、统计和可视化，可以先走数据处理。</li>
-              <li>如果你想做网站或产品，可以开始看 Web 基础。</li>
-              <li>如果你关心智能工具和应用整合，可以把 Python 接到 AI 工作流。</li>
-            </ul>
-            <div class="info">
-              <strong>今天最该抓住的点：</strong> 下一步最忌讳“什么都想学一点但没有主线”，选一个方向深一点，往往比四处点到为止更有效。
-            </div>
+            <h2>4. 常见提醒</h2>
+            <ul><li>先承认自己已经完成了第一轮入门。</li><li>找出 1 到 2 个最薄弱的知识点。</li><li>保持每周固定练习节奏。</li><li>小项目是下一阶段最好的训练场。</li></ul>
+            <div class="info"><strong>今天最该抓住的点：</strong> 先把“最小正确写法”做出来，再谈更多变化。只要你能看懂、能改一版、能自己写一个同类小例子，今天就过关了一大半。</div>
           </section>
 
           <section class="section-card" id="practice">
             <h2>5. 今日练习</h2>
-            <div class="light-card">
-              <div class="card-kicker">P1</div>
-              <h3>写下你最稳的 5 项能力</h3>
-              <p>例如变量、循环、列表、函数、文件读写，用来确认自己已经不是纯新手。</p>
-            </div>
-            <div class="light-card">
-              <div class="card-kicker">P2</div>
-              <h3>写下你最弱的 3 个点</h3>
-              <p>例如异常处理、项目结构或调试，用来安排下一轮复习重点。</p>
-            </div>
-            <div class="light-card">
-              <div class="card-kicker">P3</div>
-              <h3>选一个方向并列 7 天计划</h3>
-              <p>在自动化、数据、Web、AI 里先选一条，写一个接下来 7 天的微计划。</p>
-            </div>
+            <div class="light-card"><div class="card-kicker">P1</div><h3>练习 1</h3><p>写下你最熟悉的 3 个知识点。</p></div>
+<div class="light-card"><div class="card-kicker">P2</div><h3>练习 2</h3><p>列出你最不稳的 2 个知识点。</p></div>
+<div class="light-card"><div class="card-kicker">P3</div><h3>练习 3</h3><p>给自己安排接下来 2 周的最小学习计划。</p></div>
           </section>
 
           <section class="section-card" id="summary">
             <h2>6. 今日总结</h2>
-            <ul>
-              <li>30 天路线已经形成了一层完整基础。</li>
-              <li>你现在应该能看懂并写出基础程序。</li>
-              <li>下一步最重要的是选方向，而不是继续无主线堆知识。</li>
-              <li>复盘和路线感本身，就是能力的一部分。</li>
-            </ul>
-            <div class="success">
-              <strong>今天过关标准：</strong> 你能清楚说出自己已经掌握的能力、最需要补的短板，以及接下来 7 到 14 天准备重点推进的方向，就说明这 30 天真正转化成了下一步行动。
-            </div>
+            <ul><li>今天的主题是：路线总结与下一阶段计划。</li><li>核心关注点：学完 30 天之后，最重要的不是“我是不是全记住了”，而是“我知道下一步该怎么继续”。</li><li>先做到“能看懂 + 能改一版 + 能自己写最小例子”。</li><li>只要能围绕“总结与下一步”做出一个小练习，今天就不是白学。</li></ul>
+            <div class="success"><strong>今天过关标准：</strong> 能说清这 30 天学到了什么、还差什么，以及下一步准备怎么练。</div>
           </section>
 
           <section class="section">
             <div class="cta-card">
-              <h2>30 天路线到这里完成了，但真正的价值是你现在已经有能力把学习继续推下去。</h2>
-              <p>你可以回到学习打卡总入口复盘全程，也可以从首页重新进入任意阶段。接下来最合理的动作，是选定一个方向，继续做更多真实练习。</p>
+              <h2>30 天第一轮已经完成，下一步是继续做项目和巩固基础。</h2>
+              <p>30 天学完之后，别急着追复杂框架。先回头补薄弱点，再做一个完整小项目，会比盲目跳级更稳。</p>
               <div class="section-actions">
-                <a class="button button-primary" href="study_checkin.html">回到 30 天学习打卡总入口</a>
-                <a class="button button-secondary" href="index.html">回到课程首页</a>
+                <a class="button button-primary" href="study_checkin.html">回到学习打卡总入口</a>
+                <a class="button button-secondary" href="study_checkin.html">回到学习打卡总入口</a>
               </div>
             </div>
           </section>
@@ -492,9 +312,10 @@
     <div class="container">
       <div class="footer-row">
         <div>当前页面：<strong>day30_next_steps.html</strong></div>
-        <div>相邻导航：Day 29 调优和复盘 · 学习打卡总入口</div>
+        <div>相邻导航：回看第 29 天 · 回到学习打卡总入口</div>
       </div>
     </div>
   </footer>
+  <script type="module" src="ai-practice.mjs"></script>
 </body>
 </html>

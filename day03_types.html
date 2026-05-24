@@ -5,373 +5,177 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>第 3 天：数据类型 | Python 学习页</title>
   <style>
-    :root {
-      --bg: #07111f;
-      --panel: rgba(10, 24, 42, 0.82);
-      --line: rgba(123, 196, 255, 0.18);
-      --text: #e9f6ff;
-      --text-dark: #0d1b2a;
-      --muted: #9cb7cb;
-      --muted-dark: #607487;
-      --accent: #8ef2e4;
-      --shadow: 0 24px 70px rgba(0, 10, 22, 0.3);
-      --radius-lg: 24px;
-      --max-width: 1180px;
-      --font-display: "Segoe UI Variable Display", "PingFang SC", "Microsoft YaHei UI", sans-serif;
-      --font-body: "Segoe UI Variable Text", "PingFang SC", "Microsoft YaHei", sans-serif;
-    }
-
-    * { box-sizing: border-box; }
-    html { scroll-behavior: smooth; }
-    body {
-      margin: 0;
-      color: var(--text);
-      font-family: var(--font-body);
-      line-height: 1.72;
-      background:
-        radial-gradient(circle at top left, rgba(54, 215, 196, 0.15), transparent 24%),
-        radial-gradient(circle at 85% 12%, rgba(59, 130, 246, 0.22), transparent 26%),
-        linear-gradient(180deg, #07111f 0%, #0a1830 45%, #0d2238 100%);
-    }
-
-    a { color: inherit; text-decoration: none; }
-    .container { width: min(1180px, calc(100% - 28px)); margin: 0 auto; }
-    .section { padding: 26px 0; }
-    .glass {
-      background: var(--panel);
-      border: 1px solid var(--line);
-      box-shadow: var(--shadow);
-      backdrop-filter: blur(16px);
-    }
-    .site-header {
-      position: sticky;
-      top: 0;
-      z-index: 40;
-      padding: 14px 0;
-      background: linear-gradient(180deg, rgba(7, 17, 31, 0.86), rgba(7, 17, 31, 0.32));
-      backdrop-filter: blur(12px);
-    }
-    .nav {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 16px;
-      padding: 14px 18px;
-      border-radius: 999px;
-    }
-    .brand {
-      display: flex;
-      align-items: center;
-      gap: 14px;
-    }
-    .brand-mark {
-      width: 44px;
-      height: 44px;
-      display: grid;
-      place-items: center;
-      border-radius: 14px;
-      font-weight: 800;
-      letter-spacing: 0.08em;
-      color: var(--accent);
-      background: linear-gradient(135deg, rgba(54, 215, 196, 0.28), rgba(59, 130, 246, 0.28));
-      border: 1px solid rgba(142, 242, 228, 0.18);
-    }
-    .brand-copy strong {
-      display: block;
-      font-size: 1rem;
-      font-family: var(--font-display);
-    }
-    .brand-copy span {
-      display: block;
-      color: var(--muted);
-      font-size: 0.88rem;
-    }
-    .nav-links {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      flex-wrap: wrap;
-    }
-    .nav-links a {
-      padding: 10px 14px;
-      border-radius: 999px;
-      color: var(--muted);
-      transition: 0.2s ease;
-    }
-    .nav-links a:hover,
-    .nav-links a.is-active {
-      color: #fff;
-      background: rgba(255, 255, 255, 0.07);
-    }
-    .hero-card, .section-card, .light-card, .cta-card, .toc { border-radius: var(--radius-lg); box-shadow: var(--shadow); }
-    .hero-card {
-      position: relative;
-      overflow: hidden;
-      padding: 36px;
-    }
-    .hero-card::before,
-    .hero-card::after {
-      content: "";
-      position: absolute;
-      border-radius: 999px;
-      filter: blur(10px);
-    }
-    .hero-card::before {
-      width: 260px;
-      height: 260px;
-      top: -110px;
-      right: -70px;
-      background: radial-gradient(circle, rgba(54, 215, 196, 0.28), transparent 68%);
-    }
-    .hero-card::after {
-      width: 300px;
-      height: 300px;
-      bottom: -150px;
-      left: -110px;
-      background: radial-gradient(circle, rgba(59, 130, 246, 0.24), transparent 68%);
-    }
-    .hero-grid {
-      position: relative;
-      display: grid;
-      grid-template-columns: minmax(0, 1.08fr) minmax(320px, 0.92fr);
-      gap: 28px;
-      align-items: center;
-    }
-    .eyebrow {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      padding: 8px 14px;
-      border-radius: 999px;
-      color: var(--accent);
-      font-size: 0.9rem;
-      background: rgba(142, 242, 228, 0.08);
-      border: 1px solid rgba(142, 242, 228, 0.14);
-    }
-    .hero h1 {
-      margin: 18px 0 14px;
-      font-size: clamp(2.45rem, 4.8vw, 4rem);
-      line-height: 1.04;
-      letter-spacing: -0.03em;
-      font-family: var(--font-display);
-    }
-    .hero p {
-      margin: 0;
-      max-width: 680px;
-      color: #c8ddef;
-      font-size: 1.05rem;
-    }
-    .hero-actions, .section-actions {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 14px;
-      margin-top: 28px;
-    }
-    .button {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      min-height: 52px;
-      padding: 0 22px;
-      border-radius: 999px;
-      border: 1px solid transparent;
-      font-weight: 700;
-      cursor: pointer;
-      transition: transform 0.2s ease;
-    }
-    .button:hover { transform: translateY(-2px); }
-    .button-primary {
-      color: #07131e;
-      background: linear-gradient(135deg, var(--accent), #7ed9ff);
-    }
-    .button-secondary {
-      color: #fff;
-      background: rgba(255, 255, 255, 0.07);
-      border-color: rgba(255, 255, 255, 0.12);
-    }
-    .button-inline {
-      color: #12406c;
-      background: linear-gradient(135deg, #d8fff6, #dceeff);
-    }
-    .hero-stats, .surface-grid { display: grid; gap: 18px; }
-    .hero-stats { grid-template-columns: repeat(3, minmax(0, 1fr)); margin-top: 28px; }
-    .surface-grid.cols-2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-    .stat-card, .section-card, .toc {
-      background: linear-gradient(180deg, rgba(12, 27, 46, 0.95), rgba(8, 21, 36, 0.98));
-      border: 1px solid var(--line);
-    }
-    .stat-card {
-      padding: 18px;
-      border-radius: 18px;
-    }
-    .stat-card strong {
-      display: block;
-      color: #fff;
-      font-size: 1.45rem;
-      font-family: var(--font-display);
-    }
-    .stat-card span {
-      color: #bdd5e8;
-      font-size: 0.92rem;
-    }
-    .hero-panel {
-      padding: 24px;
-      border-radius: 28px;
-      background: linear-gradient(180deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.04));
-      border: 1px solid rgba(255, 255, 255, 0.08);
-    }
-    .hero-panel h3 { margin: 0 0 10px; font-size: 1.12rem; }
-    .hero-panel p { margin: 0; color: #c6daeb; font-size: 0.96rem; }
-    .panel-box, .code {
-      margin-top: 16px;
-      padding: 18px;
-      border-radius: 18px;
-      background: #09111f;
-      border: 1px solid rgba(120, 194, 255, 0.12);
-      color: #e4f4ff;
-      font-family: "Cascadia Code", "Consolas", monospace;
-      line-height: 1.8;
-      white-space: pre-wrap;
-      overflow-x: auto;
-    }
-    .page-grid {
-      display: grid;
-      grid-template-columns: 280px 1fr;
-      gap: 24px;
-      align-items: start;
-    }
-    .toc {
-      position: sticky;
-      top: 92px;
-      padding: 20px;
-    }
-    .toc h2 {
-      margin: 0 0 10px;
-      font-size: 1.02rem;
-      font-family: var(--font-display);
-    }
-    .toc p {
-      margin: 0 0 14px;
-      color: var(--muted);
-      font-size: 0.92rem;
-    }
-    .toc a {
-      display: block;
-      padding: 10px 12px;
-      border-radius: 14px;
-      color: #cbe1f1;
-      transition: 0.2s ease;
-    }
-    .toc a:hover {
-      color: #fff;
-      background: rgba(255, 255, 255, 0.07);
-    }
-    .content { display: grid; gap: 20px; }
-    .section-card { padding: 24px; }
-    .light-card {
-      padding: 24px;
-      color: var(--text-dark);
-      background: linear-gradient(180deg, #f5fcff, #edf8ff);
-      border: 1px solid rgba(57, 127, 181, 0.14);
-    }
-    .section-card h2, .light-card h2 {
-      margin: 0 0 10px;
-      font-family: var(--font-display);
-      font-size: 2rem;
-      line-height: 1.08;
-    }
-    .section-card h3, .light-card h3 {
-      margin: 0 0 10px;
-      font-family: var(--font-display);
-      font-size: 1.2rem;
-    }
-    .section-card p, .section-card li { color: var(--muted); }
-    .light-card p, .light-card li { color: var(--muted-dark); }
-    .card-kicker {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      width: 44px;
-      height: 44px;
-      margin-bottom: 16px;
-      border-radius: 14px;
-      font-weight: 800;
-      color: #0d2238;
-      background: linear-gradient(135deg, #8ef2e4, #8ec5ff);
-    }
-    .info, .success, .warn {
-      margin-top: 18px;
-      padding: 16px 18px;
-      border-radius: 18px;
-      border-left: 5px solid #3b82f6;
-      background: rgba(222, 245, 255, 0.08);
-    }
-    .success { border-left-color: #0f9f7a; background: rgba(15, 159, 122, 0.1); }
-    .warn { border-left-color: #ea7c3c; background: rgba(234, 124, 60, 0.1); }
-    .info strong, .success strong, .warn strong { color: #fff; }
-    .flow-row {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 10px;
-      margin-top: 16px;
-    }
-    .flow-row span {
-      display: inline-flex;
-      align-items: center;
-      min-height: 34px;
-      padding: 0 12px;
-      border-radius: 999px;
-      background: linear-gradient(135deg, #d7fff7, #dbeeff);
-      color: #0d2238;
-      font-weight: 700;
-      font-size: 0.84rem;
-    }
-    .cta-card {
-      padding: 34px;
-      background:
-        radial-gradient(circle at 10% 20%, rgba(142, 242, 228, 0.18), transparent 32%),
-        radial-gradient(circle at 88% 24%, rgba(59, 130, 246, 0.24), transparent 30%),
-        linear-gradient(135deg, #071726, #102843 52%, #0e3341);
-      border: 1px solid rgba(142, 242, 228, 0.16);
-    }
-    .cta-card h2 {
-      margin: 0 0 14px;
-      font-family: var(--font-display);
-      font-size: clamp(2rem, 3vw, 3rem);
-      line-height: 1.05;
-    }
-    .cta-card p {
-      margin: 0;
-      max-width: 760px;
-      color: #cae1f2;
-      font-size: 1.04rem;
-    }
-    .footer {
-      padding: 16px 0 42px;
-      color: #9ab3c7;
-      font-size: 0.95rem;
-    }
-    .footer-row {
-      display: flex;
-      justify-content: space-between;
-      gap: 18px;
-      align-items: center;
-      flex-wrap: wrap;
-    }
-    @media (max-width: 1080px) {
-      .hero-grid, .page-grid, .surface-grid.cols-2 { grid-template-columns: 1fr; }
-      .toc { position: static; }
-    }
-    @media (max-width: 860px) {
-      .hero-card, .section-card, .light-card, .cta-card { padding: 24px; }
-      .hero-stats { grid-template-columns: 1fr; }
-    }
-    @media (max-width: 560px) {
-      .container { width: min(var(--max-width), calc(100% - 20px)); }
-      .button { width: 100%; }
-      .hero-actions, .section-actions { flex-direction: column; }
-    }
-  </style>
+  :root {
+    --bg: #07111f;
+    --panel: rgba(10, 24, 42, 0.82);
+    --line: rgba(123, 196, 255, 0.18);
+    --text: #e9f6ff;
+    --muted: #9cb7cb;
+    --accent: #8ef2e4;
+    --shadow: 0 24px 70px rgba(0, 10, 22, 0.3);
+    --radius-lg: 24px;
+    --max-width: 1180px;
+    --font-display: "Segoe UI Variable Display", "PingFang SC", "Microsoft YaHei UI", sans-serif;
+    --font-body: "Segoe UI Variable Text", "PingFang SC", "Microsoft YaHei", sans-serif;
+  }
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    margin: 0;
+    color: var(--text);
+    font-family: var(--font-body);
+    line-height: 1.72;
+    background:
+      radial-gradient(circle at top left, rgba(54, 215, 196, 0.15), transparent 24%),
+      radial-gradient(circle at 85% 12%, rgba(59, 130, 246, 0.22), transparent 26%),
+      linear-gradient(180deg, #07111f 0%, #0a1830 45%, #0d2238 100%);
+  }
+  a { color: inherit; text-decoration: none; }
+  .container { width: min(var(--max-width), calc(100% - 28px)); margin: 0 auto; }
+  .section { padding: 26px 0; }
+  .glass {
+    background: var(--panel);
+    border: 1px solid var(--line);
+    box-shadow: var(--shadow);
+    backdrop-filter: blur(16px);
+  }
+  .site-header {
+    position: sticky;
+    top: 0;
+    z-index: 40;
+    padding: 14px 0;
+    background: linear-gradient(180deg, rgba(7, 17, 31, 0.86), rgba(7, 17, 31, 0.32));
+    backdrop-filter: blur(12px);
+  }
+  .nav { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 14px 18px; border-radius: 999px; }
+  .brand { display: flex; align-items: center; gap: 14px; }
+  .brand-mark {
+    width: 44px;
+    height: 44px;
+    display: grid;
+    place-items: center;
+    border-radius: 14px;
+    font-weight: 800;
+    letter-spacing: 0.08em;
+    color: var(--accent);
+    background: linear-gradient(135deg, rgba(54, 215, 196, 0.28), rgba(59, 130, 246, 0.28));
+    border: 1px solid rgba(142, 242, 228, 0.18);
+  }
+  .brand-copy strong { display: block; font-size: 1rem; font-family: var(--font-display); }
+  .brand-copy span { display: block; color: var(--muted); font-size: 0.88rem; }
+  .nav-links { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; justify-content: flex-end; }
+  .nav-links a { padding: 10px 14px; border-radius: 999px; color: var(--muted); transition: 0.2s ease; }
+  .nav-links a:hover, .nav-links a.is-active { color: #fff; background: rgba(255,255,255,0.07); }
+  .hero-card, .section-card, .light-card, .cta-card, .toc { border-radius: var(--radius-lg); box-shadow: var(--shadow); }
+  .hero-card { position: relative; overflow: hidden; padding: 36px; }
+  .hero-card::before, .hero-card::after { content: ""; position: absolute; border-radius: 999px; filter: blur(10px); }
+  .hero-card::before { width: 260px; height: 260px; top: -110px; right: -70px; background: radial-gradient(circle, rgba(54, 215, 196, 0.28), transparent 68%); }
+  .hero-card::after { width: 300px; height: 300px; bottom: -150px; left: -110px; background: radial-gradient(circle, rgba(59, 130, 246, 0.24), transparent 68%); }
+  .hero-grid { position: relative; display: grid; grid-template-columns: minmax(0, 1.08fr) minmax(320px, 0.92fr); gap: 28px; align-items: center; }
+  .eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 14px;
+    border-radius: 999px;
+    color: var(--accent);
+    font-size: 0.9rem;
+    background: rgba(142, 242, 228, 0.08);
+    border: 1px solid rgba(142, 242, 228, 0.14);
+  }
+  .hero h1 { margin: 18px 0 14px; font-size: clamp(2.4rem, 4.8vw, 4rem); line-height: 1.06; letter-spacing: -0.03em; font-family: var(--font-display); }
+  .hero p { margin: 0; max-width: 700px; color: #c8ddef; font-size: 1.05rem; }
+  .hero-actions, .section-actions { display: flex; flex-wrap: wrap; gap: 14px; margin-top: 28px; }
+  .button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 52px;
+    padding: 0 22px;
+    border-radius: 999px;
+    border: 1px solid transparent;
+    font-weight: 700;
+    cursor: pointer;
+    transition: transform 0.2s ease;
+  }
+  .button:hover { transform: translateY(-2px); }
+  .button-primary { color: #07131e; background: linear-gradient(135deg, var(--accent), #7ed9ff); }
+  .button-secondary { color: #fff; background: rgba(255,255,255,0.07); border-color: rgba(255,255,255,0.12); }
+  .button-inline { color: #12406c; background: linear-gradient(135deg, #d8fff6, #dceeff); }
+  .hero-stats, .surface-grid { display: grid; gap: 18px; }
+  .hero-stats { grid-template-columns: repeat(3, minmax(0, 1fr)); margin-top: 28px; }
+  .surface-grid.cols-2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .stat-card, .section-card, .toc { background: linear-gradient(180deg, rgba(12, 27, 46, 0.95), rgba(8, 21, 36, 0.98)); border: 1px solid var(--line); }
+  .stat-card { padding: 18px; border-radius: 18px; }
+  .stat-card strong { display: block; color: #fff; font-size: 1.45rem; font-family: var(--font-display); }
+  .stat-card span { color: #bdd5e8; font-size: 0.92rem; }
+  .hero-panel { padding: 24px; border-radius: 28px; background: linear-gradient(180deg, rgba(255,255,255,0.08), rgba(255,255,255,0.04)); border: 1px solid rgba(255,255,255,0.08); }
+  .hero-panel h3 { margin: 0 0 10px; font-size: 1.12rem; }
+  .hero-panel p { margin: 0; color: #c6daeb; font-size: 0.96rem; }
+  .panel-box, .code {
+    margin-top: 16px;
+    padding: 18px;
+    border-radius: 18px;
+    background: #09111f;
+    border: 1px solid rgba(120, 194, 255, 0.12);
+    color: #e4f4ff;
+    font-family: "Cascadia Code", "Consolas", monospace;
+    line-height: 1.8;
+    white-space: pre-wrap;
+    overflow-x: auto;
+  }
+  .page-grid { display: grid; grid-template-columns: 280px 1fr; gap: 24px; align-items: start; }
+  .toc { position: sticky; top: 92px; padding: 20px; }
+  .toc h2 { margin: 0 0 10px; font-size: 1.02rem; font-family: var(--font-display); }
+  .toc p { margin: 0 0 14px; color: var(--muted); font-size: 0.92rem; }
+  .toc a { display: block; padding: 10px 12px; border-radius: 14px; color: #cbe1f1; transition: 0.2s ease; }
+  .toc a:hover { color: #fff; background: rgba(255,255,255,0.07); }
+  .content { display: grid; gap: 20px; }
+  .section-card { padding: 24px; }
+  .section-card h2 { margin-top: 0; font-family: var(--font-display); }
+  .light-card {
+    padding: 20px;
+    border-radius: 22px;
+    background: linear-gradient(180deg, rgba(255,255,255,0.07), rgba(255,255,255,0.03));
+    border: 1px solid rgba(255,255,255,0.08);
+  }
+  .light-card h3 { margin: 0 0 10px; font-size: 1.08rem; }
+  .card-kicker {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 44px;
+    height: 44px;
+    margin-bottom: 16px;
+    border-radius: 14px;
+    font-weight: 800;
+    color: #0d2238;
+    background: linear-gradient(135deg, #8ef2e4, #8ec5ff);
+  }
+  .info, .success {
+    margin-top: 18px;
+    padding: 16px 18px;
+    border-radius: 18px;
+    border-left: 5px solid #3b82f6;
+    background: rgba(222, 245, 255, 0.08);
+  }
+  .success { border-left-color: #0f9f7a; background: rgba(15, 159, 122, 0.1); }
+  .info strong, .success strong { color: #fff; }
+  .cta-card {
+    padding: 34px;
+    background: radial-gradient(circle at 10% 20%, rgba(142, 242, 228, 0.18), transparent 32%), radial-gradient(circle at 88% 24%, rgba(59, 130, 246, 0.24), transparent 30%), linear-gradient(135deg, #071726, #102843 52%, #0e3341);
+    border: 1px solid rgba(142, 242, 228, 0.16);
+  }
+  .cta-card h2 { margin: 0 0 14px; font-family: var(--font-display); font-size: clamp(2rem, 3vw, 3rem); line-height: 1.08; }
+  .cta-card p { margin: 0; max-width: 760px; color: #cae1f2; font-size: 1.04rem; }
+  .footer { padding: 16px 0 42px; color: #9ab3c7; font-size: 0.95rem; }
+  .footer-row { display: flex; justify-content: space-between; gap: 18px; align-items: center; flex-wrap: wrap; }
+  ul { padding-left: 20px; }
+  li + li { margin-top: 10px; }
+  @media (max-width: 1080px) { .hero-grid, .page-grid, .surface-grid.cols-2 { grid-template-columns: 1fr; } .toc { position: static; } }
+  @media (max-width: 860px) { .hero-card, .section-card, .light-card, .cta-card { padding: 24px; } .hero-stats { grid-template-columns: 1fr; } }
+  @media (max-width: 560px) { .container { width: min(var(--max-width), calc(100% - 20px)); } .button { width: 100%; } .hero-actions, .section-actions { flex-direction: column; } }
+</style>
 </head>
 <body>
   <header class="site-header">
@@ -381,13 +185,13 @@
           <div class="brand-mark">D3</div>
           <div class="brand-copy">
             <strong>第 3 天：数据类型</strong>
-            <span>同样是数据，但它们不是同一类</span>
+            <span>字符串、整数、浮点数</span>
           </div>
         </div>
         <div class="nav-links">
           <a href="index.html">首页</a>
           <a href="python_study.html">新手核心内容</a>
-          <a href="day04_input_output.html" class="is-active">下一天</a>
+          <a href="study_checkin.html">打卡总入口</a>
         </div>
       </nav>
     </div>
@@ -398,37 +202,29 @@
       <div class="container">
         <div class="hero-card glass">
           <div class="hero-grid">
-            <div>
+            <div class="hero">
               <div class="eyebrow">Day 03 / Types</div>
-              <h1>程序不只是认识“值”，<br />它还要知道“这是什么类型的值”。</h1>
-              <p>名字、年龄、余额、是否会员，看起来都像信息，但它们在程序里属于不同类型。今天要建立的核心能力，是分清文字、整数、小数和真假判断的区别。</p>
+              <h1>写代码时先分清“这是一段文字，还是一个数字”，很多错误都会少一半。</h1>
+              <p>今天先掌握最常见的 3 种基础类型：字符串 str、整数 int、浮点数 float。类型不同，能做的操作也不同。</p>
               <div class="hero-actions">
-                <a class="button button-primary" href="#types">先看 4 个核心类型</a>
-                <a class="button button-secondary" href="day02_variables.html">回看变量</a>
+                <a class="button button-primary" href="#example">先看示例代码</a>
+                <a class="button button-secondary" href="python_study.html#week1">返回阶段入口</a>
               </div>
               <div class="hero-stats">
-                <div class="stat-card">
-                  <strong>4 种核心</strong>
-                  <span>str / int / float / bool</span>
-                </div>
-                <div class="stat-card">
-                  <strong>1 个工具</strong>
-                  <span>用 `type()` 查看类型</span>
-                </div>
-                <div class="stat-card">
-                  <strong>1 个目标</strong>
-                  <span>看见值就知道大概属于哪类</span>
-                </div>
+                <div class="stat-card"><strong>Day 03</strong><span>当天正式学习</span></div>
+                <div class="stat-card"><strong>字符串、整数、浮点数</strong><span>今天核心主题</span></div>
+                <div class="stat-card"><strong>1 个重点</strong><span>先把最小能力做出来</span></div>
               </div>
             </div>
-
             <div class="hero-panel">
-              <h3>今天你会第一次明确分清</h3>
-              <p>“18”和“'18'”看起来像一回事，但在程序里它们不是同一种数据。</p>
-              <div class="panel-box">name = "小林"     # 字符串
-age = 18          # 整数
-money = 99.5      # 小数
-is_vip = True     # 布尔值</div>
+              <h3>今天最小可运行示例</h3>
+              <p>先看懂最小例子，再自己改写一遍，学习效率会更高。</p>
+              <div class="panel-box">name = &quot;Amy&quot;
+age = 18
+height = 165.5
+print(type(name))
+print(type(age))
+print(type(height))</div>
             </div>
           </div>
         </div>
@@ -439,136 +235,77 @@ is_vip = True     # 布尔值</div>
       <div class="container page-grid">
         <aside class="toc">
           <h2>本页目录</h2>
-          <p>先建立类型感觉，再做练习。</p>
-          <a href="#goal">1. 今天目标</a>
-          <a href="#types">2. 4 个核心类型</a>
-          <a href="#case">3. 用户信息案例</a>
-          <a href="#tool">4. 用 `type()` 查看类型</a>
-          <a href="#compare">5. 容易混淆的地方</a>
-          <a href="#practice">6. 今日练习</a>
-          <a href="#summary">7. 今日总结</a>
+          <p>先抓住目标，再看例子，最后做练习和总结。</p>
+          <a href="#goal">1. 今日目标</a>
+          <a href="#concept">2. 核心理解</a>
+          <a href="#example">3. 示例代码</a>
+          <a href="#tips">4. 常见提醒</a>
+          <a href="#practice">5. 今日练习</a>
+          <a href="#summary">6. 今日总结</a>
         </aside>
 
         <div class="content">
           <section class="section-card" id="goal">
-            <h2>1. 今天目标</h2>
-            <p>昨天你学会了“把信息放进变量”。今天的重点是继续追问：这些信息各自属于哪一类？因为只有分清类型，程序才能知道该怎么处理它们。</p>
-            <div class="info">
-              <strong>一句话理解：</strong> 数据类型就是“这个值属于哪一类”。比如名字属于文字，年龄属于整数，余额属于小数。
-            </div>
+            <h2>1. 今日目标</h2>
+            <p>写代码时先分清“这是一段文字，还是一个数字”，很多错误都会少一半。</p>
+            <ul><li>有没有引号，往往直接决定它是不是字符串。</li><li>数字看起来像“值”，字符串更像“文本”。</li></ul>
           </section>
 
-          <section class="section-card" id="types">
-            <h2>2. 4 个核心类型</h2>
+          <section class="section-card" id="concept">
+            <h2>2. 核心理解</h2>
+            <p>这一页先围绕“字符串、整数、浮点数”建立直觉。不要急着追求复杂，先把最小理解做稳。</p>
             <div class="surface-grid cols-2">
               <article class="light-card">
-                <div class="card-kicker">S</div>
-                <h3>`str` 字符串</h3>
-                <p>主要表示文字内容。通常会被引号包起来，比如姓名、城市、课程名。</p>
-                <div class="code">name = "小林"</div>
+                <div class="card-kicker">C1</div>
+                <h3>先理解用途</h3>
+                <p>有没有引号，往往直接决定它是不是字符串。</p>
               </article>
               <article class="light-card">
-                <div class="card-kicker">I</div>
-                <h3>`int` 整数</h3>
-                <p>没有小数点的数字，比如年龄、数量、排名。</p>
-                <div class="code">age = 18</div>
-              </article>
-              <article class="light-card">
-                <div class="card-kicker">F</div>
-                <h3>`float` 小数</h3>
-                <p>带小数点的数字，比如价格、余额、身高。</p>
-                <div class="code">money = 99.5</div>
-              </article>
-              <article class="light-card">
-                <div class="card-kicker">B</div>
-                <h3>`bool` 布尔值</h3>
-                <p>表示真假判断。只有两个值：`True` 和 `False`。</p>
-                <div class="code">is_vip = True</div>
+                <div class="card-kicker">C2</div>
+                <h3>再理解边界</h3>
+                <p>数字看起来像“值”，字符串更像“文本”。</p>
               </article>
             </div>
           </section>
 
-          <section class="section-card" id="case">
-            <h2>3. 用户信息案例</h2>
-            <p>看一个最典型的综合例子：同样都是“用户信息”，其实里面的数据类型并不一样。</p>
-            <div class="code">name = "小林"
+          <section class="section-card" id="example">
+            <h2>3. 示例代码</h2>
+            <p>下面这段代码是今天最值得看懂的最小例子。</p>
+            <div class="code">name = &quot;Amy&quot;
 age = 18
-money = 99.5
-is_vip = True</div>
-            <ul>
-              <li>`name` 是字符串，因为它是文字。</li>
-              <li>`age` 是整数，因为年龄一般用整数字表示。</li>
-              <li>`money` 是小数，因为余额常常会有小数点。</li>
-              <li>`is_vip` 是布尔值，因为它只回答“是或不是”。</li>
-            </ul>
-          </section>
-
-          <section class="section-card" id="tool">
-            <h2>4. 用 `type()` 查看类型</h2>
-            <p>当你不确定一个值到底属于哪一类，可以用 `type()` 来检查。</p>
-            <div class="code">print(type(name))
+height = 165.5
+print(type(name))
 print(type(age))
-print(type(money))
-print(type(is_vip))</div>
-            <div class="success">
-              <strong>记住：</strong> `type()` 不是让你背答案，而是一个帮你确认“程序眼里它是什么”的工具。
-            </div>
+print(type(height))</div>
+            <div class="success"><strong>这段代码在说明什么：</strong> 字符串适合保存文字，整数适合保存整数字，浮点数适合保存带小数的数据。</div>
           </section>
 
-          <section class="section-card" id="compare">
-            <h2>5. 容易混淆的地方</h2>
-            <div class="light-card">
-              <div class="card-kicker">!</div>
-              <h3>`18` 和 `"18"` 不是一回事</h3>
-              <p>`18` 是整数，`"18"` 是字符串。虽然看起来都像 18，但程序处理它们的方式不同。</p>
-            </div>
-            <div class="warn">
-              <strong>为什么这很重要：</strong> 后面做输入、运算时，很多报错本质上都和“类型没搞清楚”有关。
-            </div>
+          <section class="section-card" id="tips">
+            <h2>4. 常见提醒</h2>
+            <ul><li>&quot;18&quot; 和 18 不是一回事。</li><li>整数没有小数点，浮点数通常有小数点。</li><li>遇到报错时，先怀疑类型有没有写错。</li><li>先把最常见的 3 种类型认熟。</li></ul>
+            <div class="info"><strong>今天最该抓住的点：</strong> 先把“最小正确写法”做出来，再谈更多变化。只要你能看懂、能改一版、能自己写一个同类小例子，今天就过关了一大半。</div>
           </section>
 
           <section class="section-card" id="practice">
-            <h2>6. 今日练习</h2>
-            <div class="light-card">
-              <div class="card-kicker">P1</div>
-              <h3>各写一个例子</h3>
-              <p>分别创建一个 `str`、一个 `int`、一个 `float`、一个 `bool`，再用 `type()` 看它们的类型。</p>
-            </div>
-            <div class="light-card" style="margin-top: 18px;">
-              <div class="card-kicker">P2</div>
-              <h3>用户信息练习</h3>
-              <p>自己定义姓名、年龄、余额、是否会员这 4 个变量，并判断它们分别属于什么类型。</p>
-            </div>
-            <div class="light-card" style="margin-top: 18px;">
-              <div class="card-kicker">P3</div>
-              <h3>对比练习</h3>
-              <div class="code">a = 10
-b = "10"</div>
-              <p>观察 `type(a)` 和 `type(b)`，明确它们不一样。</p>
-            </div>
+            <h2>5. 今日练习</h2>
+            <div class="light-card"><div class="card-kicker">P1</div><h3>练习 1</h3><p>写出 3 个变量，分别是字符串、整数、浮点数。</p></div>
+<div class="light-card"><div class="card-kicker">P2</div><h3>练习 2</h3><p>判断下面几个值分别属于什么类型：&quot;100&quot;、100、100.0。</p></div>
+<div class="light-card"><div class="card-kicker">P3</div><h3>练习 3</h3><p>试着解释为什么字符串和数字不能完全当成一类东西。</p></div>
           </section>
 
           <section class="section-card" id="summary">
-            <h2>7. 今日总结</h2>
-            <ul>
-              <li>`str`：文字内容。</li>
-              <li>`int`：整数。</li>
-              <li>`float`：小数。</li>
-              <li>`bool`：真假判断。</li>
-              <li>`type()`：查看数据类型。</li>
-            </ul>
-            <div class="success">
-              <strong>今天过关标准：</strong> 你能自己写出这 4 种类型各一个例子，并能解释为什么它们不属于同一类。
-            </div>
+            <h2>6. 今日总结</h2>
+            <ul><li>今天的主题是：字符串、整数、浮点数。</li><li>核心关注点：写代码时先分清“这是一段文字，还是一个数字”，很多错误都会少一半。</li><li>先做到“能看懂 + 能改一版 + 能自己写最小例子”。</li><li>只要能围绕“数据类型”做出一个小练习，今天就不是白学。</li></ul>
+            <div class="success"><strong>今天过关标准：</strong> 能区分字符串、整数和浮点数，并能看出引号是否会改变数据类型。</div>
           </section>
 
           <section class="section">
             <div class="cta-card">
-              <h2>类型分清楚后，程序就能开始和人互动了。</h2>
-              <p>第 4 天会进入输入输出。你会第一次真正让程序问你问题、接收你的回答，再把结果显示出来。</p>
+              <h2>完成第 3 天后，继续保持连续推进。</h2>
+              <p>下一站会继续把今天的基础往前推进，重点不是换一堆新名词，而是把理解再压实一层。</p>
               <div class="section-actions">
                 <a class="button button-primary" href="day04_input_output.html">进入第 4 天：输入输出</a>
-                <a class="button button-secondary" href="day02_variables.html">回到第 2 天</a>
+                <a class="button button-secondary" href="study_checkin.html">回到学习打卡总入口</a>
               </div>
             </div>
           </section>
@@ -581,9 +318,10 @@ b = "10"</div>
     <div class="container">
       <div class="footer-row">
         <div>当前页面：<strong>day03_types.html</strong></div>
-        <div>上一页：变量　下一页：输入输出</div>
+        <div>相邻导航：回看第 2 天 · 进入第 4 天：输入输出</div>
       </div>
     </div>
   </footer>
+  <script type="module" src="ai-practice.mjs"></script>
 </body>
 </html>
